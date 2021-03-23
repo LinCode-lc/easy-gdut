@@ -1,32 +1,105 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <div class="mb-5">
+      <Header></Header>
     </div>
-    <router-view/>
+    
+        
+    <!-- </div> -->
+    <!-- <el-col :span="5">
+       
+    </el-col> -->
+      <el-col :xs="24" :sm="5"><LoginWelcome></LoginWelcome><SideBar></SideBar></el-col>
+
+      <el-col :xs="24" :sm="19">
+        <!-- <el-card><div class="topicc" ><Topic></Topic></div></el-card>
+        <el-card><div class="topicc" ><Topic></Topic></div></el-card>
+        <el-card><div class="topicc" ><Topic></Topic></div></el-card>
+        <el-card><div class="topicc" ><Topic></Topic></div></el-card> -->
+      
+        <!-- <el-row ><Topic></Topic></el-row> -->
+        <el-col :xs="24" :sm="6">
+          <Card></Card>
+        </el-col>
+
+        <el-col :xs="24" :sm="6">
+          <Card></Card>
+        </el-col>
+        <el-col :xs="24" :sm="6">
+          <Card></Card>
+        </el-col>
+        <el-col :xs="24" :sm="6">
+          <Card></Card>
+        </el-col>
+
+        <!-- <el-col :xs="24" :sm="6">
+          <Card></Card>
+        </el-col> -->
+        
+        
+        
+      </el-col>
+
+     
+        <!-- <div>
+          <Topic></Topic>
+        </div> -->
+        <!-- <div>
+          <Topic></Topic>
+        </div>
+        <div>
+          <Topic></Topic>
+        </div>
+        <div>
+          <Topic></Topic>
+        </div>
+        <div>
+          <Topic></Topic>
+        </div>
+        <div>
+          <Topic></Topic>
+        </div>
+        <div>
+          <Topic></Topic>
+        </div>
+        <div>
+          <Topic></Topic>
+        </div>
+        <div>
+          <Topic></Topic>
+        </div>
+        <div>
+          <Topic></Topic>
+        </div> -->
+      
+    
+  
+    
+
+    <router-view />
   </div>
 </template>
 
+<script>
+// import NavMenu from "./components/common/NavMenu"
+import SideBar from "./components/common/SideBar";
+import Header from "./components/common/Header";
+// import Topic from "./components/content/Topic";
+import LoginWelcome from "./components/content/LoginWelcome"
+import Card from "./components/content/Card"
+export default {
+  name: "App",
+  components: {
+    // NavMenu,
+    SideBar,
+    Header,
+    
+    LoginWelcome,
+    Card
+  }
+};
+</script>
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
 
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
 </style>
