@@ -1,10 +1,11 @@
 <template>
   <div id="side-bar">
         <el-row class="tac">
-      <el-col :span="12">
+      <el-col :span="24">
       
         <el-menu
-          default-active="2"
+        router :default-active="$route.path"
+         
           class="el-menu-vertical-demo"
           @open="handleOpen"
           @close="handleClose"
@@ -27,15 +28,15 @@
               <el-menu-item index="1-4-1">选项1</el-menu-item>
             </el-submenu>
           </el-submenu>
-          <el-menu-item index="2">
+          <el-menu-item index="/deliver" >
             <i class="el-icon-bicycle"></i>
             <span slot="title">跑腿服务</span>
           </el-menu-item>
-          <el-menu-item index="3">
+          <el-menu-item index="/group">
             <i class="el-icon-s-promotion"></i>
             <span slot="title">校园组队</span>
           </el-menu-item>
-          <el-menu-item index="4">
+          <el-menu-item index="/trade">
             <i class="el-icon-suitcase-1"></i>
             <span slot="title">闲置交易</span>
           </el-menu-item>
@@ -62,7 +63,7 @@ export default {
 
 <style scoped>
 .el-menu-vertical-demo:not(.el-menu--collapse) {
-    width: 200px;
+    width: 100%;
     min-height: 400px;
   }
 </style>

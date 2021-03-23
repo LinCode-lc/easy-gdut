@@ -5,19 +5,49 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 const routes = [
-  // {
-  //   path: '/',
-  //   name: 'Main',
-  //   component: Home
-  // },
-  // {
-  //   path: '/about',
-  //   name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-  //   component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  // }
+  //主页
+  {
+    path: '/',
+    name: 'Main',
+    component: () => import('@/views/Main')
+  },
+ 
+  {
+    path: '/study',
+    name: 'Study',
+    component: () => import('@/views/Study'),
+    meta:{title:"学习资料"}
+  },
+  {
+    path: '/deliver',
+    name: 'Deliver',
+    component: () => import('@/views/Deliver'),
+    meta:{title:"跑腿服务"}
+  },
+  {
+    path: '/group',
+    name: 'Group',
+    component: () => import('@/views/Group'),
+    meta:{title:"校园组队"}
+  },
+  {
+    path: '/trade',
+    name: 'Trade',
+    component: () => import('@/views/Trade'),
+    meta:{title:"闲置交易"}
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: () => import('@/views/auth/Login'),
+    meta:{title:"登录"}
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    component: () => import('@/views/auth/Register'),
+    meta:{title:"注册"}
+  },
 ]
 
 const router = new VueRouter({

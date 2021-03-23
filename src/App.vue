@@ -5,88 +5,33 @@
     </div>
     
         
-    <!-- </div> -->
-    <!-- <el-col :span="5">
-       
-    </el-col> -->
-      <el-col :xs="24" :sm="5"><LoginWelcome></LoginWelcome><SideBar></SideBar></el-col>
-
-      <el-col :xs="24" :sm="19">
-        <!-- <el-card><div class="topicc" ><Topic></Topic></div></el-card>
-        <el-card><div class="topicc" ><Topic></Topic></div></el-card>
-        <el-card><div class="topicc" ><Topic></Topic></div></el-card>
-        <el-card><div class="topicc" ><Topic></Topic></div></el-card> -->
-      
-        <!-- <el-row ><Topic></Topic></el-row> -->
-        <el-col :xs="24" :sm="6">
-          <Card></Card>
-        </el-col>
-
-        <el-col :xs="24" :sm="6">
-          <Card></Card>
-        </el-col>
-        <el-col :xs="24" :sm="6">
-          <Card></Card>
-        </el-col>
-        <el-col :xs="24" :sm="6">
-          <Card></Card>
-        </el-col>
-
-        <!-- <el-col :xs="24" :sm="6">
-          <Card></Card>
-        </el-col> -->
-        
-        
-        
+    
+      <el-col :xs="24" :sm="5">
+        <el-row><el-col :span="20" :offset="2" ><LoginWelcome></LoginWelcome></el-col></el-row>
+        <el-row><el-col :span="20" :offset="2"><SideBar></SideBar></el-col></el-row>
       </el-col>
 
-     
-        <!-- <div>
-          <Topic></Topic>
-        </div> -->
-        <!-- <div>
-          <Topic></Topic>
-        </div>
-        <div>
-          <Topic></Topic>
-        </div>
-        <div>
-          <Topic></Topic>
-        </div>
-        <div>
-          <Topic></Topic>
-        </div>
-        <div>
-          <Topic></Topic>
-        </div>
-        <div>
-          <Topic></Topic>
-        </div>
-        <div>
-          <Topic></Topic>
-        </div>
-        <div>
-          <Topic></Topic>
-        </div>
-        <div>
-          <Topic></Topic>
-        </div> -->
+      <router-view />
+      
+
+        
       
     
   
     
 
-    <router-view />
+    
   </div>
 </template>
 
 <script>
-// import NavMenu from "./components/common/NavMenu"
+
 import SideBar from "./components/common/SideBar";
 import Header from "./components/common/Header";
-// import Topic from "./components/content/Topic";
+
 import LoginWelcome from "./components/content/LoginWelcome"
-import Card from "./components/content/Card"
+// import Card from "./components/content/Card"
+// import Card2 from "./components/content/Card2"
 export default {
   name: "App",
   components: {
@@ -95,7 +40,8 @@ export default {
     Header,
     
     LoginWelcome,
-    Card
+    // Card,
+    // Card2
   }
 };
 </script>

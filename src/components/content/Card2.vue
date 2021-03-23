@@ -62,7 +62,7 @@
             </el-col>
           </el-row>
 
-          <span>好吃的汉堡付款还是客户打款v你看着弄子女看发动攻击了打击三股势力大概几点了到v你说的女的考虑你的v你在上课立法保护理念上的可不能但是看了你吧......</span>
+          <span>好吃上课立法保护理念上的可不能但是看了你吧......</span>
           <div class="bottom clearfix">
             <span class="tags">  #JAVA </span>
             <span class="tags">  #Python </span>
@@ -85,7 +85,7 @@
 
 <script>
 export default {
-  name: "Card",
+  name: "Card2",
   data() {
     return {
       currentDate: new Date()
