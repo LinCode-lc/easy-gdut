@@ -6,7 +6,7 @@
     >
       <template slot="brand">
         <b-navbar-item tag="div">
-          <!-- <img  alt="logo"> -->
+          <img :src="doubaoImg" alt="logo">
         </b-navbar-item>
 
         <b-navbar-item
@@ -46,6 +46,7 @@
               >检索
               </b-button>
             </p>
+           
           </b-field>
         </b-navbar-item>
 
@@ -107,25 +108,39 @@
         </b-navbar-dropdown>
       </template>
     </b-navbar>
+    
   </header>
 </template>
 
 <script>
 import { disable as disableDarkMode, enable as enableDarkMode } from 'darkreader'
 import { getDarkMode, setDarkMode } from '@/utils/auth'
+import { mapGetters } from 'vuex'
+
 export default {
-    name:"Header",
-     data() {
+  name: 'Header',
+  data() {
     return {
-    //   logoUrl: require('@/assets/logo.png'),
-    //   doubaoImg: require('@/assets/image/doubao.png'),
+      logoUrl: require('@/assets/logo.png'),
+      doubaoImg: require('@/assets/img/doubao.png'),
       searchKey: '',
       darkMode: false
     }
   },
-//   computed: {
-//     ...mapGetters(['token', 'user'])
-//   },
+  computed: {
+    ...mapGetters(['token', 'user'])
+    // token:"5555",
+    // user:"5656"
+    // ...mapGetters({
+    //   'token': 'token',
+    //   'user': 'user',
+      
+    // })
+   
+  
+    
+  
+  },
   watch: {
     // 监听Theme模式
     darkMode(val) {
@@ -140,6 +155,7 @@ export default {
   created() {
     // 获取cookie中的夜间还是白天模式
     this.darkMode = getDarkMode()
+    
     if (this.darkMode) {
       enableDarkMode({})
     } else {
@@ -147,14 +163,14 @@ export default {
     }
   },
   methods: {
-    // async logout() {
-    //   this.$store.dispatch('user/logout').then(() => {
-    //     this.$message.info('退出登录成功')
-    //     setTimeout(() => {
-    //       this.$router.push({ path: this.redirect || '/' })
-    //     }, 500)
-    //   })
-    // },
+    async logout() {
+      this.$store.dispatch('user/logout').then(() => {
+        this.$message.info('退出登录成功')
+        setTimeout(() => {
+          this.$router.push({ path: this.redirect || '/' })
+        }, 500)
+      })
+    },
     search() {
       console.log(this.token)
       if (this.searchKey.trim() === null || this.searchKey.trim() === '') {

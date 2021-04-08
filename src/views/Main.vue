@@ -1,30 +1,13 @@
 <template>
     <div id="main">
+     
         
-        <el-col :xs="24" :sm="5">
-          <Card></Card>
+        <el-col :xs="24"  v-for="(item, index) in articleList" :key="index" class="card-item">
+          <Card :cardMessage="item"></Card>
         </el-col>
-
-        <el-col :xs="24" :sm="5">
-          <Card2></Card2>
-        </el-col>
-
-        <el-col :xs="24" :sm="5">
-          <Card></Card>
-        </el-col>
-
-        <el-col :xs="24" :sm="5">
-          <Card2></Card2>
-        </el-col>
-
-        <el-col :xs="24" :sm="5">
-          <Card></Card>
-        </el-col>
-
-        <el-col :xs="24" :sm="5">
-          <Card></Card>
-        </el-col>
-
+        
+      
+       <el-col  :sm="{span:24,offset:8}" >
         <pagination
         v-show="page.total > 0"
         :total="page.total"
@@ -32,19 +15,24 @@
         :limit.sync="page.size"
         @pagination="init"
       />
+      </el-col>
+    
+      
+      
     </div>
+    
 </template>
 
 <script>
 import Card from "../components/content/Card"
-import Card2 from "../components/content/Card2"
+// import Card2 from "../components/content/Card2"
 import { getList } from '@/network/main.js'
 import Pagination from "@/components/common/Pagination"
 export default {
     name:"Main",
     components:{
     Card,
-    Card2,
+    // Card2,
     Pagination
     },
      data() {
@@ -53,8 +41,8 @@ export default {
             articleList: [],
             page: {
             current: 1,
-            size: 10,
-            total: 0,
+            size: 5,
+            total: 20,
             tab: 'latest'
            
       }
@@ -72,6 +60,7 @@ export default {
         this.page.total = data.total
         this.page.size = data.size
         this.articleList = data.records
+       
       
       })
     },
@@ -84,5 +73,10 @@ export default {
 </script>
 
 <style scoped>
-
+.card-item{
+ 
+  width: 350px;
+  margin-left: 20px;
+  margin-top:50px;
+}
 </style>

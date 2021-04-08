@@ -1,7 +1,8 @@
 import axios from 'axios'
 import { Message, MessageBox } from 'element-ui'
+import store from '@/store'
 // import store from '@/store'
-// import { getToken } from '@/utils/auth'
+import { getToken } from '@/utils/auth'
 
 // 1.创建axios实例
 const service = axios.create({
@@ -23,6 +24,7 @@ service.interceptors.request.use(
       // config.headers.token = token;       // 如果要求携带在请求头中
       // bearer：w3c规范
       config.headers['Authorization'] = 'Bearer ' + getToken()
+     
     }
     return config
   },

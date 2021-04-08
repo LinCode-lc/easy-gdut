@@ -1,4 +1,4 @@
-import {request} from './request'
+import request from './request'
 
 export function getList(pageNo, size, tab) {
     return request(({

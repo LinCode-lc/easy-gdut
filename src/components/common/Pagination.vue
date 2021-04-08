@@ -6,7 +6,7 @@
       :page-size.sync="pageSize"
       :layout="layout"
       :page-sizes="pageSizes"
-      :total="total"
+     
       v-bind="$attrs"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import {scrollTo} from "@/utils/scroll-to";
+import {scrollTo} from "@/common/scroll-to";
 
 export default {
   name: "Pagination",

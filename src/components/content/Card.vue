@@ -1,6 +1,8 @@
 <template>
   <el-row class="card">
     <el-col :span="24">
+      <router-link :to="{name:'TopicDetail',params:{id:cardMessage.id}}">
+                     
       <el-card :body-style="{ padding: '0px' }">
         <!-- <el-row>
             <el-col :span="8">
@@ -54,20 +56,33 @@
             </el-col>
             <el-col :span="12">
               <el-row>
-                <span class="username">小明他爸爸</span>
+                <span class="username">{{ cardMessage.username }}</span>
               </el-row>
               <el-row>
-                <span class="createtime">6分钟前</span>
+                
+                <span class="createtime"
+                  >发布于:{{
+                    dayjs(cardMessage.createTime).format("YYYY/MM/DD hh:mm")
+                  }}</span
+                >
               </el-row>
             </el-col>
           </el-row>
+          <span>{{ cardMessage.title }}</span>
 
-          <span>好吃的汉堡付款还是客户打款v你看着弄子女看发动攻击了打击三股势力大概几点了到v你说的女的考虑你的v你在上课立法保护理念上的可不能但是看了你吧......</span>
           <div class="bottom clearfix">
-            <span class="tags">  #JAVA </span>
-            <span class="tags">  #Python </span>
+            <span
+              v-for="(tag, index) in cardMessage.tags"
+              :key="index"
+              class="tag is-hidden-mobile is-success is-light mr-1"
+            >
+              <router-link :to="{ name: 'tag', params: { name: tag.name } }">
+                {{ "#" + tag.name }}
+              </router-link>
+            </span>
 
-                      <span class="scan">浏览:8</span>
+            <span class="is-hidden-mobile scan" >浏览:{{ cardMessage.view }}</span>
+
             
           </div>
         </div>
@@ -79,6 +94,7 @@
           />
         </el-row>
       </el-card>
+      </router-link>
     </el-col>
   </el-row>
 </template>
@@ -90,6 +106,14 @@ export default {
     return {
       currentDate: new Date()
     };
+  },
+  props: {
+    cardMessage: {
+      type: Object,
+      default() {
+        return {};
+      }
+    }
   }
 };
 </script>
@@ -100,14 +124,18 @@ export default {
   color: #999;
 }
 
-.username{
-    font-size: 15px;
-    font-weight: 700;
+.username {
+  font-size: 15px;
+  font-weight: 700;
 }
 
-.createtime{
-    font-size: 8px;
-    color:#999
+.createtime {
+  font-size: 8px;
+  color: #999;
+}
+.scan{
+  font-size: 8px;
+  color: #999;
 }
 
 .bottom {
@@ -134,16 +162,8 @@ export default {
 .clearfix:after {
   clear: both;
 }
-.tags{
-    color: cadetblue;
-}
-.scan{
-   float: right;
-   font-size: 10px;
-   color: #999;
-   margin-bottom: 5px;
-}
-.card{
-    margin: 8px;
+
+.card {
+  margin: 8px;
 }
 </style>

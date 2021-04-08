@@ -92,7 +92,7 @@ export default {
                 duration: 2000,
               });
 
-        
+           
 
               setTimeout(() => {
                 this.loading = false;
@@ -102,6 +102,8 @@ export default {
             .catch(() => {
               this.loading = false;
             });
+
+            
         } else {
           return false;
         }
@@ -112,7 +114,7 @@ export default {
     },
   },
   created(){
-      console.log(4545313)
+   
   }
 };
 </script>

@@ -13,10 +13,36 @@ const routes = [
   },
  
   {
-    path: '/study',
-    name: 'Study',
-    component: () => import('@/views/Study'),
-    meta:{title:"学习资料"}
+    path: '/study/upload',
+    name: 'Upload',
+    component: () => import('@/views/study/Upload'),
+    meta:{title:"上传学习资料"}
+  },
+  {
+    path: '/study/catagory',
+    name: 'Catagory',
+    component: () => import('@/views/study/Catagory'),
+    meta:{title:"资料目录"}
+  },
+  {
+    path: '/study/detail:id',
+    name: 'StudyDetail',
+    component: () => import('@/views/study/StudyDetail'),
+    meta:{title:"资料详情"}
+  },
+  //帖子详情页
+  {
+    path: '/topic/detail:id',
+    name: 'TopicDetail',
+    component: () => import('@/components/common/TopicDetail'),
+    meta:{title:"帖子详情"}
+  },
+  // 用户主页
+  {
+    name: 'user',
+    path: '/member/:username/home',
+    component: () => import('@/views/user/Profile'),
+    meta: { title: '用户主页' }
   },
   {
     path: '/deliver',

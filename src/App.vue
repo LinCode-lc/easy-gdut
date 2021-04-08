@@ -6,19 +6,19 @@
     
         
     
-      <el-col :xs="24" :sm="5">
-        <el-row><el-col :span="20" :offset="2" ><LoginWelcome></LoginWelcome></el-col></el-row>
-        <el-row><el-col :span="20" :offset="2"><SideBar></SideBar></el-col></el-row>
+      <el-col  :sm="7" class="side" >
+        <!-- <el-row><el-col :span="20" :offset="2" ><LoginWelcome></LoginWelcome></el-col></el-row> -->
+       <el-col :span="20" :offset="1" ><SideBar2></SideBar2></el-col>
       </el-col>
-
+     
+ 
+      
+    
+      <el-col :sm="{span:16}"  style="margin-left:300px" >  
       <router-view />
+      </el-col>
+   
       
-
-        
-      
-    
-  
-    
 
     
   </div>
@@ -26,7 +26,7 @@
 
 <script>
 
-import SideBar from "./components/common/SideBar";
+import SideBar2 from "./components/common/SideBar2";
 import Header from "./components/common/Header";
 
 import LoginWelcome from "./components/content/LoginWelcome"
@@ -36,7 +36,7 @@ export default {
   name: "App",
   components: {
     // NavMenu,
-    SideBar,
+    SideBar2,
     Header,
     
     LoginWelcome,
@@ -47,5 +47,15 @@ export default {
 </script>
 
 <style>
+
+.side{
+  position: fixed;
+  
+  
+  top: 50px;
+
+}
+
+
 
 </style>
