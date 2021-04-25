@@ -1,33 +1,33 @@
-import {  login,getUserInfo,logout} from "@/network/auth";
+import { login, getUserInfo, logout } from "@/network/auth";
 import { getToken, setToken, removeToken } from "@/utils/auth";
 
 const state = {
   token: getToken(), // token
-  user: "", // 用户对象
+  user: {}, // 用户对象
 };
 
 const mutations = {
   SET_TOKEN_STATE: (state, token) => {
     state.token = token;
-    console.log(state.token)
+    // console.log(state.token)
   },
   SET_USER_STATE: (state, user) => {
     state.user = user;
-    console.log(state.user)
+    // console.log(state.user)
   },
 };
 
 const actions = {
   // 用户登录
   login({ commit }, userInfo) {
-   
+    console.log(userInfo)
     const { name, pass, rememberMe } = userInfo;
     return new Promise((resolve, reject) => {
-      login({ username: name.trim(), password: pass, rememberMe: rememberMe })
+      login(name, pass)
         .then((response) => {
-          const { data } = response;
-          commit("SET_TOKEN_STATE", data.token);
-          setToken(data.token);
+          console.log(response.data)
+          commit("SET_TOKEN_STATE", response.data);
+          setToken(response.data);
           resolve();
         })
         .catch((error) => {
@@ -40,9 +40,10 @@ const actions = {
     return new Promise((resolve, reject) => {
       getUserInfo()
         .then((response) => {
+          console.log(response)
           const { data } = response;
-          console.log(data)
-          console.log(data)
+
+          // console.log(data)
           if (!data) {
             commit("SET_TOKEN_STATE", "");
             commit("SET_USER_STATE", "");

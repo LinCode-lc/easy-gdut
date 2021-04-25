@@ -9,26 +9,27 @@
             :size="45"
             src="./1.jpg"
           ></el-avatar> -->
-          <img src="./1.jpg" alt="" class="avatar">
+          <img src="./1.jpg" alt="" class="avatar" />
         </el-col>
         <el-col :span="19">
           <el-row style="margin-left:10px;">
             <router-link :to="{ path: `/member/${user.username}/home` }">
-              <span style="color:black; font-size:18px">{{ user.alias }}</span>
-             
+              <span style="color:black; font-size:18px">{{
+                user.userName
+              }}</span>
             </router-link>
           </el-row>
           <el-row style="font-size:12px" class="user-button">
             <button
               v-if="hasFollow"
-              @click="handleUnFollow(user.id)"
+              @click="handleUnFollow(user.userId)"
               class="el-icon-star-on"
             >
               已关注
             </button>
             <button
               v-else
-              @click="handleFollow(user.id)"
+              @click="handleFollow(user.userId)"
               class="el-icon-star-off"
             >
               关注
@@ -39,14 +40,28 @@
           </el-row>
         </el-col>
       </el-row>
-       <el-row class="has-text-centered">
-            <el-col :span="6" ><span class="spanText">文章</span><h2 class="span-num">7</h2></el-col>
-            <el-col :span="6" ><span class="spanText">经验</span><h2 class="span-num">216</h2></el-col>
-            <el-col :span="6" ><span class="spanText">粉丝</span><h2 class="span-num">43</h2></el-col>
-            <el-col :span="6" ><span class="spanText">关注</span><h2 class="span-num">55</h2></el-col>
-            
-          </el-row>
-
+      <el-row class="has-text-centered">
+        <el-col :span="6"
+          ><span class="spanText">文章</span>
+          <h2 class="span-num">7</h2></el-col
+        >
+        <el-col :span="6"
+          ><span class="spanText">经验</span>
+          <h2 class="span-num">216</h2></el-col
+        >
+        <el-col :span="6"
+          ><span class="spanText">粉丝</span>
+          <h2 class="span-num">
+            {{ user.fansCount === null ? 0 : user.fansCount }}
+          </h2></el-col
+        >
+        <el-col :span="6"
+          ><span class="spanText">关注</span>
+          <h2 class="span-num">
+            {{ user.focusCount === null ? 0 : user.focusCount }}
+          </h2></el-col
+        >
+      </el-row>
     </el-card>
   </section>
 </template>
@@ -114,21 +129,19 @@ export default {
   padding: 3px 3px;
   margin: 0 3px;
   border: none;
-  outline:none;
+  outline: none;
 }
-.avatar{
+.avatar {
   border-radius: 50%;
-  border:1px solid #fff;
- 
+  border: 1px solid #fff;
 }
-.has-text-centered{
+.has-text-centered {
   margin-top: 10px;
 }
-.spanText{
+.spanText {
   font-size: 14px;
-
 }
-.span-num{
+.span-num {
   font-size: 16px;
   margin-top: 10px;
 }

@@ -1,6 +1,6 @@
 <template>
-  <div class="columns py-6">
-    <div class="column is-half is-offset-one-quarter">
+  <div class="login">
+    <div class="login-area">
       <el-card shadow="never">
         <div slot="header" class="has-text-centered has-text-weight-bold">
           用户登录
@@ -45,6 +45,7 @@
 </template>
 
 <script>
+import { login } from "@/network/auth";
 export default {
   name: "Login",
   data() {
@@ -54,7 +55,7 @@ export default {
       ruleForm: {
         name: "",
         pass: "",
-        rememberMe: true,
+        rememberMe: true
       },
       rules: {
         name: [
@@ -63,8 +64,8 @@ export default {
             min: 2,
             max: 15,
             message: "长度在 2 到 15 个字符",
-            trigger: "blur",
-          },
+            trigger: "blur"
+          }
         ],
         pass: [
           { required: true, message: "请输入密码", trigger: "blur" },
@@ -72,38 +73,38 @@ export default {
             min: 6,
             max: 20,
             message: "长度在 6 到 20 个字符",
-            trigger: "blur",
-          },
-        ],
-      },
+            trigger: "blur"
+          }
+        ]
+      }
     };
   },
   methods: {
     submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
+      this.$refs[formName].validate(valid => {
         if (valid) {
           this.loading = true;
+
+          // this.$store
+          //   .dispatch("user/login", this.ruleForm)
           this.$store
             .dispatch("user/login", this.ruleForm)
             .then(() => {
               this.$message({
                 message: "恭喜你，登录成功",
                 type: "success",
-                duration: 2000,
+                duration: 2000
               });
-
-           
 
               setTimeout(() => {
                 this.loading = false;
+                // location.reload();
                 this.$router.push({ path: this.redirect || "/" });
               }, 0.1 * 1000);
             })
             .catch(() => {
               this.loading = false;
             });
-
-            
         } else {
           return false;
         }
@@ -111,13 +112,19 @@ export default {
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
-    },
+    }
   },
-  created(){
-   
-  }
+  created() {}
 };
 </script>
 
 <style scoped>
+.login {
+  background-color: #fff;
+  width: 2000px;
+}
+.login {
+  width: 600px;
+  margin: 150px auto;
+}
 </style>

@@ -1,19 +1,15 @@
 <template>
-    <div class="columns">
+  <div class="columns">
     <!--文章详情-->
     <div class="column is-three-quarters">
       <!--主题-->
-      <el-card
-        class="box-card"
-        shadow="never"
-      >
-        <div
-          slot="header"
-          class="has-text-centered"
-        >
+      <el-card class="box-card" shadow="never">
+        <div slot="header" class="has-text-centered">
           <p class="is-size-5 has-text-weight-bold">{{ topic.title }}</p>
           <div class="has-text-grey is-size-7 mt-3">
-            <span>{{ dayjs(topic.createTime).format('YYYY/MM/DD HH:mm:ss') }}</span>
+            <span>{{
+              dayjs(topic.createTime).format("YYYY/MM/DD HH:mm:ss")
+            }}</span>
             <el-divider direction="vertical" />
             <span>发布者：{{ topicUser.alias }}</span>
             <el-divider direction="vertical" />
@@ -41,21 +37,15 @@
               </b-taglist>
             </p>
           </div>
-          <div
-            v-if="token && user.id === topicUser.id"
-            class="level-right"
-          >
+          <div v-if="token && user.id === topicUser.id" class="level-right">
             <router-link
               class="level-item"
-              :to="{name:'topic-edit',params: {id:topic.id}}"
+              :to="{ name: 'topic-edit', params: { id: topic.id } }"
             >
               <span class="tag">编辑</span>
             </router-link>
             <a class="level-item">
-              <span
-                class="tag"
-                @click="handleDelete(topic.id)"
-              >删除</span>
+              <span class="tag" @click="handleDelete(topic.id)">删除</span>
             </a>
           </div>
         </nav>
@@ -66,85 +56,87 @@
 
     <div class="column">
       <!--作者-->
-      <Author
-        v-if="flag"
-        :user="topicUser"
-      />
+      <Author v-if="flag" :user="topicUser" />
       <!--推荐-->
-      <CommendBar/>
-     
+      <CommendBar />
     </div>
   </div>
 </template>
 
 <script>
-import {  getTopic } from '@/network/detail.js'
-import Vditor from 'vditor'
-import { mapGetters } from 'vuex'
-import Author from '@/components/content/Author'
-import CommendBar from '@/components/common/CommendBar'
+import { getTopic } from "@/network/detail.js";
+import Vditor from "vditor";
+import { mapGetters } from "vuex";
+import Author from "@/components/content/Author";
+import CommendBar from "@/components/common/CommendBar";
 export default {
-    name:"TopicDetail",
-    components:{
-      Author,
-      CommendBar
-    },
-      data() {
-        //设置flag初始值为false,当子组件挂载完后再显示
+  name: "TopicDetail",
+  components: {
+    Author,
+    CommendBar
+  },
+  data() {
+    //设置flag初始值为false,当子组件挂载完后再显示
     return {
       flag: false,
       topic: {
-        content: '',
+        content: "",
         id: this.$route.params.id
       },
       tags: [],
       topicUser: {}
-    }
+    };
+  },
+  created() {
+    console.log(this.$route.params.id);
   },
   computed: {
-    ...mapGetters([
-      'token','user'
-    ])
+    ...mapGetters(["token", "user"])
   },
   mounted() {
-    this.fetchTopic()
+    this.fetchTopic();
   },
   methods: {
     renderMarkdown(md) {
-      Vditor.preview(document.getElementById('preview'), md, {
-        hljs: { style: 'github' }
-      })
+      Vditor.preview(document.getElementById("preview"), md, {
+        hljs: { style: "github" }
+      });
     },
     // 初始化
     async fetchTopic() {
       getTopic(this.$route.params.id).then(response => {
-        const { data } = response
-        document.title = data.topic.title
+        const { data } = response;
+        console.log(data);
+        console.log(data.postContents);
+        console.log(data.user);
+        document.title = data.topicTitle;
 
-        this.topic = data.topic
-        this.tags = data.tags
-        this.topicUser = data.user
+        this.topic = data;
+        this.tags = data.tags;
+        this.topicUser = data.user;
         // this.comments = data.comments
-        this.renderMarkdown(this.topic.content)
-        this.flag = true
-      })
+        this.renderMarkdown(data.postContents);
+        this.flag = true;
+      });
     },
     handleDelete(id) {
       deleteTopic(id).then(value => {
-        const { code, message } = value
-        alert(message)
+        const { code, message } = value;
+        alert(message);
 
         if (code === 200) {
           setTimeout(() => {
-            this.$router.push({ path: '/' })
-          }, 500)
+            this.$router.push({ path: "/" });
+          }, 500);
         }
-      })
+      });
     }
   }
-}
+};
 </script>
 
 <style scoped>
-
+.columns {
+  margin-top: 50px;
+}
 </style>

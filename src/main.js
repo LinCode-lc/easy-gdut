@@ -31,6 +31,9 @@ Vue.use(ElementUI);
 Vue.use(Buefy)
 Vue.config.productionTip = false
 
+// const cors = require('koa2-cors');
+// Vue.use(cors());
+
 new Vue({
   router,
   store,

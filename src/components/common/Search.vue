@@ -1,70 +1,25 @@
 <template>
-  <header class="header has-background-white has-text-black">
-    <b-navbar class="container is-white" :fixed-top="true">
-      <!-- <template slot="brand">
-        <b-navbar-item tag="div">
-          <img :src="doubaoImg" alt="logo" />
-        </b-navbar-item>
+  <div class="searchout">
+    <div class="searchItem">
+      <b-navbar-item tag="div">
+        <b-input
+          v-model="searchKey"
+          class="s_input"
+          width="80%"
+          placeholder="搜索帖子、标签和用户"
+          rounded
+          clearable
+          @keyup.enter.native="search()"
+        />
 
-        <b-navbar-item
-          class="is-hidden-desktop"
-          tag="router-link"
-          :to="{ path: '/' }"
-        >
-          主页
-        </b-navbar-item>
-      </template>
-      <template slot="start">
-        <b-navbar-item tag="router-link" :to="{ path: '/' }">
-          🌐 主页
-        </b-navbar-item>
-      </template> -->
+        <!-- <p class="control">
+          <b-button class="is-info" @click="search()">检索 </b-button>
+        </p> -->
+        <b-switch v-model="darkMode" passive-type="is-warning" type="is-dark">
+          {{ darkMode ? "夜" : "日" }}
+        </b-switch>
 
-      <template slot="end">
-        <!-- <b-navbar-item tag="div">
-          <b-field position="is-centered">
-            <b-input
-              v-model="searchKey"
-              class="s_input"
-              width="80%"
-              placeholder="搜索帖子、标签和用户"
-              rounded
-              clearable
-              @keyup.enter.native="search()"
-            />
-
-            <p class="control">
-              <b-button class="is-info" @click="search()">检索 </b-button>
-            </p>
-          </b-field>
-        </b-navbar-item>
-
-        <b-navbar-item tag="div">
-          <b-switch v-model="darkMode" passive-type="is-warning" type="is-dark">
-            {{ darkMode ? "夜" : "日" }}
-          </b-switch>
-        </b-navbar-item> -->
-
-        <b-navbar-item v-if="token == null || token === ''" tag="div">
-          <div class="buttons">
-            <b-button
-              class="is-light"
-              tag="router-link"
-              :to="{ path: '/register' }"
-            >
-              注册
-            </b-button>
-            <b-button
-              class="is-light"
-              tag="router-link"
-              :to="{ path: '/login' }"
-            >
-              登录
-            </b-button>
-          </div>
-        </b-navbar-item>
-
-        <b-navbar-dropdown v-else>
+        <b-navbar-dropdown>
           <b-navbar-item
             tag="router-link"
             :to="{ path: `/member/${user.username}/home` }"
@@ -80,10 +35,18 @@
           </b-navbar-item>
           <hr class="dropdown-divider" />
           <b-navbar-item tag="a" @click="logout"> 👋 退出登录 </b-navbar-item>
+          <hr class="dropdown-divider" />
+          <b-navbar-item
+            type="is-danger"
+            tag="router-link"
+            :to="{ path: '/post/create' }"
+            outlined
+            >✍ 发表想法</b-navbar-item
+          >
         </b-navbar-dropdown>
-      </template>
-    </b-navbar>
-  </header>
+      </b-navbar-item>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -95,7 +58,7 @@ import { getDarkMode, setDarkMode } from "@/utils/auth";
 import { mapGetters } from "vuex";
 
 export default {
-  name: "Header",
+  name: "Search",
   data() {
     return {
       logoUrl: require("@/assets/logo.png"),
@@ -139,6 +102,7 @@ export default {
     async logout() {
       this.$store.dispatch("user/logout").then(() => {
         this.$message.info("退出登录成功");
+        // location.reload();
         setTimeout(() => {
           this.$router.push({ path: this.redirect || "/" });
         }, 500);
@@ -164,5 +128,16 @@ export default {
 input {
   width: 80%;
   height: 86%;
+}
+.searchout {
+  position: fixed;
+}
+.searchItem {
+  position: absolute;
+  left: 13px;
+  top: 60px;
+}
+.s_input {
+  margin-right: 10px;
 }
 </style>
