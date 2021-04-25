@@ -102,6 +102,18 @@ const routes = [
         component: () => import("@/views/post/Create"),
         meta: { title: "信息发布" },
       },
+      {
+        path: '/forget',
+        name: 'Forget',
+        component: () => import('@/views/auth/Forget'),
+        meta: { title: '找回密码' }
+      },
+      {
+        path: '/update',
+        name: 'Update',
+        component: () => import('@/views/auth/Update'),
+        meta: { title: '信息修改' }
+      },
     ]
   },
   // {

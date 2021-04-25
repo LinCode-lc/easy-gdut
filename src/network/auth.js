@@ -60,3 +60,49 @@ export function logout() {
     url: '/user/logout'
   })
 }
+
+export function forget1(meth, type) {
+  return request({
+    url: 'user/sendForgetEmail',
+    method: 'post',
+    params: {
+      info: meth,
+      type
+    }
+  })
+}
+
+export function forget2(meth, type) {
+  return request({
+    url: 'user/sendForgetEmail',
+    method: 'post',
+    params: {
+      info: meth,
+      type
+    }
+  })
+}
+
+export function sentforget1(usercode, meth, type) {
+  return request({
+    url: '/user/checkFcode',
+    method: 'post',
+    params: {
+      usercode,
+      info: meth,
+      type
+    }
+  })
+}
+
+export function sentforget2(usercode, meth, type) {
+  return request({
+    url: '/user/checkFcode',
+    method: 'post',
+    params: {
+      usercode,
+      info: meth,
+      type
+    }
+  })
+}

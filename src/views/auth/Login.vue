@@ -27,8 +27,15 @@
               ></el-input>
             </el-form-item>
 
+            <!-- <el-form-item label="记住" prop="delivery">
+              <el-switch v-model="ruleForm.rememberMe"></el-switch>
+            </el-form-item> -->
+
             <el-form-item label="记住" prop="delivery">
               <el-switch v-model="ruleForm.rememberMe"></el-switch>
+              <el-link href="/#/forget" type="primary" style="margin-left:270px"
+                >忘记密码</el-link
+              >
             </el-form-item>
 
             <el-form-item>
