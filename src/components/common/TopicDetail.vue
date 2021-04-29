@@ -52,6 +52,7 @@
       </el-card>
 
       <!-- <lv-comments :slug="topic.id" />  -->
+      <Comment class=""></Comment>
     </div>
 
     <div class="column">
@@ -64,16 +65,19 @@
 </template>
 
 <script>
-import { getTopic } from "@/network/detail.js";
+import { getTopic, getCommentList } from "@/network/detail.js";
 import Vditor from "vditor";
 import { mapGetters } from "vuex";
 import Author from "@/components/content/Author";
 import CommendBar from "@/components/common/CommendBar";
+import Comment from "@/components/common/comment/Comment";
+
 export default {
   name: "TopicDetail",
   components: {
     Author,
-    CommendBar
+    CommendBar,
+    Comment
   },
   data() {
     //设置flag初始值为false,当子组件挂载完后再显示
@@ -89,6 +93,11 @@ export default {
   },
   created() {
     console.log(this.$route.params.id);
+    //请求评论内容
+    getCommentList(this.$route.params.id).then(response => {
+      const { data } = response;
+      console.log(data);
+    });
   },
   computed: {
     ...mapGetters(["token", "user"])
@@ -136,6 +145,9 @@ export default {
 </script>
 
 <style scoped>
+/* #preview {
+  height: 500px;
+} */
 .columns {
   margin-top: 50px;
 }

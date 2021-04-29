@@ -10,3 +10,15 @@ export function getTopic(id) {
     // }
   })
 }
+
+
+// 获取评论
+export function getCommentList(id) {
+  return request({
+    url: `comment/listbypostid/`,
+    method: 'get',
+    params: {
+      postid: id
+    }
+  })
+}

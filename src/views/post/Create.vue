@@ -104,7 +104,7 @@ export default {
       mode: "sv",
       upload: {
         accept: "image/*",
-        url: "http://localhost:8030/file/b-upload",
+        url: "http://localhost:8030/file/s-upload",
         multiple: true,
         filename(name) {
           return name.replace(/[^(a-zA-Z0-9\u4e00-\u9fa5\.)]/g);
