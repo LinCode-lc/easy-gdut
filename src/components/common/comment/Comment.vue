@@ -72,12 +72,12 @@
             </div>
           </div>
         </div>
-
+        <!-- 内容 -->
         <div class="reply-content" v-html="analyzeEmoji(item.commentContents)">
           {{ analyzeEmoji(item.commentContents) }}
         </div>
         <div class="reply-content reply-fa">
-          <div class="reply-font" @click="doReply(item.postId)">
+          <div class="reply-font" @click="doReply(item.commentId)">
             <div>
               <img src="./img/icon/reply.png" class="icon-reply" /><font
                 class="icon-reply icon-hf"
@@ -89,25 +89,25 @@
           <div
             class="comment"
             :style="{ width: commentWidth }"
-            v-if="replyMap[item.id]"
+            v-if="replyMap[item.commentId]"
             :showAvatar="showAvatar"
           >
             <el-input
-              @focus="showButton(item.postId)"
+              @focus="showButton(item.commentId)"
               type="textarea"
               :autosize="{ minRows: minRows, maxRows: maxRows }"
               :placeholder="placeholder"
-              v-model="textareaMap[item.postId]"
+              v-model="textareaMap[item.commentId]"
             >
             </el-input>
 
-            <div v-if="buttonMap[item.postId]" class="hbl-owo">
+            <div v-if="buttonMap[item.commentId]" class="hbl-owo">
               <div
-                :class="pBodyMap[item.postId] ? 'OwO' : 'OwO OwO-open'"
+                :class="pBodyMap[item.commentId] ? 'OwO' : 'OwO OwO-open'"
                 class="emoj publish"
                 :style="{ width: emojiWidth }"
               >
-                <div class="OwO-logo" @click="pBodyStatus(item.postId)">
+                <div class="OwO-logo" @click="pBodyStatus(item.commentId)">
                   <span>Emoji表情</span>
                 </div>
                 <div class="OwO-body">
@@ -116,7 +116,7 @@
                       class="OwO-item"
                       v-for="(oitem, index) in OwOlist"
                       :key="'oitem' + index"
-                      @click="choseEmoji(item.postId, oitem.title)"
+                      @click="choseEmoji(item.commentId, oitem.title)"
                     >
                       <img :src="require('./img/face/' + oitem.url)" alt="" />
                     </li>
@@ -127,11 +127,11 @@
               <div class="publish publish-btn">
                 <button
                   class="btn"
-                  @click="doChidSend(item.postId, item.userId, item.postId)"
+                  @click="doChidSendParent(item.commentId, item)"
                 >
                   发送
                 </button>
-                <button @click="cancel(item.postId)" class="btn btn-cancel">
+                <button @click="cancel(item.commentId)" class="btn btn-cancel">
                   取消
                 </button>
               </div>
@@ -178,7 +178,7 @@
           </div>
 
           <div class="reply-content reply-fa">
-            <div class="reply-font" @click="doReply(ritem.postId)">
+            <div class="reply-font" @click="doReply(ritem.commentId)">
               <div>
                 <img src="./img/icon/reply.png" class="icon-reply" /><font
                   class="icon-reply icon-hf"
@@ -190,25 +190,25 @@
             <div
               class="comment"
               :style="{ width: commentWidth }"
-              v-if="replyMap[ritem.postId]"
+              v-if="replyMap[ritem.commentId]"
               :showAvatar="showAvatar"
             >
               <el-input
-                @focus="showButton(ritem.postId)"
+                @focus="showButton(ritem.commentId)"
                 type="textarea"
                 :autosize="{ minRows: minRows, maxRows: maxRows }"
                 :placeholder="placeholder"
-                v-model="textareaMap[ritem.postId]"
+                v-model="textareaMap[ritem.commentId]"
               >
               </el-input>
 
-              <div v-if="buttonMap[ritem.postId]" class="hbl-owo">
+              <div v-if="buttonMap[ritem.commentId]" class="hbl-owo">
                 <div
-                  :class="pBodyMap[ritem.postId] ? 'OwO' : 'OwO OwO-open'"
+                  :class="pBodyMap[ritem.commentId] ? 'OwO' : 'OwO OwO-open'"
                   class="emoj publish"
                   :style="{ width: emojiWidth }"
                 >
-                  <div class="OwO-logo" @click="pBodyStatus(ritem.postId)">
+                  <div class="OwO-logo" @click="pBodyStatus(ritem.commentId)">
                     <span>Emoji表情</span>
                   </div>
                   <div class="OwO-body">
@@ -217,7 +217,7 @@
                         class="OwO-item"
                         v-for="(oitem, index) in OwOlist"
                         :key="'oitem' + index"
-                        @click="choseEmoji(ritem.postId, oitem.title)"
+                        @click="choseEmoji(ritem.commentId, oitem.title)"
                       >
                         <img :src="require('./img/face/' + oitem.url)" alt="" />
                       </li>
@@ -228,13 +228,17 @@
                 <div class="publish publish-btn">
                   <button
                     class="btn"
-                    @click="doChidSend(ritem.postId, ritem.userId, item.postId)"
+                    @click="doChidSend(ritem.commentId, ritem)"
                   >
                     发送
                   </button>
-                  <button @click="cancel(ritem.postId)" class="btn btn-cancel">
+                  <but
+                    ton
+                    @click="cancel(ritem.commentId)"
+                    class="btn btn-cancel"
+                  >
                     取消
-                  </button>
+                  </but>
                 </div>
               </div>
             </div>
@@ -247,6 +251,8 @@
 
 <script>
 import avatar from "./Avatar.vue";
+import { postComment } from "@/network/post.js";
+import { getCommentList } from "@/network/detail.js";
 export default {
   props: {
     emojiWidth: {
@@ -285,304 +291,305 @@ export default {
       type: String,
       default: "作"
     },
-    commentList: {
-      type: Array,
-      default: () => [
-        {
-          commentId: "comment001",
-          postId: "post001",
-          replyId: "0",
-          replyReplyId: "0",
-          userId: "10081",
-          commentContents: "这篇文章很辣鸡",
-          creatTime: "2021-03-30T00:12:16",
-          commentStatus: 0,
-          commentImageSrc: "comment/image01",
-          replyCount: 99,
-          parseCount: 4,
-          children: [
-            {
-              commentId: "comment006",
-              postId: "post001",
-              replyId: "comment001",
-              replyReplyId: "0",
-              userId: "10081",
-              commentContents: "111",
-              creatTime: "2021-03-30T00:34:50",
-              commentStatus: 0,
-              commentImageSrc: "comment/image01",
-              replyCount: 0,
-              parseCount: 2,
-              children: null,
-              username: "小红",
-              avater: "image/plate01.jpg",
-              replyname: null
-            },
-            {
-              commentId: "comment007",
-              postId: "post001",
-              replyId: "comment001",
-              replyReplyId: "0",
-              userId: "10081",
-              commentContents: "这篇文章很辣鸡",
-              creatTime: "2021-03-30T00:12:16",
-              commentStatus: 0,
-              commentImageSrc: "comment/image01",
-              replyCount: 0,
-              parseCount: 2,
-              children: null,
-              username: "小明",
-              avater: "image/plate01.jpg",
-              replyname: null
-            },
-            {
-              commentId: "comment008",
-              postId: "post001",
-              replyId: "comment001",
-              replyReplyId: "0",
-              userId: "10081",
-              commentContents: "这篇文章很辣鸡",
-              creatTime: "2021-03-30T00:12:16",
-              commentStatus: 0,
-              commentImageSrc: "comment/image01",
-              replyCount: 0,
-              parseCount: 1,
-              children: null,
-              username: "小明",
-              avater: "image/plate01.jpg",
-              replyname: null
-            },
-            {
-              commentId: "comment009",
-              postId: "post001",
-              replyId: "comment001",
-              replyReplyId: "comment006",
-              userId: "10081",
-              commentContents: "这篇文章很辣鸡",
-              creatTime: "2021-03-30T00:12:16",
-              commentStatus: 0,
-              commentImageSrc: "comment/image01",
-              replyCount: 0,
-              parseCount: 1,
-              children: null,
-              username: "小明",
-              avater: "image/plate01.jpg",
-              replyname: "小明"
-            },
-            {
-              commentId: "comment010",
-              postId: "post001",
-              replyId: "comment001",
-              replyReplyId: "comment006",
-              userId: "10081",
-              commentContents: "这篇文章很辣鸡",
-              creatTime: "2021-03-30T00:12:16",
-              commentStatus: 0,
-              commentImageSrc: "comment/image01",
-              replyCount: 0,
-              parseCount: 1,
-              children: null,
-              username: "小明",
-              avater: "image/plate01.jpg",
-              replyname: "小明"
-            }
-          ],
-          username: "小明",
-          avater: "image/plate01.jpg",
-          replyname: null
-        },
-        {
-          commentId: "comment002",
-          postId: "post001",
-          replyId: "0",
-          replyReplyId: "0",
-          userId: "10082",
-          commentContents: "这篇文章很辣鸡",
-          creatTime: "2021-03-30T00:12:16",
-          commentStatus: 0,
-          commentImageSrc: "comment/image01",
-          replyCount: 0,
-          parseCount: 1,
-          children: [],
-          username: "小王",
-          avater: "image/plate01.jpg",
-          replyname: null
-        },
-        {
-          commentId: "comment003",
-          postId: "post001",
-          replyId: "0",
-          replyReplyId: "0",
-          userId: "10083",
-          commentContents: "这篇文章很辣鸡",
-          creatTime: "2021-03-30T00:12:16",
-          commentStatus: 0,
-          commentImageSrc: "comment/image01",
-          replyCount: 0,
-          parseCount: 1,
-          children: [],
-          username: "小刚",
-          avater: "image/plate01.jpg",
-          replyname: null
-        },
-        {
-          commentId: "comment004",
-          postId: "post001",
-          replyId: "0",
-          replyReplyId: "0",
-          userId: "10084",
-          commentContents: "这篇文章很辣鸡",
-          creatTime: "2021-03-30T00:12:16",
-          commentStatus: 0,
-          commentImageSrc: "comment/image01",
-          replyCount: 0,
-          parseCount: 1,
-          children: [],
-          username: "小李",
-          avater: "image/plate01.jpg",
-          replyname: null
-        },
-        {
-          commentId: "comment007",
-          postId: "post001",
-          replyId: "comment001",
-          replyReplyId: "0",
-          userId: "10081",
-          commentContents: "这篇文章很辣鸡",
-          creatTime: "2021-03-30T00:12:16",
-          commentStatus: 0,
-          commentImageSrc: "comment/image01",
-          replyCount: 0,
-          parseCount: 2,
-          children: null,
-          username: "小明",
-          avater: "image/plate01.jpg",
-          replyname: null
-        },
-        {
-          commentId: "comment009",
-          postId: "post001",
-          replyId: "comment001",
-          replyReplyId: "comment006",
-          userId: "10081",
-          commentContents: "这篇文章很辣鸡",
-          creatTime: "2021-03-30T00:12:16",
-          commentStatus: 0,
-          commentImageSrc: "comment/image01",
-          replyCount: 0,
-          parseCount: 1,
-          children: null,
-          username: "小明",
-          avater: "image/plate01.jpg",
-          replyname: "小明"
-        }
-      ]
-      //   default: () => [
-      //     {
-      //       id: 1,
-      //       commentUser: {
-      //         id: 1,
-      //         nickName: "花非花",
-      //         avatar:
-      //           "http://qzapp.qlogo.cn/qzapp/101483738/6637A2B6611592A44A7699D14E13F7F7/50"
-      //       },
-      //       content:
-      //         "<a style='text-decoration:none;color: #409eff ' href='https://blog.csdn.net/abcwanglinyong/'>我的CSDN博客地址</a>[害羞][害羞][害羞]<br/>" +
-      //         "我的微信公众号：<br/>" +
-      //         "<img src=" +
-      //         require("./img/hbl.jpg") +
-      //         ">",
-      //       createDate: "2019-9-23 17:36:02",
-      //       childrenList: [
-      //         {
-      //           id: 2,
-      //           commentUser: {
-      //             id: 2,
-      //             nickName: "坏菠萝",
-      //             avatar: ""
-      //           },
-      //           targetUser: {
-      //             id: 1,
-      //             nickName: "花非花",
-      //             avatar:
-      //               "http://qzapp.qlogo.cn/qzapp/101483738/6637A2B6611592A44A7699D14E13F7F7/50"
-      //           },
-      //           content: "真的就很sha！很Nice!",
-      //           createDate: "2019-9-23 17:45:26"
-      //         },
-      //         {
-      //           id: 3,
-      //           commentUser: {
-      //             id: 3,
-      //             nickName: "小草莓",
-      //             avatar:
-      //               "http://qzapp.qlogo.cn/qzapp/101483738/6637A2B6611592A44A7699D14E13F7F7/50"
-      //           },
-      //           targetUser: {
-      //             id: 2,
-      //             nickName: "坏菠萝",
-      //             avatar:
-      //               "http://qzapp.qlogo.cn/qzapp/101483738/6637A2B6611592A44A7699D14E13F7F7/50"
-      //           },
-      //           content: "这很菜",
-      //           createDate: "2019-9-23 17:45:26"
-      //         }
-      //       ]
-      //     },
-      //     {
-      //       id: 1,
-      //       commentUser: {
-      //         id: 1,
-      //         nickName: "花非花",
-      //         avatar:
-      //           "http://qzapp.qlogo.cn/qzapp/101483738/6637A2B6611592A44A7699D14E13F7F7/50"
-      //       },
-      //       content:
-      //         "<a style='text-decoration:none;color: #409eff ' href='https://blog.csdn.net/abcwanglinyong/'>我的CSDN博客地址</a>[害羞][害羞][害羞]<br/>" +
-      //         "我的微信公众号：<br/>" +
-      //         "<img src=" +
-      //         require("./img/hbl.jpg") +
-      //         ">",
-      //       createDate: "2019-9-23 17:36:02",
-      //       childrenList: [
-      //         {
-      //           id: 2,
-      //           commentUser: {
-      //             id: 2,
-      //             nickName: "坏菠萝",
-      //             avatar: ""
-      //           },
-      //           targetUser: {
-      //             id: 1,
-      //             nickName: "花非花",
-      //             avatar:
-      //               "http://qzapp.qlogo.cn/qzapp/101483738/6637A2B6611592A44A7699D14E13F7F7/50"
-      //           },
-      //           content: "真的就很sha！很Nice!",
-      //           createDate: "2019-9-23 17:45:26"
-      //         },
-      //         {
-      //           id: 3,
-      //           commentUser: {
-      //             id: 3,
-      //             nickName: "小草莓",
-      //             avatar:
-      //               "http://qzapp.qlogo.cn/qzapp/101483738/6637A2B6611592A44A7699D14E13F7F7/50"
-      //           },
-      //           targetUser: {
-      //             id: 2,
-      //             nickName: "坏菠萝",
-      //             avatar:
-      //               "http://qzapp.qlogo.cn/qzapp/101483738/6637A2B6611592A44A7699D14E13F7F7/50"
-      //           },
-      //           content: "这很菜",
-      //           createDate: "2019-9-23 17:45:26"
-      //         }
-      //       ]
-      //     }
+    // commentList: {
+    //   type: Array,
+    //   // default: () => []
+    //   default: () => [
+    //     {
+    //       commentId: "comment001",
+    //       postId: "post001",
+    //       replyId: "0",
+    //       replyReplyId: "0",
+    //       userId: "10081",
+    //       commentContents: "这篇文章dsfsdfsdfsdf",
+    //       creatTime: "2021-03-30T00:12:16",
+    //       commentStatus: 0,
+    //       commentImageSrc: "comment/image01",
+    //       replyCount: 99,
+    //       parseCount: 4,
+    //       children: [
+    //         {
+    //           commentId: "comment006",
+    //           postId: "post001",
+    //           replyId: "comment001",
+    //           replyReplyId: "0",
+    //           userId: "10081",
+    //           commentContents: "111",
+    //           creatTime: "2021-03-30T00:34:50",
+    //           commentStatus: 0,
+    //           commentImageSrc: "comment/image01",
+    //           replyCount: 0,
+    //           parseCount: 2,
+    //           children: null,
+    //           username: "小红",
+    //           avater: "image/plate01.jpg",
+    //           replyname: null
+    //         },
+    //         {
+    //           commentId: "comment007",
+    //           postId: "post001",
+    //           replyId: "comment001",
+    //           replyReplyId: "0",
+    //           userId: "10081",
+    //           commentContents: "这篇文章很辣鸡",
+    //           creatTime: "2021-03-30T00:12:16",
+    //           commentStatus: 0,
+    //           commentImageSrc: "comment/image01",
+    //           replyCount: 0,
+    //           parseCount: 2,
+    //           children: null,
+    //           username: "小明",
+    //           avater: "image/plate01.jpg",
+    //           replyname: null
+    //         },
+    //         {
+    //           commentId: "comment008",
+    //           postId: "post001",
+    //           replyId: "comment001",
+    //           replyReplyId: "0",
+    //           userId: "10081",
+    //           commentContents: "这篇文章很辣鸡",
+    //           creatTime: "2021-03-30T00:12:16",
+    //           commentStatus: 0,
+    //           commentImageSrc: "comment/image01",
+    //           replyCount: 0,
+    //           parseCount: 1,
+    //           children: null,
+    //           username: "小明",
+    //           avater: "image/plate01.jpg",
+    //           replyname: null
+    //         },
+    //         {
+    //           commentId: "comment009",
+    //           postId: "post001",
+    //           replyId: "comment001",
+    //           replyReplyId: "comment006",
+    //           userId: "10081",
+    //           commentContents: "这篇文章很辣鸡",
+    //           creatTime: "2021-03-30T00:12:16",
+    //           commentStatus: 0,
+    //           commentImageSrc: "comment/image01",
+    //           replyCount: 0,
+    //           parseCount: 1,
+    //           children: null,
+    //           username: "小明",
+    //           avater: "image/plate01.jpg",
+    //           replyname: "小明"
+    //         },
+    //         {
+    //           commentId: "comment010",
+    //           postId: "post001",
+    //           replyId: "comment001",
+    //           replyReplyId: "comment006",
+    //           userId: "10081",
+    //           commentContents: "这篇文章很辣鸡",
+    //           creatTime: "2021-03-30T00:12:16",
+    //           commentStatus: 0,
+    //           commentImageSrc: "comment/image01",
+    //           replyCount: 0,
+    //           parseCount: 1,
+    //           children: null,
+    //           username: "小明",
+    //           avater: "image/plate01.jpg",
+    //           replyname: "小明"
+    //         }
+    //       ],
+    //       username: "小明",
+    //       avater: "image/plate01.jpg",
+    //       replyname: null
+    //     },
+    //     {
+    //       commentId: "comment002",
+    //       postId: "post001",
+    //       replyId: "0",
+    //       replyReplyId: "0",
+    //       userId: "10082",
+    //       commentContents: "这篇文章很辣鸡",
+    //       creatTime: "2021-03-30T00:12:16",
+    //       commentStatus: 0,
+    //       commentImageSrc: "comment/image01",
+    //       replyCount: 0,
+    //       parseCount: 1,
+    //       children: [],
+    //       username: "小王",
+    //       avater: "image/plate01.jpg",
+    //       replyname: null
+    //     },
+    //     {
+    //       commentId: "comment003",
+    //       postId: "post001",
+    //       replyId: "0",
+    //       replyReplyId: "0",
+    //       userId: "10083",
+    //       commentContents: "这篇文章很辣鸡",
+    //       creatTime: "2021-03-30T00:12:16",
+    //       commentStatus: 0,
+    //       commentImageSrc: "comment/image01",
+    //       replyCount: 0,
+    //       parseCount: 1,
+    //       children: [],
+    //       username: "小刚",
+    //       avater: "image/plate01.jpg",
+    //       replyname: null
+    //     },
+    //     {
+    //       commentId: "comment004",
+    //       postId: "post001",
+    //       replyId: "0",
+    //       replyReplyId: "0",
+    //       userId: "10084",
+    //       commentContents: "这篇文章很辣鸡",
+    //       creatTime: "2021-03-30T00:12:16",
+    //       commentStatus: 0,
+    //       commentImageSrc: "comment/image01",
+    //       replyCount: 0,
+    //       parseCount: 1,
+    //       children: [],
+    //       username: "小李",
+    //       avater: "image/plate01.jpg",
+    //       replyname: null
+    //     },
+    //     {
+    //       commentId: "comment007",
+    //       postId: "post001",
+    //       replyId: "comment001",
+    //       replyReplyId: "0",
+    //       userId: "10081",
+    //       commentContents: "这篇文章很辣鸡",
+    //       creatTime: "2021-03-30T00:12:16",
+    //       commentStatus: 0,
+    //       commentImageSrc: "comment/image01",
+    //       replyCount: 0,
+    //       parseCount: 2,
+    //       children: null,
+    //       username: "小明",
+    //       avater: "image/plate01.jpg",
+    //       replyname: null
+    //     },
+    //     {
+    //       commentId: "comment009",
+    //       postId: "post001",
+    //       replyId: "comment001",
+    //       replyReplyId: "comment006",
+    //       userId: "10081",
+    //       commentContents: "这篇文章很辣鸡",
+    //       creatTime: "2021-03-30T00:12:16",
+    //       commentStatus: 0,
+    //       commentImageSrc: "comment/image01",
+    //       replyCount: 0,
+    //       parseCount: 1,
+    //       children: null,
+    //       username: "小明",
+    //       avater: "image/plate01.jpg",
+    //       replyname: "小明"
+    //     }
+    //   ]
+    //   // default: () => [
+    //   //   {
+    //   //     id: 1,
+    //   //     commentUser: {
+    //   //       id: 1,
+    //   //       nickName: "花非花",
+    //   //       avatar:
+    //   //         "http://qzapp.qlogo.cn/qzapp/101483738/6637A2B6611592A44A7699D14E13F7F7/50"
+    //   //     },
+    //   //     content:
+    //   //       "<a style='text-decoration:none;color: #409eff ' href='https://blog.csdn.net/abcwanglinyong/'>我的CSDN博客地址</a>[害羞][害羞][害羞]<br/>" +
+    //   //       "我的微信公众号：<br/>" +
+    //   //       "<img src=" +
+    //   //       require("./img/hbl.jpg") +
+    //   //       ">",
+    //   //     createDate: "2019-9-23 17:36:02",
+    //   //     childrenList: [
+    //   //       {
+    //   //         id: 2,
+    //   //         commentUser: {
+    //   //           id: 2,
+    //   //           nickName: "坏菠萝",
+    //   //           avatar: ""
+    //   //         },
+    //   //         targetUser: {
+    //   //           id: 1,
+    //   //           nickName: "花非花",
+    //   //           avatar:
+    //   //             "http://qzapp.qlogo.cn/qzapp/101483738/6637A2B6611592A44A7699D14E13F7F7/50"
+    //   //         },
+    //   //         content: "真的就很sha！很Nice!",
+    //   //         createDate: "2019-9-23 17:45:26"
+    //   //       },
+    //   //       {
+    //   //         id: 3,
+    //   //         commentUser: {
+    //   //           id: 3,
+    //   //           nickName: "小草莓",
+    //   //           avatar:
+    //   //             "http://qzapp.qlogo.cn/qzapp/101483738/6637A2B6611592A44A7699D14E13F7F7/50"
+    //   //         },
+    //   //         targetUser: {
+    //   //           id: 2,
+    //   //           nickName: "坏菠萝",
+    //   //           avatar:
+    //   //             "http://qzapp.qlogo.cn/qzapp/101483738/6637A2B6611592A44A7699D14E13F7F7/50"
+    //   //         },
+    //   //         content: "这很菜",
+    //   //         createDate: "2019-9-23 17:45:26"
+    //   //       }
+    //   //     ]
+    //   //   },
+    //   //   {
+    //   //     id: 1,
+    //   //     commentUser: {
+    //   //       id: 1,
+    //   //       nickName: "花非花",
+    //   //       avatar:
+    //   //         "http://qzapp.qlogo.cn/qzapp/101483738/6637A2B6611592A44A7699D14E13F7F7/50"
+    //   //     },
+    //   //     content:
+    //   //       "<a style='text-decoration:none;color: #409eff ' href='https://blog.csdn.net/abcwanglinyong/'>我的CSDN博客地址</a>[害羞][害羞][害羞]<br/>" +
+    //   //       "我的微信公众号：<br/>" +
+    //   //       "<img src=" +
+    //   //       require("./img/hbl.jpg") +
+    //   //       ">",
+    //   //     createDate: "2019-9-23 17:36:02",
+    //   //     childrenList: [
+    //   //       {
+    //   //         id: 2,
+    //   //         commentUser: {
+    //   //           id: 2,
+    //   //           nickName: "坏菠萝",
+    //   //           avatar: ""
+    //   //         },
+    //   //         targetUser: {
+    //   //           id: 1,
+    //   //           nickName: "花非花",
+    //   //           avatar:
+    //   //             "http://qzapp.qlogo.cn/qzapp/101483738/6637A2B6611592A44A7699D14E13F7F7/50"
+    //   //         },
+    //   //         content: "真的就很sha！很Nice!",
+    //   //         createDate: "2019-9-23 17:45:26"
+    //   //       },
+    //   //       {
+    //   //         id: 3,
+    //   //         commentUser: {
+    //   //           id: 3,
+    //   //           nickName: "小草莓",
+    //   //           avatar:
+    //   //             "http://qzapp.qlogo.cn/qzapp/101483738/6637A2B6611592A44A7699D14E13F7F7/50"
+    //   //         },
+    //   //         targetUser: {
+    //   //           id: 2,
+    //   //           nickName: "坏菠萝",
+    //   //           avatar:
+    //   //             "http://qzapp.qlogo.cn/qzapp/101483738/6637A2B6611592A44A7699D14E13F7F7/50"
+    //   //         },
+    //   //         content: "这很菜",
+    //   //         createDate: "2019-9-23 17:45:26"
+    //   //       }
+    //   //     ]
+    //   //   }
 
-      //   ]
-    },
+    //   // ]
+    // },
     commentWidth: {
       type: String,
       default: "80%"
@@ -590,6 +597,7 @@ export default {
   },
   data() {
     return {
+      commentList: [],
       replyMap: [],
       buttonMap: [],
       pBodyMap: [],
@@ -674,7 +682,22 @@ export default {
   components: {
     avatar
   },
+  created() {
+    this.fetchTopic();
+  },
+
   methods: {
+    // 初始化
+    async fetchTopic() {
+      getCommentList(this.$route.params.id).then(response => {
+        console.log("下面一行打印评论");
+        const { data } = response;
+        this.commentList = data;
+        console.log(data);
+        console.log(this.commentList);
+      });
+    },
+
     //事件处理器
 
     showButton(index) {
@@ -692,15 +715,67 @@ export default {
       //this.showFlag = false;
     },
     doSend() {
-      this.$emit("doSend", this.textareaMap[0]);
+      console.log(this.textareaMap[0]);
+      console.log(this.$route.params.id);
+      console.log(this.$store.state.user.user.userId);
+      postComment(
+        this.textareaMap[0],
+        this.$route.params.id,
+        0,
+        0,
+        this.$store.state.user.user.userId
+      ).then(response => {
+        console.log("下面一行打印评论");
+        const { data } = response;
+        // console.log(data);
+        // this.commentData = data;
+        this.fetchTopic();
+        // console.log(data);
+        // console.log(this.commentData);
+      });
+      // this.$emit("doSend", this.textareaMap[0]);
       this.$set(this.textareaMap, 0, "");
+      this.cancel(0);
     },
-    doChidSend(index, commentUserId, pid) {
+    doChidSendParent(index, item) {
+      console.log(item.commentId);
       console.log(this.textareaMap[index]);
-      console.log(commentUserId);
-      console.log(pid);
-      this.$emit("doChidSend", this.textareaMap[index], commentUserId, pid);
+      console.log(item.replyId);
+      console.log(item.replyReplyId);
+      postComment(
+        this.textareaMap[index],
+        this.$route.params.id,
+        item.commentId,
+        0,
+
+        this.$store.state.user.user.userId
+      ).then(response => {
+        this.fetchTopic();
+      });
+
+      // this.$emit("doChidSend", this.textareaMap[index], commentUserId, pid);
       this.$set(this.textareaMap, index, "");
+      this.cancel(index);
+    },
+
+    doChidSend(index, item) {
+      console.log(item.commentId);
+      console.log(this.textareaMap[index]);
+      console.log(item.replyId);
+      console.log(item.replyReplyId);
+      postComment(
+        this.textareaMap[index],
+        this.$route.params.id,
+        item.replyId,
+        item.commentId,
+        this.$store.state.user.user.userId
+      ).then(response => {
+        this.fetchTopic();
+      });
+
+      // this.$emit("doChidSend", this.textareaMap[index], commentUserId, pid);
+      this.$set(this.textareaMap, index, "");
+      this.cancel(index);
     },
 
     //选择表情包
@@ -737,8 +812,22 @@ export default {
     doReply(index) {
       this.$set(this.replyMap, index, true);
       console.log(this.replyMap);
+      console.log(this.textareaMap[index]);
       console.log(index);
       console.log(this.replyMap[index]);
+      // postComment(
+      //   this.textareaMap[index],
+      //   this.$route.params.id,
+      //   0,
+      //   0,
+      //   this.$store.state.user.user.userId
+      // ).then(response => {
+      //   console.log("下面一行打印评论");
+      //   const { data } = response;
+      //   this.commentData = data;
+      //   console.log(data);
+      //   console.log(this.commentData);
+      // });
     },
 
     pBodyStatus(index) {
@@ -748,12 +837,6 @@ export default {
   watch: {
     // 如果路由有变化，会再次执行该方法
     // '$route':'routeChange'
-  },
-  created() {
-    //生命周期函数
-  },
-  mounted() {
-    //页面加载完成后
   }
 };
 </script>
@@ -1503,5 +1586,8 @@ export default {
 }
 .hbl-child {
   padding: 20px;
+}
+.btn[data-v-fbaf820a] {
+  height: 40px;
 }
 </style>

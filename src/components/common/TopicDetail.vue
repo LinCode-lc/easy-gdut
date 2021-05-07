@@ -1,6 +1,7 @@
 <template>
   <div class="columns">
     <!--文章详情-->
+
     <div class="column is-three-quarters">
       <!--主题-->
       <el-card class="box-card" shadow="never">
@@ -52,14 +53,15 @@
       </el-card>
 
       <!-- <lv-comments :slug="topic.id" />  -->
-      <Comment class=""></Comment>
+      <!-- <Comment :commentList="commentData"></Comment> -->
+      <Comment :postId="topicId"></Comment>
     </div>
 
     <div class="column">
       <!--作者-->
       <Author v-if="flag" :user="topicUser" />
       <!--推荐-->
-      <CommendBar />
+      <!-- <CommendBar :commentList="commentData" /> -->
     </div>
   </div>
 </template>
@@ -87,17 +89,21 @@ export default {
         content: "",
         id: this.$route.params.id
       },
+      topicId: this.$route.params.id,
       tags: [],
-      topicUser: {}
+      topicUser: {},
+      commentData: []
     };
   },
   created() {
     console.log(this.$route.params.id);
     //请求评论内容
-    getCommentList(this.$route.params.id).then(response => {
-      const { data } = response;
-      console.log(data);
-    });
+    // getCommentList(this.$route.params.id).then(response => {
+    //   console.log("下面一行打印评论");
+    //   const { data } = response;
+    //   this.commentList = data;
+    //   console.log(data);
+    // });
   },
   computed: {
     ...mapGetters(["token", "user"])
@@ -127,7 +133,15 @@ export default {
         this.renderMarkdown(data.postContents);
         this.flag = true;
       });
+      // getCommentList(this.$route.params.id).then(response => {
+      //   console.log("下面一行打印评论");
+      //   const { data } = response;
+      //   this.commentData = data;
+      //   console.log(data);
+      //   console.log(this.commentData);
+      // });
     },
+
     handleDelete(id) {
       deleteTopic(id).then(value => {
         const { code, message } = value;

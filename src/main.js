@@ -16,6 +16,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import Antd from 'ant-design-vue';
 import { DatePicker } from 'ant-design-vue';
 import 'ant-design-vue/dist/antd.css';
+
 Vue.use(DatePicker);
 Vue.use(BootstrapVue)
 Vue.use(Antd);

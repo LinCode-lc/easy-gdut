@@ -17,3 +17,27 @@ export function post(topic) {
         }
     })
 }
+//发布评论
+export function postComment(commentContents, postId, replyId, replyReplyId, userId) {
+    return request({
+        url: '/comment/save',
+        method: 'post',
+        // params: {
+        //     commentContents,
+        //     postId,
+        //     replyId,
+        //     replyReplyId,
+        //     userId
+
+        // }
+        data: {
+            commentContents,
+            postId,
+            replyId,
+            replyReplyId,
+            userId
+
+        }
+
+    })
+}
