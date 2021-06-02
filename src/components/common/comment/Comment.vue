@@ -69,6 +69,17 @@
             </div>
             <div class="date">
               {{ item.creatTime }}
+              <div class="supportOrNonsupport">
+                <span
+                  class="support"
+                  @click="supportComment(item.commentId, 0, item.userId)"
+                >
+                  <span class="icon iconfont">&#xe605;</span> {{ 5 }}</span
+                >
+                <span class="nonsupport"
+                  ><span class="icon iconfont">&#xe612;</span> {{ 6 }}</span
+                >
+              </div>
             </div>
           </div>
         </div>
@@ -290,6 +301,9 @@ export default {
     label: {
       type: String,
       default: "作"
+    },
+    userId: {
+      type: String
     },
     // commentList: {
     //   type: Array,
@@ -694,6 +708,7 @@ export default {
         const { data } = response;
         this.commentList = data;
         console.log(data);
+        console.log("====================================");
         console.log(this.commentList);
       });
     },
@@ -841,6 +856,11 @@ export default {
 };
 </script>
 <style type="text/css" scoped>
+.supportOrNonsupport {
+  display: inline;
+  margin-left: 3.125rem /* 50/16 */;
+  font-size: 1.4rem /* 16/16 */;
+}
 .comment {
   display: inline-block;
   vertical-align: top;
@@ -853,7 +873,7 @@ export default {
   /*width: 560px;*/
 }
 .publish {
-  margin-top: 10px;
+  margin-top: 0.625rem /* 10/16 */;
   display: inline-block;
   vertical-align: top;
 }
@@ -861,23 +881,23 @@ export default {
   float: right;
 }
 .btn {
-  width: 70px; /* 宽度 */
-  margin-top: 3px;
-  height: 30px; /* 高度 */
+  width: 4.375rem /* 70/16 */; /* 宽度 */
+  margin-top: 0.1875rem /* 3/16 */;
+  height: 1.875rem /* 30/16 */; /* 高度 */
   border-width: 0px; /* 边框宽度 */
-  border-radius: 3px; /* 边框半径 */
+  border-radius: 0.1875rem /* 3/16 */; /* 边框半径 */
   background: #3cb371; /* 背景颜色 */
   cursor: pointer; /* 鼠标移入按钮范围时出现手势 */
   outline: none; /* 不显示轮廓线 */
   font-family: Microsoft YaHei; /* 设置字体 */
   color: white; /* 字体颜色 */
-  font-size: 13px; /* 字体大小 */
+  font-size: 0.8125rem /* 13/16 */; /* 字体大小 */
   text-align: center;
-  line-height: 30px;
-  border-radius: 5px;
+  line-height: 1.875rem /* 30/16 */;
+  border-radius: 0.3125rem /* 5/16 */;
   display: inline-block;
-  margin-left: 5px;
-  margin-right: 5px;
+  margin-left: 0.3125rem /* 5/16 */;
+  margin-right: 0.3125rem /* 5/16 */;
 }
 .btn-cancel {
   background: grey; /* 背景颜色 */
@@ -886,14 +906,14 @@ export default {
 .tmsgBox {
   position: relative;
   background: #fff;
-  padding: 15px;
-  margin-bottom: 20px;
-  border-radius: 5px;
+  padding: 0.9375rem /* 15/16 */;
+  margin-bottom: 1.25rem /* 20/16 */;
+  border-radius: 0.3125rem /* 5/16 */;
 }
 .tmsg-respond h3 {
-  font-size: 18px;
+  font-size: 1.125rem /* 18/16 */;
   font-weight: bold;
-  margin-bottom: 8px;
+  margin-bottom: 0.5rem /* 8/16 */;
 }
 .tmsg-respond h3 small {
   font-size: smaller;
@@ -901,8 +921,8 @@ export default {
 }
 .tmsg-respond textarea {
   background: #f4f6f7;
-  height: 100px;
-  margin-bottom: 10px;
+  height: 6.25rem /* 100/16 */;
+  margin-bottom: 0.625rem /* 10/16 */;
 }
 
 .OwO {
@@ -911,18 +931,18 @@ export default {
 }
 .OwO .OwO-logo {
   position: relative;
-  border-radius: 4px;
+  border-radius: 0.25rem /* 4/16 */;
   color: #444;
   display: inline-block;
   background: #fff;
   border: 1px solid #ddd;
-  font-size: 13px;
-  padding: 0 6px;
+  font-size: 0.8125rem /* 13/16 */;
+  padding: 0 0.375rem /* 6/16 */;
   cursor: pointer;
-  height: 30px;
+  height: 1.875rem /* 30/16 */;
   box-sizing: border-box;
   z-index: 2;
-  line-height: 30px;
+  line-height: 1.875rem /* 30/16 */;
 }
 .OwO .OwO-logo:hover {
   animation: a 5s infinite ease-in-out;
@@ -933,15 +953,15 @@ export default {
   background: #fff;
   border: 1px solid #ddd;
   z-index: 1;
-  top: 29px;
-  border-radius: 0 4px 4px 4px;
+  top: 1.8125rem /* 29/16 */;
+  border-radius: 0 0.25rem /* 4/16 */ 0.25rem /* 4/16 */ 0.25rem /* 4/16 */;
   display: none;
 }
 .OwO-open .OwO-body {
   display: block;
 }
 .OwO-open .OwO-logo {
-  border-radius: 4px 4px 0 0;
+  border-radius: 0.25rem /* 4/16 */ 0.25rem /* 4/16 */ 0 0;
   border-bottom: none;
 }
 .OwO-open .OwO-logo:hover {
@@ -949,33 +969,34 @@ export default {
   -webkit-animation: none;
 }
 .OwO .OwO-items {
-  max-height: 197px;
+  max-height: 12.3125rem /* 197/16 */;
   overflow: scroll;
   font-size: 0;
-  padding: 10px;
+  padding: 0.625rem /* 10/16 */;
   z-index: 1;
 }
 .OwO .OwO-items .OwO-item {
   background: #f7f7f7;
-  padding: 5px 10px;
-  border-radius: 5px;
+  padding: 0.3125rem /* 5/16 */ 0.625rem /* 10/16 */;
+  border-radius: 0.3125rem /* 5/16 */;
   display: inline-block;
-  margin: 0 10px 12px 0;
+  margin: 0 0.625rem /* 10/16 */ 0.75rem /* 12/16 */ 0;
   transition: 0.3s;
-  line-height: 19px;
-  font-size: 20px;
+  line-height: 1.1875rem /* 19/16 */;
+  font-size: 1.25rem /* 20/16 */;
   cursor: pointer;
 }
 .OwO .OwO-items .OwO-item:hover {
   background: #eee;
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2),
+  box-shadow: 0 0.125rem /* 2/16 */ 0.125rem /* 2/16 */ 0 rgba(0, 0, 0, 0.14),
+    0 0.1875rem /* 3/16 */ 1px -2px rgba(0, 0, 0, 0.2),
     0 1px 5px 0 rgba(0, 0, 0, 0.12);
   animation: a 5s infinite ease-in-out;
   -webkit-animation: a 5s infinite ease-in-out;
 }
 .OwO .OwO-body .OwO-bar {
   width: 100%;
-  height: 30px;
+  height: 1.875rem /* 30/16 */;
   border-top: 1px solid #ddd;
   background: #fff;
   border-radius: 0 0 4px 4px;
@@ -983,9 +1004,9 @@ export default {
 }
 .OwO .OwO-body .OwO-bar .OwO-packages li {
   display: inline-block;
-  line-height: 30px;
-  font-size: 14px;
-  padding: 0 10px;
+  line-height: 1.875rem /* 30/16 */;
+  font-size: 0.875rem /* 14/16 */;
+  padding: 0 0.625rem /* 10/16 */;
   cursor: pointer;
   margin-right: 3px;
   text-align: center;
@@ -1589,5 +1610,13 @@ export default {
 }
 .btn[data-v-fbaf820a] {
   height: 40px;
+}
+.iconfont {
+  background: none;
+  color: none;
+  font-size: 1.5rem /* 16/16 */;
+}
+.support {
+  margin-right: 0.3125rem /* 5/16 */;
 }
 </style>

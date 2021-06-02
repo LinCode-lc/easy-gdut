@@ -157,30 +157,33 @@ export default {
 
 <style scoped>
 .bgc {
-  height: 900px;
-  width: 2000px;
-  background-color: rgb(244, 245, 245);
+  height: 56.25rem /* 900/16 */;
+  width: 125rem /* 2000/16 */;
+  /* background-color: rgb(244, 245, 245); */
+  background-color: rgb(241, 246, 250);
+  margin-left: 2rem /* 30/16 */;
 }
-body {
-  background-color: rgb(244, 245, 245);
-}
+
+/* body {
+  background-color: red;
+} */
 .top-bgc {
-  height: 150px;
-  background-color: rgb(34, 46, 60);
+  height: 9.375rem /* 150/16 */;
+  background-color: rgb(241, 246, 250);
 }
 .user-profile {
-  height: 285px;
+  height: 17.8125rem /* 285/16 */;
 
   position: relative;
-  background-color: #fff;
+  background-color: rgb(244, 245, 245);
 }
 .user-profile-avatar {
   position: absolute;
-  height: 104px;
-  width: 104px;
+  height: 6.5rem /* 104/16 */;
+  width: 6.5rem /* 104/16 */;
   background-color: rosybrown;
   left: 50%;
-  top: -36px;
+  top: -2.25rem /* 36/16 */;
   transform: translateX(-50%);
   box-shadow: 0 0 10px 2px rgb(0 0 0 / 6%);
   border: 4px solid #fff;
@@ -198,16 +201,16 @@ body {
 .user-profile-header-info-m {
   /* margin-top: 120px; */
   position: absolute;
-  top: 80px;
+  top: 5rem /* 80/16 */;
   left: 50%;
   transform: translateX(-50%);
   text-align: center;
 }
 .user-profile-head-name {
   color: #222226;
-  font-size: 22px;
+  font-size: 1.375rem /* 22/16 */;
   font-weight: 500;
-  line-height: 24px;
+  line-height: 1.5rem /* 24/16 */;
   /* display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -220,7 +223,7 @@ body {
 }
 .user-profile-header-info-b {
   position: absolute;
-  top: 100px;
+  top: 6.25rem /* 100/16 */;
   left: 50%;
   transform: translateX(-50%);
   text-align: center;
@@ -231,39 +234,39 @@ body {
 .user-profile-header-info-b ul li {
   list-style: none;
   float: left;
-  height: 100px;
-  width: 100px;
+  height: 6.25rem /* 100/16 */;
+  width: 6.25rem /* 100/16 */;
   margin: 5px 10px;
   /* background-color: rosybrown; */
   /* flex: 1; */
 }
 .user-profile-statistics-num {
-  height: 50px;
-  line-height: 50px;
+  height: 3.125rem /* 50/16 */;
+  line-height: 3.125rem /* 50/16 */;
   color: #222226;
   font-family: DINCond-Black;
-  font-size: 20px;
+  font-size: 1.25rem /* 20/16 */;
   font-weight: 500;
 }
 .user-profile-statistics-name {
   color: #999aaa;
-  font-size: 14px;
-  height: 50px;
-  line-height: 50px;
+  font-size: 0.875rem /* 14/16 */;
+  height: 3.125rem /* 50/16 */;
+  line-height: 3.125rem /* 50/16 */;
 }
 .user-profile-body-inner {
-  margin: 15px 30px 0px 30px;
+  margin: 0.9375rem /* 15/16 */ 1.875rem /* 30/16 */ 0px 30px;
 }
 .user-profile-body-left {
   float: left;
-  width: 300px;
+  width: 18.75rem /* 300/16 */;
 }
 .user-general-info {
   color: #555666;
-  padding-left: 16px;
-  line-height: 50px;
-  background-color: #fff;
-  height: 50px;
+  padding-left: 1rem /* 16/16 */;
+  line-height: 3.125rem /* 50/16 */;
+  background-color: rgb(244, 245, 245);
+  height: 3.125rem /* 50/16 */;
 }
 .user-general-info ul {
   margin: 0;
@@ -273,48 +276,48 @@ body {
   list-style: none;
 }
 .aside-common-box-head {
-  margin-top: 10px;
-  font-size: 16px;
+  margin-top: 0.625rem /* 10/16 */;
+  font-size: 1rem /* 16/16 */;
   color: #222226;
   font-weight: 500;
-  line-height: 48px;
-  padding-left: 16px;
+  line-height: 3rem /* 48/16 */;
+  padding-left: 1rem /* 16/16 */;
   border-bottom: 1px solid #e8e8ed;
-  height: 48px;
-  background-color: #fff;
+  height: 3rem /* 48/16 */;
+  background-color: rgb(244, 245, 245);
 }
 .aside-common-box-content {
-  height: 120px;
-  background-color: #fff;
+  height: 7.5rem /* 120/16 */;
+  background-color: rgb(244, 245, 245);
 }
 .aside-common-box-content ul {
   margin: 0px;
   padding: 0px;
-  font-size: 14px;
+  font-size: 0.875rem /* 14/16 */;
   color: #212529;
   font-weight: 400;
   list-style: none;
-  padding-left: 16px;
+  padding-left: 1rem /* 16/16 */;
 }
 .aside-common-box-content ul li {
-  height: 40px;
-  line-height: 40px;
+  height: 2.5rem /* 40/16 */;
+  line-height: 2.5rem /* 40/16 */;
 }
 .user-profile-body-right {
   float: left;
-  margin-left: 30px;
-  width: 1080px;
+  margin-left: 1.875rem /* 30/16 */;
+  width: 67.5rem /* 1080/16 */;
 }
 .navList {
-  background-color: #fff;
-  height: 50px;
+  background-color: rgb(244, 245, 245);
+  height: 3.125rem /* 50/16 */;
 }
 .navList ul {
   /* background-color: #fff; */
   margin: 0;
   padding: 0;
-  padding-left: 20px;
-  line-height: 50px;
+  padding-left: 1.25rem /* 20/16 */;
+  line-height: 3.125rem /* 50/16 */;
   display: flex;
   width: 80%;
   /* height: 36px; */

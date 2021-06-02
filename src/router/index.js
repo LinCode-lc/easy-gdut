@@ -103,6 +103,12 @@ const routes = [
         meta: { title: "信息发布" },
       },
       {
+        name: "post-createtopic",
+        path: "/post/createtopic",
+        component: () => import("@/views/post/CreateTopic"),
+        meta: { title: "信息发布" },
+      },
+      {
         path: '/forget',
         name: 'Forget',
         component: () => import('@/views/auth/Forget'),

@@ -2,64 +2,77 @@
   <div class="columns">
     <!--文章详情-->
 
-    <div class="column is-three-quarters">
+    <div class="column is-three-quarters middle">
       <!--主题-->
-      <el-card class="box-card" shadow="never">
-        <div slot="header" class="has-text-centered">
-          <p class="is-size-5 has-text-weight-bold">{{ topic.title }}</p>
-          <div class="has-text-grey is-size-7 mt-3">
-            <span>{{
-              dayjs(topic.createTime).format("YYYY/MM/DD HH:mm:ss")
-            }}</span>
-            <el-divider direction="vertical" />
-            <span>发布者：{{ topicUser.alias }}</span>
-            <el-divider direction="vertical" />
-            <span>查看：{{ topic.view }}</span>
+      <div ref="getHeight">
+        <el-card class="box-card" shadow="never">
+          <div slot="header" class="has-text-centered">
+            <h1 class="is-size-8 has-text-weight-bold">{{ postTitle }}</h1>
+            <div class="has-text-grey is-size-7 mt-3">
+              <span>{{
+                dayjs(topic.createTime).format("YYYY/MM/DD HH:mm:ss")
+              }}</span>
+              <el-divider direction="vertical" />
+              <span>发布者：{{ topicUser.alias }}</span>
+              <el-divider direction="vertical" />
+              <span>查看：{{ parseCount }}</span>
+            </div>
           </div>
-        </div>
 
-        <!--Markdown-->
-        <div id="preview" />
+          <!--Markdown-->
+          <div id="preview" />
 
-        <!--标签-->
-        <nav class="level has-text-grey is-size-7 mt-6">
-          <div class="level-left">
-            <p class="level-item">
-              <b-taglist>
-                <router-link
-                  v-for="(tag, index) in tags"
-                  :key="index"
-                  :to="{ name: 'tag', params: { name: tag.name } }"
-                >
-                  <b-tag type="is-info is-light mr-1">
-                    {{ "#" + tag.name }}
-                  </b-tag>
-                </router-link>
-              </b-taglist>
-            </p>
-          </div>
-          <div v-if="token && user.id === topicUser.id" class="level-right">
-            <router-link
-              class="level-item"
-              :to="{ name: 'topic-edit', params: { id: topic.id } }"
-            >
-              <span class="tag">编辑</span>
-            </router-link>
-            <a class="level-item">
-              <span class="tag" @click="handleDelete(topic.id)">删除</span>
-            </a>
-          </div>
-        </nav>
-      </el-card>
+          <!--标签-->
+          <nav class="level has-text-grey is-size-7 mt-6">
+            <div class="level-left">
+              <p class="level-item">
+                <b-taglist>
+                  <router-link
+                    v-for="(tag, index) in tags"
+                    :key="index"
+                    :to="{ name: 'tag', params: { name: tag.name } }"
+                  >
+                    <b-tag type="is-info is-light mr-1">
+                      {{ "#" + tag.name }}
+                    </b-tag>
+                  </router-link>
+                </b-taglist>
+              </p>
+            </div>
+            <div v-if="token && user.id === topicUser.id" class="level-right">
+              <router-link
+                class="level-item"
+                :to="{ name: 'topic-edit', params: { id: topic.id } }"
+              >
+                <span class="tag">编辑</span>
+              </router-link>
+              <a class="level-item">
+                <span class="tag" @click="handleDelete(topic.id)">删除</span>
+              </a>
+            </div>
+          </nav>
+        </el-card>
+      </div>
 
       <!-- <lv-comments :slug="topic.id" />  -->
       <!-- <Comment :commentList="commentData"></Comment> -->
-      <Comment :postId="topicId"></Comment>
+      <Comment
+        :postId="topicId"
+        :userId="this.$store.state.user.user.userId"
+      ></Comment>
     </div>
 
     <div class="column">
       <!--作者-->
       <Author v-if="flag" :user="topicUser" />
+      <div ref="commend">
+        <CommendBar
+          @clickItem="doClick"
+          :isCollection="isCollection"
+          :isSupport="isSupport"
+        ></CommendBar>
+      </div>
+
       <!--推荐-->
       <!-- <CommendBar :commentList="commentData" /> -->
     </div>
@@ -67,7 +80,14 @@
 </template>
 
 <script>
-import { getTopic, getCommentList } from "@/network/detail.js";
+import {
+  getTopic,
+  getCommentList,
+  saveCollection,
+  removeCollection,
+  saveSupport,
+  removeSupport
+} from "@/network/detail.js";
 import Vditor from "vditor";
 import { mapGetters } from "vuex";
 import Author from "@/components/content/Author";
@@ -92,7 +112,11 @@ export default {
       topicId: this.$route.params.id,
       tags: [],
       topicUser: {},
-      commentData: []
+      commentData: [],
+      parseCount: 0,
+      postTitle: "",
+      isCollection: false,
+      isSupport: false
     };
   },
   created() {
@@ -122,10 +146,12 @@ export default {
       getTopic(this.$route.params.id).then(response => {
         const { data } = response;
         console.log(data);
-        console.log(data.postContents);
-        console.log(data.user);
+        // console.log(data.postContents);
+        // console.log(data.user);
         document.title = data.topicTitle;
-
+        this.parseCount = data.parseCount;
+        console.log(this.parseCount);
+        this.postTitle = data.postTitle;
         this.topic = data;
         this.tags = data.tags;
         this.topicUser = data.user;
@@ -153,6 +179,48 @@ export default {
           }, 500);
         }
       });
+    },
+    //处理右侧边栏图标的点击事件
+    doClick(index) {
+      // console.log(this.$refs.getHeight.offsetHeight);
+      // console.log(index);
+      // console.log(this.$refs.commend);
+      // console.log(this.$refs.commend.offsetTop);
+      let postId = this.topicId;
+      let userId = this.$store.state.user.user.userId;
+      if (index === 1) {
+        window.scrollTo({
+          top: this.$refs.getHeight.offsetHeight,
+
+          behavior: "smooth"
+        });
+      }
+      if (index === 2) {
+        this.isCollection = !this.isCollection;
+        if (this.isCollection) {
+          saveCollection(postId, userId).then(response => {});
+        } else {
+          removeCollection(postId, userId).then(response => {});
+        }
+      }
+      if (index === 3) {
+        this.isSupport = !this.isSupport;
+        if (this.isSupport) {
+          saveSupport(
+            postId,
+            1,
+            this.topicUser.userId,
+            userId
+          ).then(response => {});
+        } else {
+          removeSupport(
+            postId,
+            1,
+            this.topicUser.userId,
+            userId
+          ).then(response => {});
+        }
+      }
     }
   }
 };
@@ -163,6 +231,9 @@ export default {
   height: 500px;
 } */
 .columns {
-  margin-top: 50px;
+  margin-top: 10px;
+}
+.middle {
+  padding: 30px;
 }
 </style>

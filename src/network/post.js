@@ -3,7 +3,7 @@ import request from './request'
 // 发布
 export function post(topic) {
     return request({
-        url: '/post/release',
+        url: '/post/markdown/release',
         method: 'post',
         // params: {
         //     userId: topic.userId,

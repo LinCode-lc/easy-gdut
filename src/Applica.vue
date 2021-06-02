@@ -1,10 +1,10 @@
 <template>
   <div id="applica">
-    <el-col class="side" :span="3">
+    <div class="side">
       <SideBar2></SideBar2>
-    </el-col>
+    </div>
 
-    <el-col style="margin-left:300px" :span="20">
+    <el-col class="margin-l" :span="20">
       <!-- <Search class="searchbar"></Search> -->
       <router-view class="view" :span="24"></router-view>
     </el-col>
@@ -35,10 +35,17 @@ export default {
 <style>
 .side {
   position: fixed;
-  left: 30px;
-  top: 90px;
+  left: 1.125rem /* 18/16 */;
+  top: 0px;
+  margin-left: 1.875rem /* 30/16 */;
+  padding-top: 0px;
+  width: 15.6875rem /* 251/16 */;
+  background-color: rgb(241, 246, 250);
+  height: 100%;
 }
-
+.margin-l {
+  margin-left: 18.75rem /* 300/16 */;
+}
 /* #app {
   display: flex;
   flex-direction: column;

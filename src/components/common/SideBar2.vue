@@ -99,18 +99,16 @@
             <i class="el-icon-notebook-2" style="font-size:200%;"></i>
             <span class="item">学习资料</span>
           </template>
-          <el-menu-item-group>
-            <el-menu-item index="/study/upload">
-              <i class="el-icon-sort" style="font-size:200%;"></i>
-              <span slot="title" class="item">上传资料</span>
-            </el-menu-item>
-          </el-menu-item-group>
-          <el-menu-item-group>
-            <el-menu-item index="/study/catagory">
-              <i class="el-icon-document" style="font-size:200%;"></i>
-              <span slot="title" class="item">资料目录</span>
-            </el-menu-item>
-          </el-menu-item-group>
+
+          <el-menu-item index="/study/catagory">
+            <i class="el-icon-document" style="font-size:200%;"></i>
+            <span slot="title" class="item">资料目录</span>
+          </el-menu-item>
+
+          <el-menu-item index="/study/upload">
+            <i class="el-icon-sort" style="font-size:200%;"></i>
+            <span slot="title" class="item">上传资料</span>
+          </el-menu-item>
         </el-submenu>
         <el-menu-item index="/deliver">
           <i class="el-icon-bicycle" style="font-size:200%;"></i>
@@ -182,50 +180,102 @@ export default {
 
 <style scoped>
 .el-menu-vertical-demo:not(.el-menu--collapse) {
-  width: 250px;
-  min-height: 650px;
-  /* background-color: #f6f6f6; */
+  width: 342%;
+  min-height: 31.25rem /* 500/16 */;
+  background: linear-gradient(
+    to right,
+    rgb(216, 214, 217),
+    rgba(224, 228, 230, 0.5)
+  );
+  /* background-color: rgb(241, 246, 100) !important; */
+}
+.el-menu-vertical-demo {
+  background: linear-gradient(
+    to right,
+    rgb(216, 214, 217),
+    rgba(224, 228, 230, 0.5)
+  );
+  /* background-color: rgb(220, 221, 220) !important; */
+  height: 62.5rem /* 1000/16 */;
+}
+
+.side-background {
+  background: linear-gradient(
+    to right,
+    rgb(216, 214, 217),
+    rgba(224, 228, 230, 0.5)
+  );
 }
 .collapsse {
   position: fixed;
   left: 0;
-  bottom: 50px;
+  bottom: 3.125rem /* 50/16 */;
 }
 .item {
-  margin-left: 8px;
-  font-size: 16px;
+  margin-left: 0.5rem /* 8/16 */;
+  font-size: 1rem /* 16/16 */;
 }
 #side-bar {
   /* background-color: #f6f6f6; */
 }
+.el-menu--collapse {
+  width: 5.5rem /* 88/16 */;
+  text-align: center;
+}
+.el-menu-item {
+  height: 3.875rem /* 62/16 */;
+  background: linear-gradient(
+    to right,
+    rgb(216, 214, 217),
+    rgba(224, 228, 230, 0.5)
+  );
+}
+.el-menu-item.is-active {
+  color: #333;
+  font-weight: 600;
+}
 
 .openbutton {
-  margin-left: 25px;
+  margin-left: 3.3125rem /* 53/16 */;
   border: none;
-  font-size: 25px;
+  font-size: 1.5625rem /* 25/16 */;
+  background: linear-gradient(
+    to right,
+    rgb(216, 214, 217),
+    rgba(224, 228, 230, 0.5)
+  );
+  color: black;
 }
 .user-profile {
   position: relative;
-  width: 250px;
-  height: 180px;
-  /* background-color: burlywood; */
-  border-right: 1px solid rgb(230, 230, 230);
+  width: 15.75rem /* 252/16 */;
+  height: 11.25rem /* 180/16 */;
+  background: linear-gradient(
+    to right,
+    rgb(216, 214, 217),
+    rgba(224, 228, 230, 0.5)
+  );
+  padding-top: 1.25rem /* 20/16 */;
 }
 .user-profile-collapse {
   position: relative;
-  width: 50px;
-  height: 30px;
-  bottom: 35px;
-  left: 10px;
-  /* background-color: burlywood; */
+  width: 5.5rem /* 88/16 */;
+  height: 5rem /* 80/16 */;
+  padding-top: 1.25rem /* 20/16 */;
+  background: linear-gradient(
+    to right,
+    rgb(216, 214, 217),
+    rgba(224, 228, 230, 0.5)
+  );
+
   border-right: 1px solid rgb(230, 230, 230);
 }
 .user-avatar {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  width: 60px;
-  height: 60px;
+  width: 3.75rem /* 60/16 */;
+  height: 3.75rem /* 60/16 */;
   border-radius: 50%;
 }
 .user-avatar img {
@@ -239,41 +289,42 @@ export default {
   left: 50%;
   color: #222226;
   transform: translateX(-50%);
-  font-size: 20px;
+  font-size: 1.25rem /* 20/16 */;
   font-weight: 500;
-  margin-top: 65px;
+  margin-top: 4.0625rem; /* 65/16 */
 }
 .user-profile-header-info {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  top: 100px;
+  top: 6.25rem /* 100/16 */;
   text-align: center;
+  margin-top: 0.75rem; /* 12/16 */
 }
 .user-profile-header-info2 {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  top: 80px;
+  top: 5rem /* 80/16 */;
   text-align: center;
 }
 .user-profile-header-info2 ul {
   margin: 0px;
   padding: 0px;
   display: flex;
-  height: 36px;
+  height: 2.25rem; /* 36/16 */
 }
 
 .user-profile-header-info2 ul li {
   list-style: none;
   color: #222226;
-  margin-left: 10px;
-  padding: 3px;
+  margin-left: 0.625rem /* 10/16 */;
+  padding: 0.1875rem /* 3/16 */;
   flex: 1;
-  font-size: 21px;
+  font-size: 1.3125rem /* 21/16 */;
   font-weight: 500;
-  height: 36px;
-  line-height: 36px;
+  height: 2.25rem /* 36/16 */;
+  line-height: 2.25rem; /* 36/16 */
   /* border: 1px solid rgb(230, 230, 230); */
 }
 .user-profile-header-info ul {
@@ -283,8 +334,14 @@ export default {
 .user-profile-header-info ul li {
   list-style: none;
   float: left;
-  height: 50px;
-  width: 50px;
-  margin: 5px 10px;
+  height: 3.125rem /* 50/16 */;
+  width: 3.125rem /* 50/16 */;
+  margin: 0.3125rem /* 5/16 */ 0.625rem /* 10/16 */;
+}
+.el-submenu .el-menu-item {
+  min-width: 8.8125rem /* 141/16 */;
+}
+element.style {
+  padding-left: 1.6875rem /* 27/16 */;
 }
 </style>

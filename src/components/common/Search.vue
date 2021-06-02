@@ -41,7 +41,14 @@
             tag="router-link"
             :to="{ path: '/post/create' }"
             outlined
-            >✍ 发表想法</b-navbar-item
+            >✍ Markdown发表</b-navbar-item
+          >
+          <b-navbar-item
+            type="is-danger"
+            tag="router-link"
+            :to="{ path: '/post/createtopic' }"
+            outlined
+            >✍ 普通发表</b-navbar-item
           >
         </b-navbar-dropdown>
       </b-navbar-item>
@@ -129,14 +136,14 @@ input {
   width: 80%;
   height: 86%;
 }
-.searchout {
+/* .searchout {
   position: fixed;
-}
-.searchItem {
+} */
+/* .searchItem {
   position: absolute;
   left: 13px;
   top: 60px;
-}
+} */
 .s_input {
   margin-right: 10px;
 }

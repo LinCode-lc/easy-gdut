@@ -124,10 +124,10 @@ export default {
 <style scoped>
 .user-button button {
   background-color: #fff;
-  border-radius: 4px;
-  font-size: 10px;
-  padding: 3px 3px;
-  margin: 0 3px;
+  border-radius: 0.25rem /* 4/16 */;
+  font-size: 0.625rem /* 10/16 */;
+  padding: 0.1875rem /* 3/16 */ 0.1875rem /* 3/16 */;
+  margin: 0 0.1875rem /* 3/16 */;
   border: none;
   outline: none;
 }
@@ -136,13 +136,13 @@ export default {
   border: 1px solid #fff;
 }
 .has-text-centered {
-  margin-top: 10px;
+  margin-top: 0.625rem /* 10/16 */;
 }
 .spanText {
-  font-size: 14px;
+  font-size: 0.875rem /* 14/16 */;
 }
 .span-num {
-  font-size: 16px;
-  margin-top: 10px;
+  font-size: 1rem /* 16/16 */;
+  margin-top: 0.625rem /* 10/16 */;
 }
 </style>

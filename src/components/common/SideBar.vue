@@ -5,7 +5,7 @@
         <el-menu
           router
           :default-active="$route.path"
-          class="el-menu-vertical-demo"
+          class="el-menu-vertical-demo side-background"
           @open="handleOpen"
           @close="handleClose"
         >
@@ -62,8 +62,15 @@ export default {
 </script>
 
 <style scoped>
+/* #side-bar {
+  background-color: rgb(221, 220, 221);
+} */
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 100%;
   min-height: 400px;
+  background-color: rgb(220, 221, 220) !important;
+}
+.side-background {
+  background-color: rgb(220, 221, 220) !important;
 }
 </style>

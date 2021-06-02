@@ -25,12 +25,12 @@ export default {
 
 <style type="text/css" scoped>
 .user {
-  height: 50px;
-  width: 50px;
+  height: 3.125rem /* 50/16 */;
+  width: 3.125rem /* 50/16 */;
 }
 .user-img img {
-  height: 45px;
-  width: 45px;
+  height: 2.8125rem /* 45/16 */;
+  width: 2.8125rem /* 45/16 */;
   border-radius: 50%;
 }
 </style>

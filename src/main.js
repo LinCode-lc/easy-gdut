@@ -17,6 +17,8 @@ import Antd from 'ant-design-vue';
 import { DatePicker } from 'ant-design-vue';
 import 'ant-design-vue/dist/antd.css';
 
+import 'lib-flexible'
+import '@/assets/css/icon/iconfont.css'
 Vue.use(DatePicker);
 Vue.use(BootstrapVue)
 Vue.use(Antd);
