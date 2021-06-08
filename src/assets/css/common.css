@@ -15,3 +15,9 @@
       sans-serif, Apple Color Emoji, Segoe UI Emoji, Noto Color Emoji,
       Segoe UI Symbol, Android Emoji, EmojiSymbols;
   }
+:root {
+  /* --createColor: "#dcdfe6", */
+  --createColor: rgb(227,234,237,0.3);
+  --createBorder: 2px solid rgb(167, 159, 159);
+  --themeColor:rgb(241, 246, 250);
+}

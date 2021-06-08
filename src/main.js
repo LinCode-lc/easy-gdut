@@ -31,7 +31,10 @@ dayjs.extend(relativeTime)
 
 dayjs.locale('zh-cn') // use locale globally
 dayjs().locale('zh-cn').format() // use locale in a specific instance
-
+// 图片模块
+import preview from 'vue-photo-preview'
+import 'vue-photo-preview/dist/skin.css'
+Vue.use(preview)
 Vue.prototype.dayjs = dayjs;//可以全局使用dayjs
 Vue.use(ElementUI);
 Vue.use(Buefy)

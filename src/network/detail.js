@@ -45,6 +45,17 @@ export function removeCollection(postId, userId) {
     }
   })
 }
+//是否已经点过赞
+export function hasSupport(targetid, userid) {
+  return request({
+    url: `parse-item/isexist`,
+    method: 'get',
+    params: {
+      targetid,
+      userid,
+    }
+  })
+}
 //点赞
 export function saveSupport(targetId, targetType, targetUserId, userId) {
   return request({

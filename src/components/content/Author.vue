@@ -91,32 +91,32 @@ export default {
   methods: {
     fetchInfo() {
       if (this.token != null && this.token !== "") {
-        hasFollow(this.user.id).then(value => {
-          const { data } = value;
-          this.hasFollow = data.hasFollow;
-        });
+        // hasFollow(this.user.id).then(value => {
+        //   const { data } = value;
+        //   this.hasFollow = data.hasFollow;
+        // });
       }
-    },
-    handleFollow: function(id) {
-      if (this.token != null && this.token !== "") {
-        follow(id).then(response => {
-          const { message } = response;
-          this.$message.success(message);
-          this.hasFollow = !this.hasFollow;
-          this.user.followerCount = parseInt(this.user.followerCount) + 1;
-        });
-      } else {
-        this.$message.success("请先登录");
-      }
-    },
-    handleUnFollow: function(id) {
-      unFollow(id).then(response => {
-        const { message } = response;
-        this.$message.success(message);
-        this.hasFollow = !this.hasFollow;
-        this.user.followerCount = parseInt(this.user.followerCount) - 1;
-      });
     }
+    // handleFollow: function(id) {
+    //   if (this.token != null && this.token !== "") {
+    //     follow(id).then(response => {
+    //       const { message } = response;
+    //       this.$message.success(message);
+    //       this.hasFollow = !this.hasFollow;
+    //       this.user.followerCount = parseInt(this.user.followerCount) + 1;
+    //     });
+    //   } else {
+    //     this.$message.success("请先登录");
+    //   }
+    // },
+    // handleUnFollow: function(id) {
+    //   unFollow(id).then(response => {
+    //     const { message } = response;
+    //     this.$message.success(message);
+    //     this.hasFollow = !this.hasFollow;
+    //     this.user.followerCount = parseInt(this.user.followerCount) - 1;
+    //   });
+    // }
   }
 };
 </script>

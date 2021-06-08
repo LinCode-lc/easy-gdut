@@ -1,6 +1,6 @@
 <template>
   <div class="hbl-fa">
-    <div class="hbl-comm">
+    <div class="hbl-comm" v-if="commentIf">
       <div class="comment-avatar" v-if="showAvatar">
         <avatar :avatar="avatar"></avatar>
       </div>
@@ -305,308 +305,18 @@ export default {
     userId: {
       type: String
     },
-    // commentList: {
-    //   type: Array,
-    //   // default: () => []
-    //   default: () => [
-    //     {
-    //       commentId: "comment001",
-    //       postId: "post001",
-    //       replyId: "0",
-    //       replyReplyId: "0",
-    //       userId: "10081",
-    //       commentContents: "这篇文章dsfsdfsdfsdf",
-    //       creatTime: "2021-03-30T00:12:16",
-    //       commentStatus: 0,
-    //       commentImageSrc: "comment/image01",
-    //       replyCount: 99,
-    //       parseCount: 4,
-    //       children: [
-    //         {
-    //           commentId: "comment006",
-    //           postId: "post001",
-    //           replyId: "comment001",
-    //           replyReplyId: "0",
-    //           userId: "10081",
-    //           commentContents: "111",
-    //           creatTime: "2021-03-30T00:34:50",
-    //           commentStatus: 0,
-    //           commentImageSrc: "comment/image01",
-    //           replyCount: 0,
-    //           parseCount: 2,
-    //           children: null,
-    //           username: "小红",
-    //           avater: "image/plate01.jpg",
-    //           replyname: null
-    //         },
-    //         {
-    //           commentId: "comment007",
-    //           postId: "post001",
-    //           replyId: "comment001",
-    //           replyReplyId: "0",
-    //           userId: "10081",
-    //           commentContents: "这篇文章很辣鸡",
-    //           creatTime: "2021-03-30T00:12:16",
-    //           commentStatus: 0,
-    //           commentImageSrc: "comment/image01",
-    //           replyCount: 0,
-    //           parseCount: 2,
-    //           children: null,
-    //           username: "小明",
-    //           avater: "image/plate01.jpg",
-    //           replyname: null
-    //         },
-    //         {
-    //           commentId: "comment008",
-    //           postId: "post001",
-    //           replyId: "comment001",
-    //           replyReplyId: "0",
-    //           userId: "10081",
-    //           commentContents: "这篇文章很辣鸡",
-    //           creatTime: "2021-03-30T00:12:16",
-    //           commentStatus: 0,
-    //           commentImageSrc: "comment/image01",
-    //           replyCount: 0,
-    //           parseCount: 1,
-    //           children: null,
-    //           username: "小明",
-    //           avater: "image/plate01.jpg",
-    //           replyname: null
-    //         },
-    //         {
-    //           commentId: "comment009",
-    //           postId: "post001",
-    //           replyId: "comment001",
-    //           replyReplyId: "comment006",
-    //           userId: "10081",
-    //           commentContents: "这篇文章很辣鸡",
-    //           creatTime: "2021-03-30T00:12:16",
-    //           commentStatus: 0,
-    //           commentImageSrc: "comment/image01",
-    //           replyCount: 0,
-    //           parseCount: 1,
-    //           children: null,
-    //           username: "小明",
-    //           avater: "image/plate01.jpg",
-    //           replyname: "小明"
-    //         },
-    //         {
-    //           commentId: "comment010",
-    //           postId: "post001",
-    //           replyId: "comment001",
-    //           replyReplyId: "comment006",
-    //           userId: "10081",
-    //           commentContents: "这篇文章很辣鸡",
-    //           creatTime: "2021-03-30T00:12:16",
-    //           commentStatus: 0,
-    //           commentImageSrc: "comment/image01",
-    //           replyCount: 0,
-    //           parseCount: 1,
-    //           children: null,
-    //           username: "小明",
-    //           avater: "image/plate01.jpg",
-    //           replyname: "小明"
-    //         }
-    //       ],
-    //       username: "小明",
-    //       avater: "image/plate01.jpg",
-    //       replyname: null
-    //     },
-    //     {
-    //       commentId: "comment002",
-    //       postId: "post001",
-    //       replyId: "0",
-    //       replyReplyId: "0",
-    //       userId: "10082",
-    //       commentContents: "这篇文章很辣鸡",
-    //       creatTime: "2021-03-30T00:12:16",
-    //       commentStatus: 0,
-    //       commentImageSrc: "comment/image01",
-    //       replyCount: 0,
-    //       parseCount: 1,
-    //       children: [],
-    //       username: "小王",
-    //       avater: "image/plate01.jpg",
-    //       replyname: null
-    //     },
-    //     {
-    //       commentId: "comment003",
-    //       postId: "post001",
-    //       replyId: "0",
-    //       replyReplyId: "0",
-    //       userId: "10083",
-    //       commentContents: "这篇文章很辣鸡",
-    //       creatTime: "2021-03-30T00:12:16",
-    //       commentStatus: 0,
-    //       commentImageSrc: "comment/image01",
-    //       replyCount: 0,
-    //       parseCount: 1,
-    //       children: [],
-    //       username: "小刚",
-    //       avater: "image/plate01.jpg",
-    //       replyname: null
-    //     },
-    //     {
-    //       commentId: "comment004",
-    //       postId: "post001",
-    //       replyId: "0",
-    //       replyReplyId: "0",
-    //       userId: "10084",
-    //       commentContents: "这篇文章很辣鸡",
-    //       creatTime: "2021-03-30T00:12:16",
-    //       commentStatus: 0,
-    //       commentImageSrc: "comment/image01",
-    //       replyCount: 0,
-    //       parseCount: 1,
-    //       children: [],
-    //       username: "小李",
-    //       avater: "image/plate01.jpg",
-    //       replyname: null
-    //     },
-    //     {
-    //       commentId: "comment007",
-    //       postId: "post001",
-    //       replyId: "comment001",
-    //       replyReplyId: "0",
-    //       userId: "10081",
-    //       commentContents: "这篇文章很辣鸡",
-    //       creatTime: "2021-03-30T00:12:16",
-    //       commentStatus: 0,
-    //       commentImageSrc: "comment/image01",
-    //       replyCount: 0,
-    //       parseCount: 2,
-    //       children: null,
-    //       username: "小明",
-    //       avater: "image/plate01.jpg",
-    //       replyname: null
-    //     },
-    //     {
-    //       commentId: "comment009",
-    //       postId: "post001",
-    //       replyId: "comment001",
-    //       replyReplyId: "comment006",
-    //       userId: "10081",
-    //       commentContents: "这篇文章很辣鸡",
-    //       creatTime: "2021-03-30T00:12:16",
-    //       commentStatus: 0,
-    //       commentImageSrc: "comment/image01",
-    //       replyCount: 0,
-    //       parseCount: 1,
-    //       children: null,
-    //       username: "小明",
-    //       avater: "image/plate01.jpg",
-    //       replyname: "小明"
-    //     }
-    //   ]
-    //   // default: () => [
-    //   //   {
-    //   //     id: 1,
-    //   //     commentUser: {
-    //   //       id: 1,
-    //   //       nickName: "花非花",
-    //   //       avatar:
-    //   //         "http://qzapp.qlogo.cn/qzapp/101483738/6637A2B6611592A44A7699D14E13F7F7/50"
-    //   //     },
-    //   //     content:
-    //   //       "<a style='text-decoration:none;color: #409eff ' href='https://blog.csdn.net/abcwanglinyong/'>我的CSDN博客地址</a>[害羞][害羞][害羞]<br/>" +
-    //   //       "我的微信公众号：<br/>" +
-    //   //       "<img src=" +
-    //   //       require("./img/hbl.jpg") +
-    //   //       ">",
-    //   //     createDate: "2019-9-23 17:36:02",
-    //   //     childrenList: [
-    //   //       {
-    //   //         id: 2,
-    //   //         commentUser: {
-    //   //           id: 2,
-    //   //           nickName: "坏菠萝",
-    //   //           avatar: ""
-    //   //         },
-    //   //         targetUser: {
-    //   //           id: 1,
-    //   //           nickName: "花非花",
-    //   //           avatar:
-    //   //             "http://qzapp.qlogo.cn/qzapp/101483738/6637A2B6611592A44A7699D14E13F7F7/50"
-    //   //         },
-    //   //         content: "真的就很sha！很Nice!",
-    //   //         createDate: "2019-9-23 17:45:26"
-    //   //       },
-    //   //       {
-    //   //         id: 3,
-    //   //         commentUser: {
-    //   //           id: 3,
-    //   //           nickName: "小草莓",
-    //   //           avatar:
-    //   //             "http://qzapp.qlogo.cn/qzapp/101483738/6637A2B6611592A44A7699D14E13F7F7/50"
-    //   //         },
-    //   //         targetUser: {
-    //   //           id: 2,
-    //   //           nickName: "坏菠萝",
-    //   //           avatar:
-    //   //             "http://qzapp.qlogo.cn/qzapp/101483738/6637A2B6611592A44A7699D14E13F7F7/50"
-    //   //         },
-    //   //         content: "这很菜",
-    //   //         createDate: "2019-9-23 17:45:26"
-    //   //       }
-    //   //     ]
-    //   //   },
-    //   //   {
-    //   //     id: 1,
-    //   //     commentUser: {
-    //   //       id: 1,
-    //   //       nickName: "花非花",
-    //   //       avatar:
-    //   //         "http://qzapp.qlogo.cn/qzapp/101483738/6637A2B6611592A44A7699D14E13F7F7/50"
-    //   //     },
-    //   //     content:
-    //   //       "<a style='text-decoration:none;color: #409eff ' href='https://blog.csdn.net/abcwanglinyong/'>我的CSDN博客地址</a>[害羞][害羞][害羞]<br/>" +
-    //   //       "我的微信公众号：<br/>" +
-    //   //       "<img src=" +
-    //   //       require("./img/hbl.jpg") +
-    //   //       ">",
-    //   //     createDate: "2019-9-23 17:36:02",
-    //   //     childrenList: [
-    //   //       {
-    //   //         id: 2,
-    //   //         commentUser: {
-    //   //           id: 2,
-    //   //           nickName: "坏菠萝",
-    //   //           avatar: ""
-    //   //         },
-    //   //         targetUser: {
-    //   //           id: 1,
-    //   //           nickName: "花非花",
-    //   //           avatar:
-    //   //             "http://qzapp.qlogo.cn/qzapp/101483738/6637A2B6611592A44A7699D14E13F7F7/50"
-    //   //         },
-    //   //         content: "真的就很sha！很Nice!",
-    //   //         createDate: "2019-9-23 17:45:26"
-    //   //       },
-    //   //       {
-    //   //         id: 3,
-    //   //         commentUser: {
-    //   //           id: 3,
-    //   //           nickName: "小草莓",
-    //   //           avatar:
-    //   //             "http://qzapp.qlogo.cn/qzapp/101483738/6637A2B6611592A44A7699D14E13F7F7/50"
-    //   //         },
-    //   //         targetUser: {
-    //   //           id: 2,
-    //   //           nickName: "坏菠萝",
-    //   //           avatar:
-    //   //             "http://qzapp.qlogo.cn/qzapp/101483738/6637A2B6611592A44A7699D14E13F7F7/50"
-    //   //         },
-    //   //         content: "这很菜",
-    //   //         createDate: "2019-9-23 17:45:26"
-    //   //       }
-    //   //     ]
-    //   //   }
 
-    //   // ]
-    // },
     commentWidth: {
       type: String,
       default: "80%"
+    },
+    postId: {
+      type: String,
+      default: ""
+    },
+    commentIf: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -703,7 +413,7 @@ export default {
   methods: {
     // 初始化
     async fetchTopic() {
-      getCommentList(this.$route.params.id).then(response => {
+      getCommentList(this.postId).then(response => {
         console.log("下面一行打印评论");
         const { data } = response;
         this.commentList = data;
@@ -731,11 +441,11 @@ export default {
     },
     doSend() {
       console.log(this.textareaMap[0]);
-      console.log(this.$route.params.id);
+      console.log(this.postId);
       console.log(this.$store.state.user.user.userId);
       postComment(
         this.textareaMap[0],
-        this.$route.params.id,
+        this.postId,
         0,
         0,
         this.$store.state.user.user.userId
@@ -759,7 +469,7 @@ export default {
       console.log(item.replyReplyId);
       postComment(
         this.textareaMap[index],
-        this.$route.params.id,
+        this.postId,
         item.commentId,
         0,
 
@@ -780,7 +490,7 @@ export default {
       console.log(item.replyReplyId);
       postComment(
         this.textareaMap[index],
-        this.$route.params.id,
+        this.postId,
         item.replyId,
         item.commentId,
         this.$store.state.user.user.userId

@@ -1,30 +1,69 @@
 <template>
-  <div class="nine-square">
+  <div class="nine-square" v-if="plateId">
+    <div class="card-h">
+      <div class="profile">
+        <div class="profile-avatar">
+          <div class="avatar">
+            <img :src="cardMessage.user.userAvatar" alt="" />
+          </div>
+        </div>
+        <div class="profile-message">
+          <div class="username">{{ cardMessage.user.userName }}</div>
+          <div class="create-time">{{ cardMessage.creatTime }}</div>
+        </div>
+      </div>
+    </div>
+    <p class="markContent">{{ cardMessage.postContents }}</p>
+    <div class="card-b">
+      <div
+        v-for="(item, index) in cardMessage.images"
+        :key="index"
+        :class="showCol"
+      >
+        <img :src="item.imageSrc" alt="" class="image" />
+      </div>
+      <div>
+        <div class="ant-card-actions">
+          <a-icon key="like" type="like" />
+          <a-icon key="message" type="message" />
+          <a-icon key="star" type="star" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nine-square" v-else>
     <router-link
       :to="{ name: 'topic-detail', params: { id: cardMessage.postId } }"
     >
-      <div class="scale">
-        <div class="card-h">
-          <div class="profile">
-            <div class="profile-avatar">
-              <div class="avatar">
-                <img :src="cardMessage.user.userAvatar" alt="" />
-              </div>
-            </div>
-            <div class="profile-message">
-              <div class="username">{{ cardMessage.user.userName }}</div>
-              <div class="create-time">{{ cardMessage.creatTime }}</div>
+      <div class="card-h">
+        <div class="profile">
+          <div class="profile-avatar">
+            <div class="avatar">
+              <img :src="cardMessage.user.userAvatar" alt="" />
             </div>
           </div>
+          <div class="profile-message">
+            <div class="username">{{ cardMessage.user.userName }}</div>
+            <div class="create-time">{{ cardMessage.creatTime }}</div>
+          </div>
         </div>
-        <p class="content">{{}}</p>
-        <div class="card-b">
-          <div
-            v-for="(item, index) in cardMessage.images"
-            :key="index"
-            :class="showCol"
-          >
-            <img :src="item.imageSrc" alt="" class="image" />
+      </div>
+      <div class="topicTitle">{{ cardMessage.postTitle }}</div>
+      <p class="markContent">{{ cardMessage.postContents }}</p>
+      <div class="card-b">
+        <div
+          v-for="(item, index) in cardMessage.images"
+          :key="index"
+          :class="showCol"
+        >
+          <img :src="item.imageSrc" alt="" class="image" />
+        </div>
+        <div>
+          <div class="ant-card-actions">
+            <a-icon key="like" type="like" />
+            <a-icon key="message" type="message" />
+            <a-icon key="star" type="star" />
           </div>
         </div>
       </div>
@@ -61,11 +100,14 @@ export default {
       default() {
         return {};
       }
+    },
+    plateId: {
+      type: Number,
+      default: 1
     }
   },
   created() {
     this.showCol = this.countCol();
-    console.log(this.showCol);
   },
   methods: {
     countCol() {
@@ -86,16 +128,17 @@ export default {
 
 <style scoped>
 .nine-square {
-  width: 25rem /* 400/16 */;
+  width: 100% /* 400/16 */;
+  height: 100%;
   border-radius: 10px;
-  overflow: hidden;
+  /* overflow: hidden; */
   background-color: rgb(255, 255, 255);
   transition: all 0.3;
 }
 
-.nine-square:hover {
+/* .nine-square:hover {
   transform: scale(1.07);
-}
+} */
 .profile {
   height: 3.75rem /* 60/16 */;
   position: relative;
@@ -181,5 +224,43 @@ export default {
   width: 100%;
   border: 1px solid rgba(13, 24, 24, 0.1);
   border-radius: 0.3125rem /* 5/16 */;
+}
+/* markDowm帖子的样式 */
+.topicTitle {
+  font-weight: 600;
+  color: #333;
+  padding: 0 /* 10/16 */ 2.625rem /* 10/16 */;
+  margin: 0.625rem /* 10/16 */ 0;
+  font-size: 16px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+.markContent {
+  font-weight: 400;
+  color: #333;
+  padding: 0 /* 10/16 */ 0.625rem /* 10/16 */;
+  margin: 0.625rem /* 10/16 */ 0;
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+}
+/* 卡片底部图标的样式 */
+.ant-card-actions {
+  padding-top: 1rem;
+  background-color: none;
+}
+.ant-card-actions >>> .anticon {
+  width: 5.75rem /* 60/16 */;
+  height: 3.75rem /* 60/16 */;
+}
+.ant-card-actions >>> .anticon svg {
+  width: 40%;
+  height: 40%;
 }
 </style>

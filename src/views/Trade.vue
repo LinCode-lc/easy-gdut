@@ -53,34 +53,34 @@
     <br />
     <br />
 
-    <a-row :gutter="16">
-      <a-col :span="8">
+    <a-row :gutter="24">
+      <a-col :span="7">
         <Card3></Card3>
       </a-col>
-      <a-col :span="8">
+      <a-col :span="7">
         <Card3></Card3>
       </a-col>
-      <a-col :span="8">
-        <Card3></Card3>
-        <br />
-      </a-col>
-      <a-col :span="8">
-        <Card3></Card3>
-      </a-col>
-      <a-col :span="8">
-        <Card3></Card3>
-      </a-col>
-      <a-col :span="8">
+      <a-col :span="7">
         <Card3></Card3>
         <br />
       </a-col>
-      <a-col :span="8">
+      <a-col :span="7">
         <Card3></Card3>
       </a-col>
-      <a-col :span="8">
+      <a-col :span="7">
         <Card3></Card3>
       </a-col>
-      <a-col :span="8">
+      <a-col :span="7">
+        <Card3></Card3>
+        <br />
+      </a-col>
+      <a-col :span="7">
+        <Card3></Card3>
+      </a-col>
+      <a-col :span="7">
+        <Card3></Card3>
+      </a-col>
+      <a-col :span="7">
         <Card3></Card3>
         <br />
       </a-col>
@@ -158,5 +158,8 @@ export default {
   width: 90px;
   margin-left: 10px;
   vertical-align: bottom;
+}
+#trade {
+  margin-left: 30px;
 }
 </style>

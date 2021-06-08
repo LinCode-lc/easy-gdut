@@ -86,6 +86,7 @@ import {
   saveCollection,
   removeCollection,
   saveSupport,
+  hasSupport,
   removeSupport
 } from "@/network/detail.js";
 import Vditor from "vditor";
@@ -159,6 +160,7 @@ export default {
         this.renderMarkdown(data.postContents);
         this.flag = true;
       });
+
       // getCommentList(this.$route.params.id).then(response => {
       //   console.log("下面一行打印评论");
       //   const { data } = response;
@@ -166,6 +168,14 @@ export default {
       //   console.log(data);
       //   console.log(this.commentData);
       // });
+      //判断该用户是否已经对该帖子点过赞
+      hasSupport(
+        this.$route.params.id,
+        this.$store.state.user.user.userId
+      ).then(result => {
+        console.log(result);
+        this.isSupport = result;
+      });
     },
 
     handleDelete(id) {
@@ -206,6 +216,10 @@ export default {
       if (index === 3) {
         this.isSupport = !this.isSupport;
         if (this.isSupport) {
+          console.log(postId);
+          console.log(1);
+          console.log(this.topicUser.userId);
+          console.log(userId);
           saveSupport(
             postId,
             1,
