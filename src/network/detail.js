@@ -23,12 +23,24 @@ export function getCommentList(id) {
   })
 }
 
-//点赞
+//判断是否有收藏
+//取消收藏
+export function hasCollection(postid, usetid) {
+  return request({
+    url: `collection/isexist`,
+    method: 'get',
+    params: {
+      postid,
+      usetid
+    }
+  })
+}
+//收藏
 export function saveCollection(postId, userId) {
   return request({
     url: `collection/save`,
-    method: 'get',
-    params: {
+    method: 'post',
+    data: {
       postId,
       userId
     }
@@ -39,20 +51,20 @@ export function removeCollection(postId, userId) {
   return request({
     url: `collection/remove`,
     method: 'get',
-    params: {
+    data: {
       postId,
       userId
     }
   })
 }
 //是否已经点过赞
-export function hasSupport(targetid, userid) {
+export function hasSupport(targetId, userId) {
   return request({
-    url: `parse-item/isexist`,
+    url: `/parse-item/isexist`,
     method: 'get',
     params: {
-      targetid,
-      userid,
+      targetId,
+      userId,
     }
   })
 }
@@ -60,8 +72,8 @@ export function hasSupport(targetid, userid) {
 export function saveSupport(targetId, targetType, targetUserId, userId) {
   return request({
     url: `parse-item/save`,
-    method: 'get',
-    params: {
+    method: 'post',
+    data: {
       targetId,
       targetType,
       targetUserId,
@@ -69,16 +81,51 @@ export function saveSupport(targetId, targetType, targetUserId, userId) {
     }
   })
 }
+
 //取消点赞
-export function remove(targetId, targetType, targetUserId, userId) {
+export function removeSupport(targetId, targetType, targetUserId, userId) {
   return request({
     url: `parse-item/remove`,
-    method: 'get',
-    params: {
+    method: 'post',
+    data: {
       targetId,
       targetType,
       targetUserId,
       userId
+    }
+  })
+}
+
+//是否已关注
+export function hasFollow(targetuserId, relationFlag) {
+  return request({
+    url: `user/queryRelation`,
+    method: 'get',
+    params: {
+      targetuserId,
+      relationFlag
+    }
+  })
+}
+//取消关注
+export function removeFollow(targetuserId, relationFlag) {
+  return request({
+    url: `user/deleteRelation`,
+    method: 'post',
+    params: {
+      targetuserId,
+      relationFlag
+    }
+  })
+}
+
+export function saveFollow(targetuserId, relationFlag) {
+  return request({
+    url: `user/setRelation`,
+    method: 'post',
+    params: {
+      targetuserId,
+      relationFlag
     }
   })
 }

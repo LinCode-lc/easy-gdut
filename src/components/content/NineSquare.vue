@@ -22,30 +22,30 @@
       >
         <img :src="item.imageSrc" alt="" class="image" />
       </div>
-      <div class="bottomIconBox">
-        <div>
-          <div class="bottomIcon black" v-if="true">
-            <img src="@/assets/img/svg/clickLike.svg" alt="" />
-          </div>
-          <div class="bottomIcon " v-else>
-            <img src="@/assets/img/svg/like.svg" alt="" />
-          </div>
+    </div>
+    <div class="bottomIconBox">
+      <div>
+        <div class="bottomIcon black" v-if="false">
+          <img src="@/assets/img/svg/clickLike.svg" alt="" />
         </div>
-        <div>
-          <div class="bottomIcon black" v-if="false">
-            <img src="@/assets/img/svg/collectionClick.svg" alt="" />
-          </div>
-          <div class="bottomIcon" v-else>
-            <img src="@/assets/img/svg/collection.svg" alt="" />
-          </div>
+        <div class="bottomIcon " v-else>
+          <img src="@/assets/img/svg/like.svg" alt="" />
         </div>
-        <div>
-          <div class="bottomIcon black" v-if="true">
-            <img src="@/assets/img/svg/commentClick.svg" alt="" />
-          </div>
-          <div class="bottomIcon" v-else>
-            <img src="@/assets/img/svg/comment.svg" alt="" />
-          </div>
+      </div>
+      <div>
+        <div class="bottomIcon black" v-if="false">
+          <img src="@/assets/img/svg/collectionClick.svg" alt="" />
+        </div>
+        <div class="bottomIcon" v-else>
+          <img src="@/assets/img/svg/collection.svg" alt="" />
+        </div>
+      </div>
+      <div>
+        <div class="bottomIcon black" v-if="false">
+          <img src="@/assets/img/svg/commentClick.svg" alt="" />
+        </div>
+        <div class="bottomIcon" v-else>
+          <img src="@/assets/img/svg/comment.svg" alt="" />
         </div>
       </div>
     </div>
@@ -78,30 +78,30 @@
         >
           <img :src="item.imageSrc" alt="" class="image" />
         </div>
-        <div class="bottomIconBox">
-          <div>
-            <div class="bottomIcon black" v-if="true">
-              <img src="@/assets/img/svg/clickLike.svg" alt="" />
-            </div>
-            <div class="bottomIcon " v-else>
-              <img src="@/assets/img/svg/like.svg" alt="" />
-            </div>
+      </div>
+      <div class="bottomIconBox">
+        <div>
+          <div class="bottomIcon black" v-if="true">
+            <img src="@/assets/img/svg/clickLike.svg" alt="" />
           </div>
-          <div>
-            <div class="bottomIcon black" v-if="true">
-              <img src="@/assets/img/svg/collectionClick.svg" alt="" />
-            </div>
-            <div class="bottomIcon" v-else>
-              <img src="@/assets/img/svg/collection.svg" alt="" />
-            </div>
+          <div class="bottomIcon " v-else>
+            <img src="@/assets/img/svg/like.svg" alt="" />
           </div>
-          <div>
-            <div class="bottomIcon black" v-if="true">
-              <img src="@/assets/img/svg/commentClick.svg" alt="" />
-            </div>
-            <div class="bottomIcon" v-else>
-              <img src="@/assets/img/svg/comment.svg" alt="" />
-            </div>
+        </div>
+        <div>
+          <div class="bottomIcon black" v-if="true">
+            <img src="@/assets/img/svg/collectionClick.svg" alt="" />
+          </div>
+          <div class="bottomIcon" v-else>
+            <img src="@/assets/img/svg/collection.svg" alt="" />
+          </div>
+        </div>
+        <div>
+          <div class="bottomIcon black" v-if="true">
+            <img src="@/assets/img/svg/commentClick.svg" alt="" />
+          </div>
+          <div class="bottomIcon" v-else>
+            <img src="@/assets/img/svg/comment.svg" alt="" />
           </div>
         </div>
       </div>
@@ -143,6 +143,13 @@ export default {
   methods: {
     countCol() {
       if (this.cardMessage.images.length > 9) {
+        console.log(this.cardMessage.images.length);
+        this.cardMessage.images = this.cardMessage.images.splice(
+          // this.cardMessage.images.length - 9
+          4,
+          9
+        );
+        console.log(this.cardMessage.images.length);
       }
       if (
         this.cardMessage.images.length == 3 ||
@@ -288,16 +295,20 @@ export default {
 }
 /* 卡片底部图标的样式 */
 .bottomIconBox {
+  width: 100%;
   display: flex;
   flex-direction: row;
+  justify-content: flex-end;
 }
 .bottomIcon {
   width: 2.25rem /* 20/16 */;
   height: 2.25rem /* 20/16 */;
-  flex: 1;
-  margin: 0.625rem 2.6rem /* 10/16 */;
+
+  /* flex: 1; */
+  margin: 0.625rem 1rem;
 }
 .black {
+  opacity: 0.7;
   width: 1.8rem;
   height: 1.8rem;
 }

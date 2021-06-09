@@ -67,9 +67,7 @@ export default {
   },
   methods: {
     clickItem(index) {
-      console.log(this.isCollection);
       if (index == 2) {
-        this.isCollection = !this.isCollection;
         // console.log(this.isCollection);
       }
       this.$emit("clickItem", index);

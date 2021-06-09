@@ -9,7 +9,7 @@
             :size="45"
             src="./1.jpg"
           ></el-avatar> -->
-          <img src="" alt="" class="avatar" />
+          <img :src="user.userAvatar" alt="" class="avatar" />
         </el-col>
         <el-col :span="19">
           <el-row style="margin-left:10px;">
@@ -21,17 +21,13 @@
           </el-row>
           <el-row style="font-size:12px" class="user-button">
             <button
-              v-if="hasFollow"
-              @click="handleUnFollow(user.userId)"
+              v-if="isFollow"
+              @click="handleFollow()"
               class="el-icon-star-on"
             >
               已关注
             </button>
-            <button
-              v-else
-              @click="handleFollow(user.userId)"
-              class="el-icon-star-off"
-            >
+            <button v-else @click="handleFollow()" class="el-icon-star-off">
               关注
             </button>
 
@@ -75,6 +71,10 @@ export default {
     user: {
       type: Object,
       default: null
+    },
+    isFollow: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -82,41 +82,14 @@ export default {
       hasFollow: false
     };
   },
-  mounted() {
-    this.fetchInfo();
-  },
+  mounted() {},
   computed: {
     ...mapGetters(["token"])
   },
   methods: {
-    fetchInfo() {
-      if (this.token != null && this.token !== "") {
-        // hasFollow(this.user.id).then(value => {
-        //   const { data } = value;
-        //   this.hasFollow = data.hasFollow;
-        // });
-      }
+    handleFollow() {
+      this.$emit("handleFollow", 0);
     }
-    // handleFollow: function(id) {
-    //   if (this.token != null && this.token !== "") {
-    //     follow(id).then(response => {
-    //       const { message } = response;
-    //       this.$message.success(message);
-    //       this.hasFollow = !this.hasFollow;
-    //       this.user.followerCount = parseInt(this.user.followerCount) + 1;
-    //     });
-    //   } else {
-    //     this.$message.success("请先登录");
-    //   }
-    // },
-    // handleUnFollow: function(id) {
-    //   unFollow(id).then(response => {
-    //     const { message } = response;
-    //     this.$message.success(message);
-    //     this.hasFollow = !this.hasFollow;
-    //     this.user.followerCount = parseInt(this.user.followerCount) - 1;
-    //   });
-    // }
   }
 };
 </script>

@@ -660,4 +660,10 @@ export default {
 /* 评论 */
 .showComment {
 }
+/* 浏览模式 */
+.ant-dropdown-link {
+  color: var(--subjectColor);
+  font-size: 14px;
+  font-weight: 600;
+}
 </style>

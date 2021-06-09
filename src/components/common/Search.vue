@@ -147,4 +147,8 @@ input {
 .s_input {
   margin-right: 10px;
 }
+.switch input[type="checkbox"] + .check.is-warning-passive,
+.switch input[type="checkbox"] + .check:hover {
+  background: var(--subjectColor) !important;
+}
 </style>

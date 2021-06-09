@@ -20,4 +20,10 @@
   --createColor: rgb(227,234,237,0.3);
   --createBorder: 2px solid rgb(167, 159, 159);
   --themeColor:rgb(241, 246, 250);
+  --subjectColor:#ed5b8c;
+  --sideBarColor: linear-gradient(
+    to right,
+    rgb(216, 214, 217),
+    rgba(224, 228, 230, 0.5)
+  );
 }

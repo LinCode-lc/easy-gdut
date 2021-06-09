@@ -1,135 +1,144 @@
 <template>
   <div id="side-bar">
-    <el-col :span="7">
-      <!-- <el-row>
-        <el-col :span="10"
-          ><img src=".././content/1.jpg" alt="" class="avatar" /> </el-col
-      ></el-row> -->
-      <div v-if="isCollapse" class="user-profile-collapse">
-        <a href="../.././views/user/Profile.vue">
+    <div>
+      <div>
+        <div v-if="isCollapse" class="user-profile-collapse">
+          <a href="../.././views/user/Profile.vue">
+            <router-link :to="{ path: '/profile' }">
+              <div class="user-avatar">
+                <img :src="user.userAvatar" alt="" v-if="token" />
+                <img :src="nocircleUrl" alt="" v-else />
+              </div>
+            </router-link>
+          </a>
+        </div>
+        <div class="user-profile" v-else>
           <router-link :to="{ path: '/profile' }">
-            <div class="user-avatar">
-              <img :src="user.userAvatar" alt="" v-if="token" />
-              <img :src="nocircleUrl" alt="" v-else />
+            <div class="user-avatar" v-if="token">
+              <img :src="user.userAvatar" alt="" />
+            </div>
+            <div class="user-avatar" v-else>
+              <img :src="nocircleUrl" alt="" />
             </div>
           </router-link>
-        </a>
-      </div>
-      <div class="user-profile" v-else>
-        <router-link :to="{ path: '/profile' }">
-          <div class="user-avatar" v-if="token">
-            <img :src="user.userAvatar" alt="" />
+          <div v-if="token">
+            <div class="user-name">
+              <div>{{ user.userName }}</div>
+            </div>
+            <div class="user-profile-header-info">
+              <ul>
+                <li>
+                  <div class="user-profile-statistics-num" data-v-d1dbb6f8="">
+                    0
+                  </div>
+                  <div class="user-profile-statistics-name" data-v-d1dbb6f8="">
+                    动态
+                  </div>
+                </li>
+                <li>
+                  <div class="user-profile-statistics-num" data-v-d1dbb6f8="">
+                    0
+                  </div>
+                  <div class="user-profile-statistics-name" data-v-d1dbb6f8="">
+                    关注
+                  </div>
+                </li>
+                <li>
+                  <div class="user-profile-statistics-num" data-v-d1dbb6f8="">
+                    12
+                  </div>
+                  <div class="user-profile-statistics-name" data-v-d1dbb6f8="">
+                    粉丝
+                  </div>
+                </li>
+              </ul>
+            </div>
           </div>
-          <div class="user-avatar" v-else>
-            <img :src="nocircleUrl" alt="" />
-          </div>
-        </router-link>
-        <div v-if="token">
-          <div class="user-name">
-            <div>{{ user.userName }}</div>
-          </div>
-          <div class="user-profile-header-info">
-            <ul>
-              <li>
-                <div class="user-profile-statistics-num" data-v-d1dbb6f8="">
-                  0
-                </div>
-                <div class="user-profile-statistics-name" data-v-d1dbb6f8="">
-                  动态
-                </div>
-              </li>
-              <li>
-                <div class="user-profile-statistics-num" data-v-d1dbb6f8="">
-                  0
-                </div>
-                <div class="user-profile-statistics-name" data-v-d1dbb6f8="">
-                  关注
-                </div>
-              </li>
-              <li>
-                <div class="user-profile-statistics-num" data-v-d1dbb6f8="">
-                  12
-                </div>
-                <div class="user-profile-statistics-name" data-v-d1dbb6f8="">
-                  粉丝
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div v-else>
-          <div class="user-profile-header-info2">
-            <ul>
-              <li>
-                <div class="user-profile-statistics-name">
-                  <b-button
-                    class="is-light"
-                    tag="router-link"
-                    :to="{ path: '/register' }"
-                  >
-                    注册
-                  </b-button>
-                </div>
-              </li>
-              <li>
-                <div class="user-profile-statistics-name">
-                  <b-button
-                    class="is-light"
-                    tag="router-link"
-                    :to="{ path: '/login' }"
-                  >
-                    登录
-                  </b-button>
-                </div>
-              </li>
-            </ul>
+          <div v-else>
+            <div class="user-profile-header-info2">
+              <ul>
+                <li>
+                  <div class="user-profile-statistics-name">
+                    <b-button
+                      class="is-light"
+                      tag="router-link"
+                      :to="{ path: '/register' }"
+                    >
+                      注册
+                    </b-button>
+                  </div>
+                </li>
+                <li>
+                  <div class="user-profile-statistics-name">
+                    <b-button
+                      class="is-light"
+                      tag="router-link"
+                      :to="{ path: '/login' }"
+                    >
+                      登录
+                    </b-button>
+                  </div>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
+
       <el-menu
         router
         :default-active="$route.path"
-        class="el-menu-vertical-demo"
+        class="el-menu-vertical-demo el-menu"
         @open="handleOpen"
         @close="handleClose"
         :collapse="isCollapse"
       >
         <el-submenu index="1">
           <template slot="title">
-            <i class="el-icon-notebook-2" style="font-size:200%;"></i>
+            <i class="el-icon-notebook-2 side-icon"></i>
             <span class="item">学习资料</span>
           </template>
 
           <el-menu-item index="/study/catagory">
-            <i class="el-icon-document" style="font-size:200%;"></i>
+            <i class="el-icon-document side-icon"></i>
             <span slot="title" class="item">资料目录</span>
           </el-menu-item>
 
           <el-menu-item index="/study/upload">
-            <i class="el-icon-sort" style="font-size:200%;"></i>
+            <i class="el-icon-sort side-icon"></i>
             <span slot="title" class="item">上传资料</span>
           </el-menu-item>
         </el-submenu>
         <el-menu-item index="/deliver">
-          <i class="el-icon-bicycle" style="font-size:200%;"></i>
+          <i class="el-icon-bicycle side-icon"></i>
           <span slot="title" class="item">跑腿服务</span>
         </el-menu-item>
         <el-menu-item index="/group">
-          <i class="el-icon-s-promotion" style="font-size:200%;"></i>
+          <i class="el-icon-s-promotion side-icon"></i>
           <span slot="title" class="item">校园组队</span>
         </el-menu-item>
         <el-menu-item index="/trade">
-          <i class="el-icon-suitcase-1" style="font-size:200%;"></i>
+          <i class="el-icon-suitcase-1 side-icon"></i>
           <span slot="title" class="item">闲置交易</span>
         </el-menu-item>
       </el-menu>
-      <el-radio-group v-model="isCollapse" class="collapsse">
-        <el-button :label="false" @click="changeCollapse" class="openbutton">
+    </div>
+    <el-radio-group v-model="isCollapse" class="collapsse">
+      <el-button :label="false" @click="changeCollapse" class="openbutton">
+        <div>
+          <div v-if="isCollapse" class="addCollapse">
+            <img src="@/assets/img/svg/add.svg" alt="" />
+          </div>
+          <div v-else class="add">
+            <img src="@/assets/img/svg/add.svg" alt="" />
+          </div>
+        </div>
+        <div>
           <div v-if="isCollapse" class="el-icon-arrow-right"></div>
           <div v-else class="el-icon-arrow-left"></div>
-        </el-button>
-      </el-radio-group>
-    </el-col>
+        </div>
+      </el-button>
+    </el-radio-group>
   </div>
 </template>
 
@@ -182,41 +191,35 @@ export default {
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 342%;
   min-height: 31.25rem /* 500/16 */;
-  background: linear-gradient(
+  /* background: linear-gradient(
     to right,
     rgb(216, 214, 217),
     rgba(224, 228, 230, 0.5)
-  );
+  ); */
   /* background-color: rgb(241, 246, 100) !important; */
 }
 .el-menu-vertical-demo {
-  background: linear-gradient(
-    to right,
-    rgb(216, 214, 217),
-    rgba(224, 228, 230, 0.5)
-  );
+  background: var(--sideBarColor);
   /* background-color: rgb(220, 221, 220) !important; */
   height: 62.5rem /* 1000/16 */;
 }
 
 .side-background {
-  background: linear-gradient(
+  /* background: linear-gradient(
     to right,
     rgb(216, 214, 217),
     rgba(224, 228, 230, 0.5)
-  );
+  ); */
 }
-.collapsse {
-  position: fixed;
-  left: 0;
-  bottom: 3.125rem /* 50/16 */;
-}
-.item {
-  margin-left: 0.5rem /* 8/16 */;
-  font-size: 1rem /* 16/16 */;
-}
+/* .collapsse {
+  position: absolute;
+  top: 47.5rem ;
+  left: 2rem;
+  bottom: 3.125rem ;
+  width: 1.875rem ;
+} */
+
 #side-bar {
-  /* background-color: #f6f6f6; */
 }
 .el-menu--collapse {
   width: 5.5rem /* 88/16 */;
@@ -224,37 +227,31 @@ export default {
 }
 .el-menu-item {
   height: 3.875rem /* 62/16 */;
-  background: linear-gradient(
-    to right,
-    rgb(216, 214, 217),
-    rgba(224, 228, 230, 0.5)
-  );
+  background: var(--sideBarColor);
 }
 .el-menu-item.is-active {
   color: #333;
   font-weight: 600;
 }
 
-.openbutton {
-  margin-left: 3.3125rem /* 53/16 */;
+/* .openbutton {
+ 
   border: none;
-  font-size: 1.5625rem /* 25/16 */;
+  font-size: 1.5625rem ;
   background: linear-gradient(
     to right,
     rgb(216, 214, 217),
     rgba(224, 228, 230, 0.5)
   );
   color: black;
-}
+} */
 .user-profile {
   position: relative;
   width: 15.75rem /* 252/16 */;
   height: 11.25rem /* 180/16 */;
-  background: linear-gradient(
-    to right,
-    rgb(216, 214, 217),
-    rgba(224, 228, 230, 0.5)
-  );
+
+  background-color: rgba(217, 216, 220);
+  /* background: var(--sideBarColor); */
   padding-top: 1.25rem /* 20/16 */;
 }
 .user-profile-collapse {
@@ -262,12 +259,12 @@ export default {
   width: 5.5rem /* 88/16 */;
   height: 5rem /* 80/16 */;
   padding-top: 1.25rem /* 20/16 */;
-  background: linear-gradient(
+  /* background: linear-gradient(
     to right,
     rgb(216, 214, 217),
     rgba(224, 228, 230, 0.5)
-  );
-
+  ); */
+  background-color: rgba(224, 225, 228);
   border-right: 1px solid rgb(230, 230, 230);
 }
 .user-avatar {
@@ -343,5 +340,58 @@ export default {
 }
 element.style {
   padding-left: 1.6875rem /* 27/16 */;
+}
+
+/* 加号样式 */
+.addCollapse {
+  position: absolute;
+  top: 47.5rem /* 600/16 */;
+  left: 1.5rem /* 30/16 */;
+  width: 2.875rem /* 30/16 */;
+  height: 2.875rem /* 30/16 */;
+}
+.add {
+  position: absolute;
+  top: 47.5rem /* 600/16 */;
+  left: 3.5rem /* 30/16 */;
+  width: 4.875rem /* 30/16 */;
+  height: 4.875rem /* 30/16 */;
+  opacity: 0.5;
+}
+.el-icon-arrow-right {
+  position: absolute;
+  font-size: 1.875rem /* 30/16 */;
+  color: var(--subjectColor);
+  top: 57.5rem;
+  left: 0.675rem;
+  width: 4.875rem;
+  height: 4.875rem;
+}
+.el-icon-arrow-left {
+  position: absolute;
+  font-size: 2rem /* 30/16 */;
+  color: var(--subjectColor);
+  top: 57.5rem;
+  left: 3.875rem;
+  width: 4.875rem;
+  height: 4.875rem;
+}
+/* 侧边栏图标 */
+.side-icon {
+  color: var(--subjectColor);
+  font-size: 1.75rem /* 28/16 */;
+}
+/* 侧边栏文字 */
+.item {
+  margin-left: 0.5rem /* 8/16 */;
+  font-size: 1.2rem /* 16/16 */;
+  font-weight: 500;
+}
+.item:hover {
+  font-weight: 600;
+  color: var(--subjectColor);
+}
+.el-menu {
+  padding-top: 3.125rem /* 50/16 */;
 }
 </style>

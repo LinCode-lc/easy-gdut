@@ -6,7 +6,7 @@
 
     <div class="margin-l">
       <!-- <Search class="searchbar"></Search> -->
-      <keep-alive :exclude="exclude">
+      <keep-alive>
         <router-view
           class="view"
           :span="24"
@@ -46,13 +46,8 @@ export default {
 <style>
 .side {
   position: fixed;
-  left: 0rem /* 18/16 */;
-  top: 0px;
-  margin-left: 0rem /* 30/16 */;
-  padding-top: 0px;
-  width: 15.6875rem /* 251/16 */;
-  background-color: rgb(241, 246, 250);
-  height: 100%;
+  width: 18.75rem /* 300/16 */;
+  background-color: var(--themeColor);
 }
 .margin-l {
   margin-left: 14.75rem /* 300/16 */;
