@@ -14,6 +14,7 @@
         ref="nine-box"
       >
         <NineSquare
+          @childMounted="childMounted"
           :cardMessage="item"
           :plateId="item.plateId"
           class="nine-card"
@@ -153,6 +154,25 @@
         </div>
       </a-drawer>
     </div>
+
+    <div class="changeCol">
+      <a-dropdown>
+        <a class="ant-dropdown-link" @click="e => e.preventDefault()">
+          浏览模式 <a-icon type="down" />
+        </a>
+        <a-menu slot="overlay">
+          <a-menu-item>
+            <a href="javascript:;" @click="clickChangeColmun(1)">单栏</a>
+          </a-menu-item>
+          <a-menu-item>
+            <a href="javascript:;" @click="clickChangeColmun(2)">双栏</a>
+          </a-menu-item>
+          <a-menu-item>
+            <a href="javascript:;" @click="clickChangeColmun(3)">三栏</a>
+          </a-menu-item>
+        </a-menu>
+      </a-dropdown>
+    </div>
   </div>
 </template>
 
@@ -165,12 +185,12 @@ import Pagination from "@/components/common/Pagination";
 import Search from "@/components/common/Search";
 import Comment from "@/components/common/comment/Comment";
 import CommendBar from "@/components/common/CommendBar";
-
 //瀑布流
 let waterfall = function(opt) {
   this.el = document.getElementsByClassName(opt.el)[0];
-  this.oItems = this.el.getElementsByClassName(opt.childName);
-
+  this.oItems = document.getElementsByClassName(opt.childName);
+  // this.elWidth = opt.elWidth;
+  // this.itemWidth = opt.childWidth;
   this.colmun = opt.colmun;
   this.gap = opt.gap;
   this.heightArr = [];
@@ -182,30 +202,38 @@ waterfall.prototype.init = function() {
     "======================================================================================"
   );
   console.log(this.itemWidth);
+  console.log(this.itemWidth);
   console.log(this.oItems);
   console.log(this.oItems.length);
   console.log(this.colmun);
   console.log(this.gap);
   console.log(this.heightArr);
+
   this.render();
 };
 function getMinIdx(arr) {
-  return arr.indexOf(Math.min.apply(null.arr));
+  console.log(arr);
+  return arr.indexOf(Math.min.apply(null, arr));
 }
 waterfall.prototype.render = function() {
   console.log(this.oItems.length);
   let item = null;
   for (let i = 0; i < this.oItems.length; i++) {
     item = this.oItems[i];
-    console.log(1);
-    item.style.width = this.itemWidth + "rem";
+
+    item.style.width = this.itemWidth + "px";
+    console.log(item);
+    console.log(item.style.width);
     if (i < this.colmun) {
-      item.style.top = "0rem";
-      item.style.left = i * (this.itemWidth + this.gap) + "rem";
+      item.style.top = 0;
+      item.style.left = i * (this.itemWidth + this.gap) + "px";
+      this.heightArr.push(item.offsetHeight);
     } else {
+      console.log(this.heightArr);
       let minIdx = getMinIdx(this.heightArr);
-      item.style.left = minIdx * (this.itemWidth + this.gap) + "rem";
-      item.style.top = this.heightArr[minIdx] + this.gap + "rem";
+      console.log(minIdx);
+      item.style.left = minIdx * (this.itemWidth + this.gap) + "px";
+      item.style.top = this.heightArr[minIdx] + this.gap + "px";
       this.heightArr[minIdx] += item.offsetHeight + this.gap;
     }
   }
@@ -325,21 +353,16 @@ export default {
       isCollection: false,
       isSupport: false,
       //评论
-      commentIf: false
+      commentIf: false,
+      //分列
+      colmun: 2,
+      //子组件加载好的个数
+      childCount: 0
     };
   },
-  mounted() {},
+
   created() {
     this.init(this.tab);
-    this.$nextTick(function() {
-      let wf = new waterfall({
-        el: "cardlist",
-        childName: "nine-box",
-        colmun: 3,
-        gap: 20
-      });
-      wf.init();
-    });
   },
   methods: {
     init(tab) {
@@ -353,6 +376,36 @@ export default {
         this.records = data.records;
       });
     },
+    //改变列数
+    clickChangeColmun(colNum) {
+      this.colmun = colNum;
+      this.changeColmun();
+    },
+    changeColmun() {
+      // this.$nextTick(
+      //   setTimeout(() => {
+
+      let wf = new waterfall({
+        elWidth: 80.25,
+        childWidth: 25,
+        el: "cardlist",
+        childName: "nine-box",
+        colmun: this.colmun,
+        gap: 10
+      });
+      wf.init();
+      //   }, 2000)
+      // );
+    },
+    //子组件加载完了
+    childMounted() {
+      this.childCount++;
+      console.log(this.childCount);
+      if (this.childCount != this.records.length) {
+        this.changeColmun();
+      }
+    },
+
     // handleClick(tab) {
     //   this.page.current = 1
     //   this.init(tab.name)
@@ -460,42 +513,42 @@ export default {
 
 <style scoped>
 #main {
-  /* height: 100%; */
+  height: 100%;
   width: 100%;
   background-color: var(--themeColor);
+  position: relative;
+  padding-bottom: 3000px;
+  margin-bottom: 3000px;
+  padding-left: 3.75rem /* 300/16 */;
+  padding-top: 1.75rem /* 300/16 */;
+}
+/* 选择列数下拉框 */
+.changeCol {
+  position: absolute;
+  right: 3.875rem /* 30/16 */;
+  top: 3.125rem /* 50/16 */;
 }
 .search {
   /* z-index: 1; */
   /* position: fixed; */
-  padding-left: 1.875rem /* 30/16 */;
-  padding-top: 3.125rem /* 50/16 */;
+  /* padding-left: 1.875rem ;
+  padding-top: 3.125rem ;
+  margin-bottom: 1.875rem ;
+  height: 3.75rem ;
+  width: 80%; */
+  position: relative;
   margin-bottom: 1.875rem /* 30/16 */;
-  height: 3.75rem /* 60/16 */;
-  width: 80%;
-  background-color: var(--themeColor);
 }
-/* .main-content {
-  margin-top: 65px;
-} */
-/* .cardlist {
-  width: 85%;
-  
-  padding-left: 1.875rem ;
-  height: 75rem ;
-  padding-top: 2.5rem ;
 
-  column-count: 2;
-  column-gap: 0;
-} */
 .cardlist {
-  width: 80.25rem;
-  background-color: black;
-  /* position: relative; */
-}
-.nine-card {
-  /* position: absolute; */
+  width: 95.25rem;
+  position: relative;
 }
 
+.nine-box {
+  width: 25rem;
+  position: absolute;
+}
 .locker >>> .ant-drawer-content {
   width: 50%;
   height: 100%;

@@ -9,7 +9,7 @@
             :size="45"
             src="./1.jpg"
           ></el-avatar> -->
-          <img src="./1.jpg" alt="" class="avatar" />
+          <img src="" alt="" class="avatar" />
         </el-col>
         <el-col :span="19">
           <el-row style="margin-left:10px;">

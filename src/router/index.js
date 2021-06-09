@@ -37,7 +37,10 @@ const routes = [
       {
         path: '/main',
         name: 'Main',
-        component: () => import('@/views/Main')
+        component: () => import('@/views/Main'),
+        meta: {
+          keepAlive: true
+        }
       },
       {
         path: '/study/upload',

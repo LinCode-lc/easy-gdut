@@ -22,11 +22,30 @@
       >
         <img :src="item.imageSrc" alt="" class="image" />
       </div>
-      <div>
-        <div class="ant-card-actions">
-          <a-icon key="like" type="like" />
-          <a-icon key="message" type="message" />
-          <a-icon key="star" type="star" />
+      <div class="bottomIconBox">
+        <div>
+          <div class="bottomIcon black" v-if="true">
+            <img src="@/assets/img/svg/clickLike.svg" alt="" />
+          </div>
+          <div class="bottomIcon " v-else>
+            <img src="@/assets/img/svg/like.svg" alt="" />
+          </div>
+        </div>
+        <div>
+          <div class="bottomIcon black" v-if="false">
+            <img src="@/assets/img/svg/collectionClick.svg" alt="" />
+          </div>
+          <div class="bottomIcon" v-else>
+            <img src="@/assets/img/svg/collection.svg" alt="" />
+          </div>
+        </div>
+        <div>
+          <div class="bottomIcon black" v-if="true">
+            <img src="@/assets/img/svg/commentClick.svg" alt="" />
+          </div>
+          <div class="bottomIcon" v-else>
+            <img src="@/assets/img/svg/comment.svg" alt="" />
+          </div>
         </div>
       </div>
     </div>
@@ -59,11 +78,30 @@
         >
           <img :src="item.imageSrc" alt="" class="image" />
         </div>
-        <div>
-          <div class="ant-card-actions">
-            <a-icon key="like" type="like" />
-            <a-icon key="message" type="message" />
-            <a-icon key="star" type="star" />
+        <div class="bottomIconBox">
+          <div>
+            <div class="bottomIcon black" v-if="true">
+              <img src="@/assets/img/svg/clickLike.svg" alt="" />
+            </div>
+            <div class="bottomIcon " v-else>
+              <img src="@/assets/img/svg/like.svg" alt="" />
+            </div>
+          </div>
+          <div>
+            <div class="bottomIcon black" v-if="true">
+              <img src="@/assets/img/svg/collectionClick.svg" alt="" />
+            </div>
+            <div class="bottomIcon" v-else>
+              <img src="@/assets/img/svg/collection.svg" alt="" />
+            </div>
+          </div>
+          <div>
+            <div class="bottomIcon black" v-if="true">
+              <img src="@/assets/img/svg/commentClick.svg" alt="" />
+            </div>
+            <div class="bottomIcon" v-else>
+              <img src="@/assets/img/svg/comment.svg" alt="" />
+            </div>
           </div>
         </div>
       </div>
@@ -83,14 +121,7 @@ export default {
       createTime: "6分钟前",
       description:
         "的看法领导妇女四道口附近上空地方还是大家看法事件的看法和科技孵化和出面可能是的能力可能能吃苦的那颗城市快速路才能",
-      images: [
-        "https://ss1.baidu.com/9vo3dSag_xI4khGko9WTAnF6hhy/zhidao/wh%3D450%2C600/sign=a587b23df11f3a295a9dddcaac159007/500fd9f9d72a60590cfef2f92934349b023bba62.jpg",
-        "https://ss1.baidu.com/9vo3dSag_xI4khGko9WTAnF6hhy/zhidao/wh%3D450%2C600/sign=a587b23df11f3a295a9dddcaac159007/500fd9f9d72a60590cfef2f92934349b023bba62.jpg",
-        "https://ss1.baidu.com/9vo3dSag_xI4khGko9WTAnF6hhy/zhidao/wh%3D450%2C600/sign=a587b23df11f3a295a9dddcaac159007/500fd9f9d72a60590cfef2f92934349b023bba62.jpg",
-        "https://ss1.baidu.com/9vo3dSag_xI4khGko9WTAnF6hhy/zhidao/wh%3D450%2C600/sign=a587b23df11f3a295a9dddcaac159007/500fd9f9d72a60590cfef2f92934349b023bba62.jpg",
-        "https://ss1.baidu.com/9vo3dSag_xI4khGko9WTAnF6hhy/zhidao/wh%3D450%2C600/sign=a587b23df11f3a295a9dddcaac159007/500fd9f9d72a60590cfef2f92934349b023bba62.jpg",
-        "https://ss1.baidu.com/9vo3dSag_xI4khGko9WTAnF6hhy/zhidao/wh%3D450%2C600/sign=a587b23df11f3a295a9dddcaac159007/500fd9f9d72a60590cfef2f92934349b023bba62.jpg"
-      ],
+      images: [],
       showCol: ""
     };
   },
@@ -111,6 +142,8 @@ export default {
   },
   methods: {
     countCol() {
+      if (this.cardMessage.images.length > 9) {
+      }
       if (
         this.cardMessage.images.length == 3 ||
         this.cardMessage.images.length > 4
@@ -122,6 +155,9 @@ export default {
         return "col1";
       }
     }
+  },
+  mounted() {
+    this.$emit("childMounted", 0);
   }
 };
 </script>
@@ -251,16 +287,18 @@ export default {
   -webkit-box-orient: vertical;
 }
 /* 卡片底部图标的样式 */
-.ant-card-actions {
-  padding-top: 1rem;
-  background-color: none;
+.bottomIconBox {
+  display: flex;
+  flex-direction: row;
 }
-.ant-card-actions >>> .anticon {
-  width: 5.75rem /* 60/16 */;
-  height: 3.75rem /* 60/16 */;
+.bottomIcon {
+  width: 2.25rem /* 20/16 */;
+  height: 2.25rem /* 20/16 */;
+  flex: 1;
+  margin: 0.625rem 2.6rem /* 10/16 */;
 }
-.ant-card-actions >>> .anticon svg {
-  width: 40%;
-  height: 40%;
+.black {
+  width: 1.8rem;
+  height: 1.8rem;
 }
 </style>
