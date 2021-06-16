@@ -36,6 +36,12 @@ const routes = [
     mete: { title: '您的关注' }
   },
   {
+    path: '/otheruser',
+    name: 'Otheruser',
+    component: () => import('@/views/user/OtherProfile'),
+    mete: { title: '他人主页' }
+  },
+  {
     path: '/application',
     name: 'Applica',
     component: () => import('@/Applica'),

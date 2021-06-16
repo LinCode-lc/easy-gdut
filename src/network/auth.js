@@ -125,3 +125,14 @@ export function sentforget2(usercode, meth, type) {
     }
   })
 }
+
+// 获取用户主页信息
+export function getInfo(targetuserId) {
+  return request({
+    url: '/user/toAnyPersonalInfo',
+    method: 'get',
+    params: {
+      targetuserId
+    }
+  })
+}

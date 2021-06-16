@@ -35,12 +35,17 @@
           </a-menu>
           <a-button icon="more"></a-button>
         </a-dropdown>
-        <a-list-item-meta :description="item.userStatement">
-          <a slot="title" href="1111"
+
+        <a-list-item-meta
+          :description="item.userStatement"
+          @click="clickOther(item.userId)"
+        >
+          <a slot="title" href="javascript:false"
             ><span style="color:rgb(251, 114, 153)">{{
               item.userName
             }}</span></a
           >
+
           <a-avatar
             slot="avatar"
             :src="item.userAvatar"
@@ -74,7 +79,9 @@ export default {
         this.$message.success("已成功关注", 0.1);
       }
     },
-
+    clickOther(userId) {
+      // this.$router.go("/otherProfile", (query: { Id: userId }));
+    },
     Addfocus(key) {
       addfocus(this.data[key].userId, 1).then(response => {
         console.log("已关注");
@@ -82,7 +89,6 @@ export default {
     },
 
     Deletefocus(key) {
-      console.log(0);
       cancelfocus(this.data[key].userId).then(response => {
         console.log("已取消关注");
       });
