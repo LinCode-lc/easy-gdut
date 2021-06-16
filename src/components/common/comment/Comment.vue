@@ -1,10 +1,10 @@
 <template>
   <div class="hbl-fa">
-    <div class="hbl-comm" v-if="commentIf">
-      <div class="comment-avatar" v-if="showAvatar">
+    <div class="hbl-comm">
+      <!-- <div class="comment-avatar" v-if="showAvatar">
         <avatar :avatar="avatar"></avatar>
-      </div>
-      <div class="comment" :style="{ width: commentWidth }">
+      </div> -->
+      <div class="comment" :style="{ width: commentWidth }" v-if="commentIf">
         <el-input
           @focus="showButton(0)"
           type="textarea"

@@ -7,7 +7,21 @@ export function getList(pageNo, size, tab) {
     params: {}
   }))
 }
+export function getPostList(plate) {
+  return request(({
+    url: '/post/page',
+    method: 'get',
+    params: { plate }
+  }))
+}
 
+export function getTopciDetail(id) {
+  return request(({
+    url: `/post/getDetailById/${id}`,
+    method: 'get',
+  }))
+}
+// getTopciDetail
 // export class Goods {
 // 	constructor(itemInfo, columns, services) {
 // 		this.title = itemInfo.title
@@ -20,3 +34,11 @@ export function getList(pageNo, size, tab) {
 // 		this.realPrice = itemInfo.lowNowPrice
 // 	}
 // }
+
+//获取学习资料列表
+export function getmaterialList() {
+  return request(({
+    url: `/post/materialList`,
+    method: 'get',
+  }))
+}

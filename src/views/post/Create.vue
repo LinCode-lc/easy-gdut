@@ -199,6 +199,13 @@ export default {
 
 <style>
 .columns {
-  margin-top: 50px;
+  height: 100%;
+  width: 100%;
+  background-color: var(--themeColor);
+  position: relative;
+  padding-bottom: 3000px;
+  margin-bottom: 3000px;
+  padding-left: 3.75rem /* 300/16 */;
+  padding-top: 1.75rem /* 300/16 */;
 }
 </style>

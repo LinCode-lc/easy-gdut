@@ -9,10 +9,10 @@ import { getToken } from "@/utils/auth"; // progress bar style
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
 router.beforeEach(async (to, from, next) => {
-    console.log(from.path)
-    console.log(to.path)
+    // console.log(from.path)
+    // console.log(to.path)
     if (to.path === '/login') {
-        console.log('lll')
+        // console.log('lll')
         next()
     }
     // start progress bar
@@ -21,8 +21,8 @@ router.beforeEach(async (to, from, next) => {
     document.title = getPageTitle(to.meta.title)
     // determine whether the user has logged in
     const hasToken = getToken();
-    console.log(getToken())
-    console.log(Boolean(getToken()))
+    // console.log(getToken())
+    // console.log(Boolean(getToken()))
     if (hasToken) {
         if (to.path === '/login') {
             // 登录，跳转首页

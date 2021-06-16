@@ -3,24 +3,41 @@
     <div>
       <div>
         <div v-if="isCollapse" class="user-profile-collapse">
-          <a href="../.././views/user/Profile.vue">
+          <!-- logo -->
+          <div class="logoCollapse">
+            <img
+              src="http://120.79.162.254:8070/gdut-c/resources/logo.jpg"
+              alt=""
+            />
+          </div>
+          <!-- <a href="../.././views/user/Profile.vue"> -->
+          <div class="userProfileBoxCollapse">
             <router-link :to="{ path: '/profile' }">
               <div class="user-avatar">
                 <img :src="user.userAvatar" alt="" v-if="token" />
                 <img :src="nocircleUrl" alt="" v-else />
               </div>
             </router-link>
-          </a>
+          </div>
+          <!-- </a> -->
         </div>
-        <div class="user-profile" v-else>
-          <router-link :to="{ path: '/profile' }">
-            <div class="user-avatar" v-if="token">
-              <img :src="user.userAvatar" alt="" />
-            </div>
-            <div class="user-avatar" v-else>
-              <img :src="nocircleUrl" alt="" />
-            </div>
-          </router-link>
+        <div v-else class="user-profile">
+          <div class="logo">
+            <img
+              src="http://120.79.162.254:8070/gdut-c/resources/logo.jpg"
+              alt=""
+            />
+          </div>
+          <div class="userProfileBox">
+            <router-link :to="{ path: '/profile' }">
+              <div class="user-avatar" v-if="token">
+                <img :src="user.userAvatar" alt="" />
+              </div>
+              <div class="user-avatar" v-else>
+                <img :src="nocircleUrl" alt="" />
+              </div>
+            </router-link>
+          </div>
           <div v-if="token">
             <div class="user-name">
               <div>{{ user.userName }}</div>
@@ -56,8 +73,9 @@
           </div>
           <div v-else>
             <div class="user-profile-header-info2">
+              <div class="loginButton"><Login></Login></div>
               <ul>
-                <li>
+                <!-- <li>
                   <div class="user-profile-statistics-name">
                     <b-button
                       class="is-light"
@@ -67,9 +85,9 @@
                       注册
                     </b-button>
                   </div>
-                </li>
+                </li> -->
                 <li>
-                  <div class="user-profile-statistics-name">
+                  <!-- <div class="user-profile-statistics-name">
                     <b-button
                       class="is-light"
                       tag="router-link"
@@ -77,7 +95,8 @@
                     >
                       登录
                     </b-button>
-                  </div>
+                   
+                  </div> -->
                 </li>
               </ul>
             </div>
@@ -85,6 +104,7 @@
         </div>
       </div>
 
+      <!-- -------- -->
       <el-menu
         router
         :default-active="$route.path"
@@ -93,22 +113,10 @@
         @close="handleClose"
         :collapse="isCollapse"
       >
-        <el-submenu index="1">
-          <template slot="title">
-            <i class="el-icon-notebook-2 side-icon"></i>
-            <span class="item">学习资料</span>
-          </template>
-
-          <el-menu-item index="/study/catagory">
-            <i class="el-icon-document side-icon"></i>
-            <span slot="title" class="item">资料目录</span>
-          </el-menu-item>
-
-          <el-menu-item index="/study/upload">
-            <i class="el-icon-sort side-icon"></i>
-            <span slot="title" class="item">上传资料</span>
-          </el-menu-item>
-        </el-submenu>
+        <el-menu-item index="/study/catagory">
+          <i class="el-icon-notebook-2 side-icon" />
+          <span slot="title" class="item">学习资料</span>
+        </el-menu-item>
         <el-menu-item index="/deliver">
           <i class="el-icon-bicycle side-icon"></i>
           <span slot="title" class="item">跑腿服务</span>
@@ -130,7 +138,27 @@
             <img src="@/assets/img/svg/add.svg" alt="" />
           </div>
           <div v-else class="add">
-            <img src="@/assets/img/svg/add.svg" alt="" />
+            <a-dropdown placement="topRight" :overlayClassName="overlayMenu">
+              <a class="ant-dropdown-link" @click="e => e.preventDefault()">
+                <img src="@/assets/img/svg/add.svg" alt="" />
+                <span class="addText">点击发布</span>
+              </a>
+              <a-menu slot="overlay" class="overlayMenu" placement="topRight">
+                <a-menu-item key="0">
+                  <router-link
+                    :to="{ path: '/post/createtopic' }"
+                    class="create"
+                  >
+                    <div>普通发布</div>
+                  </router-link>
+                </a-menu-item>
+                <a-menu-item key="1">
+                  <router-link :to="{ path: '/post/create' }" class="create">
+                    <div>Markdown发表</div>
+                  </router-link>
+                </a-menu-item>
+              </a-menu>
+            </a-dropdown>
           </div>
         </div>
         <div>
@@ -144,6 +172,7 @@
 
 <script>
 import { mapGetters } from "vuex";
+import Login from "@/views/auth/Login";
 export default {
   name: "SideBar2",
   data() {
@@ -156,6 +185,9 @@ export default {
         "https://gss0.baidu.com/70cFfyinKgQFm2e88IuM_a/forum/w=580/sign=98575ac840ed2e73fce98624b700a16d/7d82b112495409237379d6329858d109b3de491b.jpg",
       hadlogin: false
     };
+  },
+  components: {
+    Login
   },
   computed: {
     ...mapGetters(["token", "user"])
@@ -229,10 +261,6 @@ export default {
   height: 3.875rem /* 62/16 */;
   background: var(--sideBarColor);
 }
-.el-menu-item.is-active {
-  color: #333;
-  font-weight: 600;
-}
 
 /* .openbutton {
  
@@ -252,12 +280,11 @@ export default {
 
   background-color: rgba(217, 216, 220);
   /* background: var(--sideBarColor); */
-  padding-top: 1.25rem /* 20/16 */;
 }
 .user-profile-collapse {
   position: relative;
   width: 5.5rem /* 88/16 */;
-  height: 5rem /* 80/16 */;
+  height: 12rem /* 80/16 */;
   padding-top: 1.25rem /* 20/16 */;
   /* background: linear-gradient(
     to right,
@@ -353,10 +380,13 @@ element.style {
 .add {
   position: absolute;
   top: 47.5rem /* 600/16 */;
-  left: 3.5rem /* 30/16 */;
-  width: 4.875rem /* 30/16 */;
-  height: 4.875rem /* 30/16 */;
-  opacity: 0.5;
+  left: 1.5rem /* 30/16 */;
+  width: 2.575rem /* 30/16 */;
+  height: 2.575rem /* 30/16 */;
+}
+.addText {
+  margin-left: 0.7rem;
+  color: var(--subjectColor);
 }
 .el-icon-arrow-right {
   position: absolute;
@@ -382,16 +412,51 @@ element.style {
   font-size: 1.75rem /* 28/16 */;
 }
 /* 侧边栏文字 */
-.item {
+.el-menu-item {
   margin-left: 0.5rem /* 8/16 */;
   font-size: 1.2rem /* 16/16 */;
   font-weight: 500;
+}
+.el-menu-item.is-active {
+  font-weight: 600 !important;
+  font-size: 1.2rem !important;
+  color: var(--subjectColor) !important;
 }
 .item:hover {
   font-weight: 600;
   color: var(--subjectColor);
 }
 .el-menu {
-  padding-top: 3.125rem /* 50/16 */;
+  /* margin-top: 6rem; */
+}
+/* 发布 */
+.create {
+  color: var(--subjectColor);
+  font-size: 1.2rem /* 28/16 */;
+}
+.overlayMenu {
+  background: none;
+  margin-left: 5rem;
+}
+/* 登录按钮样式 */
+.loginButton {
+  margin: 0 auto;
+}
+/* logo */
+.logoCollapse {
+  width: 2.875rem /* 30/16 */;
+  height: 2.875rem /* 30/16 */;
+  margin-left: 1.25rem /* 20/16 */;
+}
+.logo {
+  width: 1.875rem /* 30/16 */;
+  height: 1.875rem /* 30/16 */;
+}
+.userProfileBox {
+  position: relative;
+  top: 2.875rem; /* 30/16 */
+}
+.userProfileBoxCollapse {
+  margin-top: 2rem;
 }
 </style>

@@ -14,28 +14,20 @@
       <div class="user-profile-header-info-b">
         <ul>
           <li>
-            <div class="user-profile-statistics-num" data-v-d1dbb6f8="">0</div>
-            <div class="user-profile-statistics-name" data-v-d1dbb6f8="">
-              被访问量
-            </div>
-          </li>
-          <li>
-            <div class="user-profile-statistics-num" data-v-d1dbb6f8="">0</div>
-            <div class="user-profile-statistics-name" data-v-d1dbb6f8="">
-              被访问量
-            </div>
-          </li>
-          <li>
             <div class="user-profile-statistics-num" data-v-d1dbb6f8="">12</div>
             <div class="user-profile-statistics-name" data-v-d1dbb6f8="">
               原创文章
             </div>
           </li>
           <li>
-            <div class="user-profile-statistics-num" data-v-d1dbb6f8="">5</div>
-            <div class="user-profile-statistics-name" data-v-d1dbb6f8="">
-              作者排名
-            </div>
+            <router-link :to="{ path: '/Myfocus' }">
+              <div class="user-profile-statistics-num" data-v-d1dbb6f8="">
+                5
+              </div>
+              <div class="user-profile-statistics-name" data-v-d1dbb6f8="">
+                您的关注
+              </div>
+            </router-link>
           </li>
           <li>
             <div class="user-profile-statistics-num" data-v-d1dbb6f8="">0</div>
@@ -94,7 +86,7 @@
         <div class="navList" data-v-bb5f5e3e="">
           <ul data-v-bb5f5e3e="">
             <li class="" data-v-bb5f5e3e="">
-              <!---->最近<span class="nav-li-num" data-v-bb5f5e3e=""></span>
+              <!---->最近浏览<span class="nav-li-num" data-v-bb5f5e3e=""></span>
             </li>
             <li data-v-bb5f5e3e="" class="active">
               <!---->文章·<span class="nav-li-num" data-v-bb5f5e3e="">0</span>
@@ -121,6 +113,43 @@
               ></span>
             </li>
           </ul>
+
+          <template>
+            <a-list
+              item-layout="vertical"
+              size="large"
+              :pagination="pagination"
+              :data-source="listData"
+            >
+              <div slot="footer"><b>My Treasure </b> Post</div>
+              <a-list-item slot="renderItem" key="item.title" slot-scope="item">
+                <template v-for="{ type, text } in actions" slot="actions">
+                  <span :key="type">
+                    <a-icon :type="type" style="margin-right: 10px" />
+                    {{ text }}
+                  </span>
+                </template>
+                <img
+                  slot="extra"
+                  width="290"
+                  alt="logo"
+                  src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
+                />
+                <a-list-item-meta :description="item.description">
+                  <a slot="title" :href="item.href">{{ item.title }}</a>
+                  <a-avatar slot="avatar" :src="item.avatar" />
+                </a-list-item-meta>
+                {{ item.content }}
+              </a-list-item>
+            </a-list>
+          </template>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+
           <!-- <div class="search-input" data-v-bb5f5e3e=""><input id="searchInput" type="text"
                             placeholder="搜TA的内容" value="" data-v-bb5f5e3e="">
                         <div class="search-btn" data-v-bb5f5e3e=""><img
@@ -135,33 +164,51 @@
                                 data-v-bb5f5e3e=""> <img src="https://img-home.csdnimg.cn/images/20210127052218.png"
                                 alt="" class="m-search-hover-img" data-v-bb5f5e3e=""></div>
                     </div> -->
-        </div>
-      </div>
-    </div>
-    <!-- 内容结束--------------------- -->
-  </div>
-</template>
+     
 
 <script>
 import { mapGetters } from "vuex";
 export default {
   name: "Profile",
   data() {
-    return {};
+    return {
+      listData,
+      pagination: {
+        pageSize: 4
+      },
+      actions: [
+        { type: "star-o", text: "156" },
+        { type: "like-o", text: "156" },
+        { type: "message", text: "2" }
+      ]
+    };
   },
   computed: {
     ...mapGetters(["token", "user"])
   }
 };
+
+const listData = [];
+for (let i = 0; i < 23; i++) {
+  listData.push({
+    href: "1111",
+    title: `RNG电子竞技俱乐部 ${i}`,
+    avatar: "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
+    description:
+      "RNG, A FOREVER G0D for background applications, is refined by Ant UED Team.",
+    content:
+      "We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently."
+  });
+}
 </script>
 
 <style scoped>
 .bgc {
-  height: 56.25rem /* 900/16 */;
+  height: 125rem /* 900/16 */;
   width: 125rem /* 2000/16 */;
   /* background-color: rgb(244, 245, 245); */
   background-color: rgb(241, 246, 250);
-  margin-left: 2rem /* 30/16 */;
+  margin-left: 3rem /* 30/16 */;
 }
 
 /* body {
@@ -306,7 +353,7 @@ export default {
 .user-profile-body-right {
   float: left;
   margin-left: 1.875rem /* 30/16 */;
-  width: 67.5rem /* 1080/16 */;
+  width: 90rem /* 1080/16 */;
 }
 .navList {
   background-color: rgb(244, 245, 245);

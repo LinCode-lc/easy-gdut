@@ -8,8 +8,8 @@ const routes = [
   //主页
   {
     path: '/',
-    // name: 'Main',
-    // component: () => import('@/views/Main')
+    name: 'Home',
+    // component: () => import('@/views/Main'),
     redirect: { name: 'Main' }
   },
   {
@@ -28,6 +28,12 @@ const routes = [
     name: 'Register',
     component: () => import('@/views/auth/Register'),
     meta: { title: "注册" }
+  },
+  {
+    path: '/myfocus',
+    name: 'Myfocus',
+    component: () => import('@/views/user/Myfocus'),
+    mete: { title: '您的关注' }
   },
   {
     path: '/application',
@@ -68,12 +74,12 @@ const routes = [
         meta: { title: "帖子详情" }
       },
       // 用户主页
-      {
-        name: 'user',
-        path: '/member/:username/home',
-        component: () => import('@/views/user/Profile'),
-        meta: { title: '用户主页' }
-      },
+      // {
+      //   name: 'user',
+      //   path: '/member/:username/home',
+      //   component: () => import('@/views/user/Profile'),
+      //   meta: { title: '用户主页' }
+      // },
       {
         path: '/deliver',
         name: 'Deliver',

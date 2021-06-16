@@ -9,7 +9,6 @@
       <div
         v-for="(item, index) in records"
         :key="index"
-        @click="showDrawer(item)"
         class="nine-box"
         ref="nine-box"
       >
@@ -19,9 +18,11 @@
           :plateId="item.plateId"
           class="nine-card"
           ref="nine-card"
+          @childClick="showDrawer(item)"
         ></NineSquare>
       </div>
     </div>
+
     <!-- <pagination
       v-show="page.total > 0"
       :total="page.total"
@@ -132,6 +133,17 @@
                 </div>
               </div>
             </div>
+
+            <div class="file">
+              <!-- <a
+                :href="'https//:' + `${topicLinks[0].address}`"
+               
+              >
+                -->
+              <div @click="clickLink(topicLinks[0].address)" class="link">
+                {{ topicLinks[0].address }}
+              </div>
+            </div>
           </div>
           <!-- --- -->
         </div>
@@ -180,7 +192,7 @@
 import Card from "../components/content/Card";
 import NineSquare from "../components/content/NineSquare";
 // import Card2 from "../components/content/Card2"
-import { getList } from "@/network/main.js";
+import { getList, getTopciDetail } from "@/network/main.js";
 import Pagination from "@/components/common/Pagination";
 import Search from "@/components/common/Search";
 import Comment from "@/components/common/comment/Comment";
@@ -198,40 +210,40 @@ let waterfall = function(opt) {
     (this.el.offsetWidth - this.gap * (this.colmun - 1)) / this.colmun;
 };
 waterfall.prototype.init = function() {
-  console.log(
-    "======================================================================================"
-  );
-  console.log(this.itemWidth);
-  console.log(this.itemWidth);
-  console.log(this.oItems);
-  console.log(this.oItems.length);
-  console.log(this.colmun);
-  console.log(this.gap);
-  console.log(this.heightArr);
+  // console.log(
+  //   "======================================================================================"
+  // );
+  // console.log(this.itemWidth);
+  // console.log(this.itemWidth);
+  // console.log(this.oItems);
+  // console.log(this.oItems.length);
+  // console.log(this.colmun);
+  // console.log(this.gap);
+  // console.log(this.heightArr);
 
   this.render();
 };
 function getMinIdx(arr) {
-  console.log(arr);
+  // console.log(arr);
   return arr.indexOf(Math.min.apply(null, arr));
 }
 waterfall.prototype.render = function() {
-  console.log(this.oItems.length);
+  // console.log(this.oItems.length);
   let item = null;
   for (let i = 0; i < this.oItems.length; i++) {
     item = this.oItems[i];
 
     item.style.width = this.itemWidth + "px";
-    console.log(item);
-    console.log(item.style.width);
+    // console.log(item);
+    // console.log(item.style.width);
     if (i < this.colmun) {
       item.style.top = 0;
       item.style.left = i * (this.itemWidth + this.gap) + "px";
       this.heightArr.push(item.offsetHeight);
     } else {
-      console.log(this.heightArr);
+      // console.log(this.heightArr);
       let minIdx = getMinIdx(this.heightArr);
-      console.log(minIdx);
+      // console.log(minIdx);
       item.style.left = minIdx * (this.itemWidth + this.gap) + "px";
       item.style.top = this.heightArr[minIdx] + this.gap + "px";
       this.heightArr[minIdx] += item.offsetHeight + this.gap;
@@ -357,7 +369,15 @@ export default {
       //分列
       colmun: 2,
       //子组件加载好的个数
-      childCount: 0
+      childCount: 0,
+      //作者
+      author: {},
+      //点开帖子的链接等信息
+      topicLinks: [],
+      clickCount: 0,
+      commentCount: 0,
+      modifiedTime: "",
+      parseCount: 0
     };
   },
 
@@ -369,6 +389,7 @@ export default {
       getList(this.page.current, 30, tab).then(response => {
         const { data } = response;
         console.log(data);
+        // console.log(data);
         // this.page.current = data.current
         // console.log(data);
         this.page.total = data.total;
@@ -400,19 +421,33 @@ export default {
     //子组件加载完了
     childMounted() {
       this.childCount++;
-      console.log(this.childCount);
+      // console.log(this.childCount);
       if (this.childCount != this.records.length) {
         this.changeColmun();
       }
     },
-
+    //跳转外部链接
+    clickLink(link) {
+      window.location = "https:" + link;
+    },
     // handleClick(tab) {
     //   this.page.current = 1
     //   this.init(tab.name)
     // }
     //抽屉
     showDrawer(item) {
+      //发起帖子详情的请求
+
       this.postId = item.postId;
+      getTopciDetail(this.postId).then(res => {
+        console.log(res.data);
+        this.topicLinks = res.data.links;
+        this.clickCount = res.data.clickCount;
+        this.commentCount = res.data.commentCount;
+        this.modifiedTime = res.data.modifiedTime;
+        this.parseCount = res.data.parseCount;
+        this.author = res.data.user;
+      });
       this.user = item.user;
       this.postTitle = item.postTitle;
       this.postContents = item.postContents;
@@ -420,7 +455,7 @@ export default {
       this.countCol(item.images.length);
       this.images = item.images;
 
-      console.log(item);
+      // console.log(item);
       if (item.plateId != 0) {
         this.visible = true;
       }
@@ -487,10 +522,10 @@ export default {
       if (index === 3) {
         this.isSupport = !this.isSupport;
         if (this.isSupport) {
-          console.log(postId);
-          console.log(1);
-          console.log(this.topicUser.userId);
-          console.log(userId);
+          // console.log(postId);
+          // console.log(1);
+          // console.log(this.topicUser.userId);
+          // console.log(userId);
           saveSupport(
             postId,
             1,
@@ -665,5 +700,10 @@ export default {
   color: var(--subjectColor);
   font-size: 14px;
   font-weight: 600;
+}
+/* 链接样式 */
+.link {
+  font-size: 18px;
+  color: var(--subjectColor);
 }
 </style>

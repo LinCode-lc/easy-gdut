@@ -19,28 +19,48 @@ const mutations = {
 
 const actions = {
   // 用户登录
-  login({ commit }, userInfo) {
-    console.log(userInfo)
-    const { name, pass, rememberMe } = userInfo;
+  login({ commit }, ruleForm) {
+    // console.log(userInfo)
+    const { username, password, remember } = ruleForm;
     return new Promise((resolve, reject) => {
-      login(name, pass)
-        .then((response) => {
+      // login(name, pass)
+      //   .then((response) => {
+      //     // console.log(response.data)
+      //     console.log(response)
+      //     commit("SET_TOKEN_STATE", response);
+      //     setToken(response);
+      //     resolve();
+      //   })
+      //   .catch((error) => {
+      //     reject(error);
+      //   });
+      login(username, password).then(response => {
+        if (response.data == "用户不存在") {
+          reject(0)
+
+        } else if (response.data == "用户名或密码错误") {
+
+          reject(1)
+        } else {
+          // this.$message.success("登入成功！", 0.1);
+
           console.log(response.data)
           commit("SET_TOKEN_STATE", response.data);
           setToken(response.data);
           resolve();
-        })
-        .catch((error) => {
-          reject(error);
-        });
+
+        }
+      });
     });
+
+
   },
   //获取用户信息
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
       getUserInfo()
         .then((response) => {
-          console.log(response)
+          // console.log(response)
           const { data } = response;
 
           // console.log(data)
@@ -64,7 +84,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       logout(state.token)
         .then((response) => {
-          console.log(response);
+          // console.log(response);
           commit("SET_TOKEN_STATE", "");
           commit("SET_USER_STATE", "");
           removeToken();

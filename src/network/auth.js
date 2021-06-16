@@ -1,5 +1,9 @@
 import request from './request'
 
+import qs from 'qs'
+
+
+
 export function userRegister(formData) {
   return request({
     url: "user/registered",
@@ -8,20 +12,16 @@ export function userRegister(formData) {
     // "Content-Type": "multipart/form-data"},
     // withCredentials:true,
     // data:formData
-
     params: {
-      checkPass: formData.checkPass,
-      email: formData.email,
-      userSex: formData.userSex,
-      userContact: formData.userContact,
-      userEmail: formData.userEmail,
-      userName: formData.userName,
-      userPassword: formData.userPassword,
+      checkPass: formData.checkpass,
+      email: formData.useremail,
+      userSex: formData.usersex,
+      userContact: formData.usercontact,
+      userEmail: formData.useremail,
+      userName: formData.username,
+      userPassword: formData.password,
       usercode: formData.usercode,
-
-
     }
-
   })
 }
 // 前台用户登录
@@ -62,23 +62,26 @@ export function logout() {
 }
 
 export function forget1(meth, type) {
+  let type2 = parseInt(type);
   return request({
     url: 'user/sendForgetEmail',
     method: 'post',
     params: {
       info: meth,
-      type
+      type: type2
     }
   })
 }
 
-export function forget2(meth, type) {
+export function resetpassword(usercode, type, info, newpassword) {
   return request({
-    url: 'user/sendForgetEmail',
+    url: '/user/RsetUserPassword',
     method: 'post',
     params: {
-      info: meth,
-      type
+      usercode,
+      type,
+      info,
+      newpassword
     }
   })
 }
@@ -94,6 +97,22 @@ export function sentforget1(usercode, meth, type) {
     }
   })
 }
+
+export function forget2(meth, type) {
+  let data = qs.stringify({
+    meth: meth,
+    type: type
+  })
+  return request({
+    url: 'user/sendForgetEmail',
+    method: 'post',
+    params: {
+      data
+    }
+  })
+}
+
+
 
 export function sentforget2(usercode, meth, type) {
   return request({

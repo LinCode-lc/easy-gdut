@@ -82,7 +82,7 @@ export default {
       hasFollow: false
     };
   },
-  mounted() {},
+
   computed: {
     ...mapGetters(["token"])
   },

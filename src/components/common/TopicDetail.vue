@@ -60,6 +60,7 @@
         <Comment
           :postId="topicId"
           :userId="this.$store.state.user.user.userId"
+          :commentIf="commentIf"
         ></Comment>
       </div>
 
@@ -116,6 +117,8 @@ export default {
   data() {
     //设置flag初始值为false,当子组件挂载完后再显示
     return {
+      //是否显示评论
+      commentIf: true,
       flag: false,
       topic: {
         content: "",
@@ -287,7 +290,7 @@ export default {
   position: relative;
   padding-bottom: 3000px;
   margin-bottom: 3000px;
-  padding-left: 2.75rem /* 300/16 */;
-  padding-top: 0.75rem /* 300/16 */;
+  padding-left: 3.75rem /* 300/16 */;
+  padding-top: 1.75rem /* 300/16 */;
 }
 </style>

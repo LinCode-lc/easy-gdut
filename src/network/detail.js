@@ -23,15 +23,16 @@ export function getCommentList(id) {
   })
 }
 
-//判断是否有收藏
+
+
 //取消收藏
-export function hasCollection(postid, usetid) {
+export function hasCollection(postId, userId) {
   return request({
     url: `collection/isexist`,
     method: 'get',
     params: {
-      postid,
-      usetid
+      postId,
+      userId
     }
   })
 }
@@ -50,7 +51,7 @@ export function saveCollection(postId, userId) {
 export function removeCollection(postId, userId) {
   return request({
     url: `collection/remove`,
-    method: 'get',
+    method: 'post',
     data: {
       postId,
       userId

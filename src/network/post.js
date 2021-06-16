@@ -1,5 +1,5 @@
 import request from './request'
-
+import qs from 'qs'
 // 发布
 export function post(topic) {
     return request({
@@ -66,5 +66,38 @@ export function removeImg(imgUrl) {
     return request({
         url: `/post/edit/resource-delete/${imgUrl}`,
         method: 'get',
+    })
+}
+
+//获取关注列表
+export function getFocusList() {
+    return request({
+        url: '/user/myFollowList',
+        method: 'get',
+    })
+}
+
+//关注
+export function addfocus(targetuserId, relationFlag) {
+    let data = qs.stringify({
+        targetuserId: targetuserId,
+        relationFlag: relationFlag
+    })
+    return request({
+        url: '/user/setRelation',
+        method: 'post',
+        data: data
+    })
+}
+
+//取消关注
+export function cancelfocus(targetuserId) {
+    let data = qs.stringify({
+        targetuserId: targetuserId
+    })
+    return request({
+        url: '/user/deleteRelation',
+        method: 'post',
+        data: data
     })
 }

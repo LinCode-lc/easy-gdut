@@ -1,48 +1,54 @@
 <template>
   <div class="nine-square" v-if="plateId">
-    <div class="card-h">
-      <div class="profile">
-        <div class="profile-avatar">
-          <div class="avatar">
-            <img :src="cardMessage.user.userAvatar" alt="" />
+    <div @click="showDrawer">
+      <div class="card-h">
+        <div class="profile">
+          <div class="profile-avatar">
+            <div class="avatar">
+              <img :src="cardMessage.user.userAvatar" alt="" />
+            </div>
+          </div>
+          <div class="profile-message">
+            <div class="username">{{ cardMessage.user.userName }}</div>
+            <div class="create-time">{{ cardMessage.creatTime }}</div>
           </div>
         </div>
-        <div class="profile-message">
-          <div class="username">{{ cardMessage.user.userName }}</div>
-          <div class="create-time">{{ cardMessage.creatTime }}</div>
-        </div>
       </div>
-    </div>
-    <p class="markContent">{{ cardMessage.postContents }}</p>
-    <div class="card-b">
-      <div
-        v-for="(item, index) in cardMessage.images"
-        :key="index"
-        :class="showCol"
-      >
-        <img :src="item.imageSrc" alt="" class="image" />
+      <p class="markContent">{{ cardMessage.postContents }}</p>
+      <div class="card-b">
+        <div
+          v-for="(item, index) in cardMessage.images"
+          :key="index"
+          :class="showCol"
+        >
+          <img :src="item.imageSrc" alt="" class="image" />
+        </div>
       </div>
     </div>
     <div class="bottomIconBox">
       <div>
-        <div class="bottomIcon black" v-if="false">
+        <div class="bottomIcon black" v-if="isSupport" @click="handleSupport">
           <img src="@/assets/img/svg/clickLike.svg" alt="" />
         </div>
-        <div class="bottomIcon " v-else>
+        <div class="bottomIcon " v-else @click="handleSupport">
           <img src="@/assets/img/svg/like.svg" alt="" />
         </div>
       </div>
       <div>
-        <div class="bottomIcon black" v-if="false">
+        <div
+          class="bottomIcon black"
+          v-if="isCollection"
+          @click="handleCollection"
+        >
           <img src="@/assets/img/svg/collectionClick.svg" alt="" />
         </div>
-        <div class="bottomIcon" v-else>
+        <div class="bottomIcon" v-else @click="handleCollection">
           <img src="@/assets/img/svg/collection.svg" alt="" />
         </div>
       </div>
       <div>
         <div class="bottomIcon black" v-if="false">
-          <img src="@/assets/img/svg/commentClick.svg" alt="" />
+          <img src="@/assets/img/svg/comment.svg" alt="" />
         </div>
         <div class="bottomIcon" v-else>
           <img src="@/assets/img/svg/comment.svg" alt="" />
@@ -79,37 +85,54 @@
           <img :src="item.imageSrc" alt="" class="image" />
         </div>
       </div>
-      <div class="bottomIconBox">
-        <div>
-          <div class="bottomIcon black" v-if="true">
-            <img src="@/assets/img/svg/clickLike.svg" alt="" />
-          </div>
-          <div class="bottomIcon " v-else>
-            <img src="@/assets/img/svg/like.svg" alt="" />
-          </div>
+    </router-link>
+    <div class="bottomIconBox">
+      <div>
+        <div class="bottomIcon black" v-if="isSupport" @click="handleSupport">
+          <img src="@/assets/img/svg/clickLike.svg" alt="" />
         </div>
-        <div>
-          <div class="bottomIcon black" v-if="true">
-            <img src="@/assets/img/svg/collectionClick.svg" alt="" />
-          </div>
-          <div class="bottomIcon" v-else>
-            <img src="@/assets/img/svg/collection.svg" alt="" />
-          </div>
-        </div>
-        <div>
-          <div class="bottomIcon black" v-if="true">
-            <img src="@/assets/img/svg/commentClick.svg" alt="" />
-          </div>
-          <div class="bottomIcon" v-else>
-            <img src="@/assets/img/svg/comment.svg" alt="" />
-          </div>
+        <div class="bottomIcon " v-else @click="handleSupport">
+          <img src="@/assets/img/svg/like.svg" alt="" />
         </div>
       </div>
-    </router-link>
+      <div>
+        <div
+          class="bottomIcon black"
+          v-if="isCollection"
+          @click="handleCollection"
+        >
+          <img src="@/assets/img/svg/collectionClick.svg" alt="" />
+        </div>
+        <div class="bottomIcon" v-else @click="handleCollection">
+          <img src="@/assets/img/svg/collection.svg" alt="" />
+        </div>
+      </div>
+      <div>
+        <div class="bottomIcon black" v-if="true">
+          <img src="@/assets/img/svg/comment.svg" alt="" />
+        </div>
+        <div class="bottomIcon" v-else>
+          <img src="@/assets/img/svg/comment.svg" alt="" />
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import {
+  getTopic,
+  getCommentList,
+  saveCollection,
+  removeCollection,
+  saveSupport,
+  hasSupport,
+  hasCollection,
+  hasFollow,
+  removeSupport,
+  saveFollow,
+  removeFollow
+} from "@/network/detail.js";
 export default {
   name: "NineSquare",
   data() {
@@ -122,7 +145,11 @@ export default {
       description:
         "的看法领导妇女四道口附近上空地方还是大家看法事件的看法和科技孵化和出面可能是的能力可能能吃苦的那颗城市快速路才能",
       images: [],
-      showCol: ""
+      showCol: "",
+      //点赞
+      isSupport: false,
+      //收藏
+      isCollection: false
     };
   },
   props: {
@@ -138,18 +165,36 @@ export default {
     }
   },
   created() {
+    // console.log(this.cardMessage);
     this.showCol = this.countCol();
+    //判断该用户是否已经对该帖子点过赞
+    hasSupport(
+      this.cardMessage.postId,
+      this.$store.state.user.user.userId
+    ).then(result => {
+      // console.log(result);
+      this.isSupport = result.data;
+    });
+
+    //判断是否收藏过这篇帖子
+    hasCollection(
+      this.cardMessage.postId,
+      this.$store.state.user.user.userId
+    ).then(result => {
+      // console.log(result);
+      this.isCollection = result.data;
+    });
   },
   methods: {
     countCol() {
       if (this.cardMessage.images.length > 9) {
-        console.log(this.cardMessage.images.length);
+        // console.log(this.cardMessage.images.length);
         this.cardMessage.images = this.cardMessage.images.splice(
           // this.cardMessage.images.length - 9
           4,
           9
         );
-        console.log(this.cardMessage.images.length);
+        // console.log(this.cardMessage.images.length);
       }
       if (
         this.cardMessage.images.length == 3 ||
@@ -161,6 +206,44 @@ export default {
       } else {
         return "col1";
       }
+    },
+    //控制点赞
+    handleSupport() {
+      this.isSupport = !this.isSupport;
+      if (this.isSupport) {
+        saveSupport(
+          this.cardMessage.postId,
+          1,
+          this.cardMessage.user.userId,
+          this.$store.state.user.user.userId
+        ).then(response => {});
+      } else {
+        removeSupport(
+          this.cardMessage.postId,
+          1,
+          this.cardMessage.user.userId,
+          this.$store.state.user.user.userId
+        ).then(response => {});
+      }
+    },
+    //控制收藏
+    handleCollection() {
+      this.isCollection = !this.isCollection;
+      if (this.isCollection) {
+        saveCollection(
+          this.cardMessage.postId,
+          this.$store.state.user.user.userId
+        ).then(response => {});
+      } else {
+        removeCollection(
+          this.cardMessage.postId,
+          this.$store.state.user.user.userId
+        ).then(response => {});
+      }
+    },
+    //向父组件告知被点击
+    showDrawer() {
+      this.$emit("childClick", 0);
     }
   },
   mounted() {
@@ -234,6 +317,7 @@ export default {
   text-align: center;
   margin-bottom: 0.9375rem; /* 15/16 */
   /* margin: 0 auto; */
+  margin-left: 2rem;
 }
 
 .col1 {

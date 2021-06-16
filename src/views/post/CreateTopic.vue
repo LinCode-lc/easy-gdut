@@ -670,10 +670,14 @@ export default {
 
 <style type="text/css" scoped >
 #creat {
-  height: 1500px;
+  height: 100%;
   width: 100%;
   background-color: var(--themeColor);
-  padding-top: 3.125rem /* 50/16 */;
+  position: relative;
+  padding-bottom: 3000px;
+  margin-bottom: 3000px;
+  padding-left: 3.75rem /* 300/16 */;
+  padding-top: 1.75rem /* 300/16 */;
 }
 .outer {
   display: flex;
