@@ -135,8 +135,10 @@
                
               >
                 -->
-              <div @click="clickLink(topicLinks[0].address)" class="link">
-                {{ topicLinks[0].address }}
+              <div v-if="topicLinks.length">
+                <div @click="clickLink(topicLinks[0].address)" class="link">
+                  {{ topicLinks[0].address }}
+                </div>
               </div>
             </div>
           </div>
@@ -438,6 +440,7 @@ export default {
         console.log(this.postId);
         console.log(res.data);
         this.topicLinks = res.data.links;
+        console.log(this.topicLinks);
         this.clickCount = res.data.clickCount;
         this.commentCount = res.data.commentCount;
         this.modifiedTime = res.data.modifiedTime;

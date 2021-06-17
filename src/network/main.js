@@ -4,7 +4,9 @@ export function getList(pageNo, size, tab) {
   return request(({
     url: '/post/page',
     method: 'get',
-    params: {}
+    params: {
+      size: 60
+    }
   }))
 }
 export function getPostList(plate) {

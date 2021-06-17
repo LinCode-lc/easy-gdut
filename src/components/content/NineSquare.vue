@@ -5,7 +5,16 @@
         <div class="profile">
           <div class="profile-avatar">
             <div class="avatar">
-              <img :src="cardMessage.user.userAvatar" alt="" />
+              <img
+                v-if="cardMessage.user.userAvatar"
+                :src="cardMessage.user.userAvatar"
+                alt=""
+              />
+              <img
+                v-else
+                src="http://120.79.162.254:8070/gdut-c/resources/defalut_user_avatar.jpg"
+                alt=""
+              />
             </div>
           </div>
           <div class="profile-message">
@@ -65,7 +74,16 @@
         <div class="profile">
           <div class="profile-avatar">
             <div class="avatar">
-              <img :src="cardMessage.user.userAvatar" alt="" />
+              <img
+                v-if="cardMessage.user.userAvatar"
+                :src="cardMessage.user.userAvatar"
+                alt=""
+              />
+              <img
+                v-else
+                src="http://120.79.162.254:8070/gdut-c/resources/defalut_user_avatar.jpg"
+                alt=""
+              />
             </div>
           </div>
           <div class="profile-message">

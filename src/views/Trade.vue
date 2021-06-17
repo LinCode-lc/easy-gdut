@@ -135,8 +135,10 @@
                
               >
                 -->
-              <div @click="clickLink(topicLinks[0].address)" class="link">
-                {{ topicLinks[0].address }}
+              <div v-if="topicLinks.length">
+                <div @click="clickLink(topicLinks[0].address)" class="link">
+                  {{ topicLinks[0].address }}
+                </div>
               </div>
             </div>
           </div>
@@ -187,7 +189,7 @@
 import Card from "../components/content/Card";
 import NineSquare from "../components/content/NineSquare";
 // import Card2 from "../components/content/Card2"
-import { getList, getTopciDetail } from "@/network/main.js";
+import { getPostList, getTopciDetail } from "@/network/main.js";
 import Pagination from "@/components/common/Pagination";
 import Search from "@/components/common/Search";
 import Comment from "@/components/common/comment/Comment";
@@ -246,7 +248,7 @@ waterfall.prototype.render = function() {
   }
 };
 export default {
-  name: "Deliver",
+  name: "Trade",
   components: {
     Card,
     // Card2,
@@ -381,8 +383,9 @@ export default {
   },
   methods: {
     init(tab) {
-      getPostList(3).then(response => {
+      getPostList(4).then(response => {
         const { data } = response;
+        console.log(data);
         // console.log(data);
         // this.page.current = data.current
         // console.log(data);
@@ -434,8 +437,10 @@ export default {
 
       this.postId = item.postId;
       getTopciDetail(this.postId).then(res => {
+        console.log(this.postId);
         console.log(res.data);
         this.topicLinks = res.data.links;
+        console.log(this.topicLinks);
         this.clickCount = res.data.clickCount;
         this.commentCount = res.data.commentCount;
         this.modifiedTime = res.data.modifiedTime;
@@ -541,7 +546,7 @@ export default {
 </script>
 
 <style scoped>
-#deliver {
+#trade {
   height: 100%;
   width: 100%;
   background-color: var(--themeColor);

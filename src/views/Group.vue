@@ -135,8 +135,10 @@
                
               >
                 -->
-              <div @click="clickLink(topicLinks[0].address)" class="link">
-                {{ topicLinks[0].address }}
+              <div v-if="topicLinks.length">
+                <div @click="clickLink(topicLinks[0].address)" class="link">
+                  {{ topicLinks[0].address }}
+                </div>
               </div>
             </div>
           </div>
@@ -192,7 +194,6 @@ import Pagination from "@/components/common/Pagination";
 import Search from "@/components/common/Search";
 import Comment from "@/components/common/comment/Comment";
 import CommendBar from "@/components/common/CommendBar";
-
 //瀑布流
 let waterfall = function(opt) {
   this.el = document.getElementsByClassName(opt.el)[0];
@@ -384,6 +385,7 @@ export default {
     init(tab) {
       getPostList(5).then(response => {
         const { data } = response;
+        console.log(data);
         // console.log(data);
         // this.page.current = data.current
         // console.log(data);
@@ -435,8 +437,10 @@ export default {
 
       this.postId = item.postId;
       getTopciDetail(this.postId).then(res => {
+        console.log(this.postId);
         console.log(res.data);
         this.topicLinks = res.data.links;
+        console.log(this.topicLinks);
         this.clickCount = res.data.clickCount;
         this.commentCount = res.data.commentCount;
         this.modifiedTime = res.data.modifiedTime;
@@ -702,19 +706,3 @@ export default {
   color: var(--subjectColor);
 }
 </style>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

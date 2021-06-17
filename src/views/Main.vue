@@ -53,7 +53,18 @@
           <div class="authorBox">
             <div class="userInfo">
               <el-col :span="5" class="imgDiv">
-                <img :src="user.userAvatar" alt="" class="avatar" />
+                <img
+                  v-if="user.userAvatar"
+                  :src="user.userAvatar"
+                  alt=""
+                  class="avatar"
+                />
+                <img
+                  v-else
+                  src="http://120.79.162.254:8070/gdut-c/resources/defalut_user_avatar.jpg"
+                  alt=""
+                  class="avatar"
+                />
               </el-col>
               <el-col :span="19">
                 <el-row style="margin-left:10px;">
@@ -140,8 +151,10 @@
                
               >
                 -->
-              <div @click="clickLink(topicLinks[0].address)" class="link">
-                {{ topicLinks[0].address }}
+              <div v-if="topicLinks.length">
+                <div @click="clickLink(topicLinks[0].address)" class="link">
+                  {{ topicLinks[0].address }}
+                </div>
               </div>
             </div>
           </div>
@@ -454,7 +467,7 @@ export default {
       //判断图片个数并赋值
       this.countCol(item.images.length);
       this.images = item.images;
-
+      this.visible = true;
       // console.log(item);
       if (item.plateId != 0) {
         this.visible = true;

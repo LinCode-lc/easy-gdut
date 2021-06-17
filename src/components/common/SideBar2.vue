@@ -4,34 +4,55 @@
       <div>
         <div v-if="isCollapse" class="user-profile-collapse">
           <!-- logo -->
-          <div class="logoCollapse">
-            <img
-              src="http://120.79.162.254:8070/gdut-c/resources/logo.jpg"
-              alt=""
-            />
-          </div>
+          <router-link :to="{ name: 'Main' }">
+            <div class="logoCollapse">
+              <img
+                src="http://120.79.162.254:8070/gdut-c/resources/logo1.png"
+                alt=""
+              />
+            </div>
+          </router-link>
           <!-- <a href="../.././views/user/Profile.vue"> -->
           <div class="userProfileBoxCollapse">
             <router-link :to="{ path: '/profile' }">
-              <div class="user-avatar">
+              <!-- <div class="user-avatar">
                 <img :src="user.userAvatar" alt="" v-if="token" />
                 <img :src="nocircleUrl" alt="" v-else />
+              </div> -->
+
+              <div class="user-avatar" v-if="token">
+                <img v-if="user.userAvatar" :src="user.userAvatar" alt="" />
+                <img
+                  v-if="!user.userAvatar"
+                  src="http://120.79.162.254:8070/gdut-c/resources/defalut_user_avatar.jpg"
+                  alt=""
+                />
+              </div>
+              <div class="user-avatar" v-else>
+                <img :src="nocircleUrl" alt="" />
               </div>
             </router-link>
           </div>
           <!-- </a> -->
         </div>
         <div v-else class="user-profile">
-          <div class="logo">
-            <img
-              src="http://120.79.162.254:8070/gdut-c/resources/logo.jpg"
-              alt=""
-            />
-          </div>
+          <router-link :to="{ name: 'Main' }">
+            <div class="logo">
+              <img
+                src="http://120.79.162.254:8030/resources/logo-name.jpg"
+                alt=""
+              />
+            </div>
+          </router-link>
           <div class="userProfileBox">
             <router-link :to="{ path: '/profile' }">
-              <div class="user-avatar" v-if="token">
-                <img :src="user.userAvatar" alt="" />
+              <div class="user-avatar-login" v-if="token">
+                <img v-if="user.userAvatar" :src="user.userAvatar" alt="" />
+                <img
+                  v-if="!user.userAvatar"
+                  src="http://120.79.162.254:8070/gdut-c/resources/defalut_user_avatar.jpg"
+                  alt=""
+                />
               </div>
               <div class="user-avatar" v-else>
                 <img :src="nocircleUrl" alt="" />
@@ -276,7 +297,7 @@ export default {
 .user-profile {
   position: relative;
   width: 15.75rem /* 252/16 */;
-  height: 11.25rem /* 180/16 */;
+  height: 15.25rem /* 180/16 */;
 
   background-color: rgba(217, 216, 220);
   /* background: var(--sideBarColor); */
@@ -302,12 +323,28 @@ export default {
   height: 3.75rem /* 60/16 */;
   border-radius: 50%;
 }
+.user-avatar-login {
+  position: relative;
+  left: 50%;
+  width: 3.75rem /* 60/16 */;
+  height: 3.75rem /* 60/16 */;
+  transform: translateX(-50%);
+}
+.user-avatar-login img {
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
+}
 .user-avatar img {
   height: 100%;
   width: 100%;
   border-radius: 50%;
 }
-
+ol,
+ul,
+dl {
+  margin-top: 2.2rem; /* 30/16 */
+}
 .user-name {
   position: absolute;
   left: 50%;
@@ -315,13 +352,13 @@ export default {
   transform: translateX(-50%);
   font-size: 1.25rem /* 20/16 */;
   font-weight: 500;
-  margin-top: 4.0625rem; /* 65/16 */
+  margin-top: 2.0625rem; /* 65/16 */
 }
 .user-profile-header-info {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  top: 6.25rem /* 100/16 */;
+  top: 8.25rem /* 100/16 */;
   text-align: center;
   margin-top: 0.75rem; /* 12/16 */
 }
@@ -427,7 +464,7 @@ element.style {
   color: var(--subjectColor);
 }
 .el-menu {
-  /* margin-top: 6rem; */
+  margin-top: 0rem;
 }
 /* 发布 */
 .create {
@@ -441,6 +478,7 @@ element.style {
 /* 登录按钮样式 */
 .loginButton {
   margin: 0 auto;
+  margin-top: 6rem;
 }
 /* logo */
 .logoCollapse {
@@ -448,13 +486,19 @@ element.style {
   height: 2.875rem /* 30/16 */;
   margin-left: 1.25rem /* 20/16 */;
 }
-.logo {
-  width: 1.875rem /* 30/16 */;
-  height: 1.875rem /* 30/16 */;
+/* .logo {
+  width: 60%;
+  height: 60%;
+} */
+.logo img {
+  width: 75%;
+  height: 75%;
+  margin-left: 1.25rem /* 20/16 */;
+  margin-top: 0.625rem /* 10/16 */;
 }
 .userProfileBox {
   position: relative;
-  top: 2.875rem; /* 30/16 */
+  top: 1.875rem; /* 30/16 */
 }
 .userProfileBoxCollapse {
   margin-top: 2rem;

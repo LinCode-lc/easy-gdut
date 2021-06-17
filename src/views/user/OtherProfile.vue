@@ -4,11 +4,11 @@
     <!-- 头部开始 ----------------->
     <div class="user-profile">
       <div class="user-profile-avatar">
-        <img :src="user.userAvatar" alt="" />
+        <img :src="userInfo.useravatar" alt="" />
       </div>
       <div class="user-profile-header-info-m">
         <div class="user-profile-head-name">
-          <div>{{ user.userName }}</div>
+          <div>{{ userInfo.username }}</div>
         </div>
       </div>
       <div class="user-profile-header-info-b">
@@ -20,13 +20,13 @@
             </div>
           </li>
           <li>
-            <div class="user-profile-statistics-num" data-v-d1dbb6f8="">5</div>
+            <div class="user-profile-statistics-num" data-v-d1dbb6f8="">{{userInfo.focuscount}}</div>
             <div class="user-profile-statistics-name" data-v-d1dbb6f8="">
               他的关注
             </div>
           </li>
           <li>
-            <div class="user-profile-statistics-num" data-v-d1dbb6f8="">0</div>
+            <div class="user-profile-statistics-num" data-v-d1dbb6f8="">{{userInfo.fanscount}}</div>
             <div class="user-profile-statistics-name" data-v-d1dbb6f8="">
               粉丝数量
             </div>
@@ -35,9 +35,9 @@
       </div>
     </div>
     <div>
-        <a-collapse default-active-key="1" :bordered="false">
-           <a-collapse-panel key="1" header="用户资料V" :style="messagestyle" :showArrow=false>
-              <a-descriptions size="middle" style="text-align:left" layout="vertical">
+        <a-collapse :bordered="false">
+           <a-collapse-panel key="1" header="用户资料" :style="messagestyle" >
+              <a-descriptions size="middle" style="text-align:left;margin-left:200px" layout="vertical">
                   <a-descriptions-item label="用户名">
                      {{userInfo.username}}
                   </a-descriptions-item>
@@ -71,7 +71,7 @@
               <li class="user-general-info-join-csdn" data-v-d487ed78="">
                 <i data-v-d487ed78=""></i> <span data-v-d487ed78="">于</span>
                 <span class="user-general-info-key-word" data-v-d487ed78=""
-                  >2020-02-07</span
+                  >{{userInfo.creattime}}</span
                 >
                 <span data-v-d487ed78="">加入GDUT</span>
               </li>
@@ -174,23 +174,28 @@
 <script>
 import { mapGetters } from "vuex";
 import { getInfo } from "@/network/auth.js";
+import { getrecentlyviewed } from "@/network/post.js";
+
 export default {
   name: "Profile",
   data() {
     return {
-      messagestyle:'background: #f0a1a8;border-radius: 4px;margin-bottom: 24px;border: 0;text-align:center',
-      listData,
+      messagestyle:'background: #F4F5F5;border-radius: 4px;margin-bottom: 24px;border: 0;',
       pagination: {
-        pageSize: 4,
+        pageSize:5,
       },
       id:"",
+      listData:[],
       userInfo:{
         username:"",
         usersex:"",
         userbirthday:"",
         useremail:"",
         usermessage:"",
-        creattime:""
+        creattime:"",
+        useravatar:"",
+        fanscount:"",
+        focuscount:""
       },
       actions: [
         { type: 'star-o', text: '156' },
@@ -203,36 +208,57 @@ export default {
     ...mapGetters(["token", "user"])
   },
   created(){
-    this.id = this.$route.query.id;
+    //获取用户资料
+    this.id = this.$route.query.Id;
         getInfo(this.id).then(response => {
-          for(var key in response.map)
+          for(var key in response.data)
           if(key =="false"){
-           const form = response.map[key];
+           const form = response.data[key];
            this.userInfo.username = form.userName;
-           this.userInfo.usersex = form.userSex;
+           if(form.userSex){
+              this.userInfo.usersex = "男";
+           }else{
+              this.userInfo.usersex = "女";
+           }
+           this.userInfo.useravatar = form.userAvatar;
            this.userInfo.useremail = form.userEmail;
            this.userInfo.usermessage = form.userStatement;
            this.userInfo.userbirthday = form.userBirthday;
-           this.userInfo.creattime = form.creatTime
+           this.userInfo.creattime = form.creatTime;
+           this.userInfo.fanscount = form.fansCount;
+           this.userInfo.focuscount = form.focusCount
+           console.log(form)
           }else if(key =="true"){
-            this.$router.go('/Profile');
+            this.$router.push({path:'/Profile'})
           } 
         })
+
+         //获取最近游览记录
+    getrecentlyviewed(this.id).then(res =>{
+            const list = [];
+            this.pagination.pageSize = parseInt(res.data.length);
+          for (let i = 0; i < res.data.length; i++) {
+            if(typeof(res.data[i].postContents)=="object"){
+               var pcontents = "空"
+            }else{
+               var pcontents = res.data[i].postContents.substring(0, 100);
+            }
+           list.push({
+                  href: 'javascript:false',
+                  title: res.data[i].postTitle,
+                  avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+                  description:
+                     res.data[i].postTitle,
+                  content:
+                     pcontents +"......",
+               });
+             }
+          this.listData = list
+    })
   },
 };
 
-const listData = [];
-for (let i = 0; i < 23; i++) {
-  listData.push({
-    href: '1111',
-    title: `RNG电子竞技俱乐部 ${i}`,
-    avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-    description:
-      'RNG, A FOREVER G0D for background applications, is refined by Ant UED Team.',
-    content:
-      'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
-  });
-}
+
 
 </script>
 

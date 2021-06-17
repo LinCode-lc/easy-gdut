@@ -35,21 +35,18 @@
           </a-menu>
           <a-button icon="more"></a-button>
         </a-dropdown>
-
-        <a-list-item-meta
-          :description="item.userStatement"
-          @click="clickOther(item.userId)"
-        >
-          <a slot="title" href="javascript:false"
-            ><span style="color:rgb(251, 114, 153)">{{
-              item.userName
-            }}</span></a
+        <a-list-item-meta :description="item.userStatement">
+          <a
+            slot="title"
+            href="javascript:false"
+            @click="clickother(item.userId)"
+            ><span class="a">{{ item.userName }}</span></a
           >
-
           <a-avatar
             slot="avatar"
             :src="item.userAvatar"
-            style="width:70px;height:70px"
+            @click="clickother(item.userId)"
+            style="width:70px;height:70px;cursor: pointer;"
           />
         </a-list-item-meta>
       </a-list-item>
@@ -79,9 +76,7 @@ export default {
         this.$message.success("已成功关注", 0.1);
       }
     },
-    clickOther(userId) {
-      // this.$router.go("/otherProfile", (query: { Id: userId }));
-    },
+
     Addfocus(key) {
       addfocus(this.data[key].userId, 1).then(response => {
         console.log("已关注");
@@ -92,6 +87,11 @@ export default {
       cancelfocus(this.data[key].userId).then(response => {
         console.log("已取消关注");
       });
+    }
+  },
+  methods: {
+    clickother(userId) {
+      this.$router.push({ path: "/Otheruser/", query: { Id: userId } });
     }
   },
   created() {
@@ -119,6 +119,12 @@ export default {
 }
 .bt {
   padding: 4px 11px 4px 11px;
+}
+.a:hover {
+  text-decoration: underline;
+}
+.a {
+  color: rgb(251, 114, 153);
 }
 </style>
 

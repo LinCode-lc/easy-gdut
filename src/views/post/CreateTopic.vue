@@ -517,6 +517,7 @@ export default {
       console.log(allMessage);
       postTopic(allMessage).then(res => {
         console.log(res);
+        this.$router.go(-1);
       });
     },
     //板块选择

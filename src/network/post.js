@@ -101,3 +101,13 @@ export function cancelfocus(targetuserId) {
         data: data
     })
 }
+//获取用户最近浏览记录
+export function getrecentlyviewed(userId) {
+    return request({
+        url: '/user/getMyPost',
+        method: 'get',
+        params: {
+            userId
+        }
+    })
+}

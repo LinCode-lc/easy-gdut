@@ -10,7 +10,8 @@ const routes = [
     path: '/',
     name: 'Home',
     // component: () => import('@/views/Main'),
-    redirect: { name: 'Main' }
+    redirect: { name: 'Main' },
+    meta: { title: "C-GDUT" }
   },
   {
     path: '/profile',
@@ -51,7 +52,8 @@ const routes = [
         name: 'Main',
         component: () => import('@/views/Main'),
         meta: {
-          keepAlive: true
+          keepAlive: true,
+          title: "C-GDUT"
         }
       },
       {

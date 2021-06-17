@@ -174,13 +174,10 @@ export default {
             const { data } = response;
             console.log(data);
             // this.$router.push(`/topic/detail/` + data);
-            this.$router.push(``);
-            setTimeout(() => {
-              this.$router.push({
-                name: "post-detail",
-                params: { id: data.id }
-              });
-            }, 800);
+            this.$router.go(-1);
+            // setTimeout(() => {
+            //   this.$router.go(-1);
+            // }, 800);
           });
         } else {
           console.log("error submit!!");

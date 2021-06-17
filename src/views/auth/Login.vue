@@ -626,19 +626,17 @@ export default {
       console.log(0);
       this.$refs.ruleForm.validate(valid => {
         if (valid) {
-          this.$store
-            .dispatch("user/login", this.form)
-            .then(res => {
-              this.visible1 = false;
-              this.resetForm();
-            })
-            .catch(res => {
-              if ((res = 0)) {
-                this.$message.success("用户不存在！", 0.1);
-              } else if ((res = 1)) {
-                this.$message.success("用户名或密码错误！", 0.1);
-              }
-            });
+          this.$store.dispatch("user/login", this.form).then(res => {
+            this.visible1 = false;
+            this.resetForm();
+          });
+          // .catch(res => {
+          //   if ((res = 0)) {
+          //     this.$message.success("用户不存在！", 0.1);
+          //   } else if ((res = 1)) {
+          //     this.$message.success("用户名或密码错误！", 0.1);
+          //   }
+          // });
           // login(this.form.username, this.form.password).then(response => {
           //   if (response.data == "用户不存在") {
           //     this.$message.success("用户不存在！", 0.1);

@@ -130,9 +130,25 @@ export function sentforget2(usercode, meth, type) {
 export function getInfo(targetuserId) {
   return request({
     url: '/user/toAnyPersonalInfo',
-    method: 'get',
+    method: 'post',
     params: {
       targetuserId
     }
+  })
+}
+
+
+
+// 用户修改信息
+export function updata(message, contact, sex) {
+  let data = qs.stringify({
+    userContact: contact,
+    userSex: sex,
+    userStatement: message
+  })
+  return request({
+    url: '/user/updateInfo',
+    method: 'post',
+    data: data
   })
 }
