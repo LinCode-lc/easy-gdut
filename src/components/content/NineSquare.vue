@@ -151,6 +151,7 @@ import {
   saveFollow,
   removeFollow
 } from "@/network/detail.js";
+import { mapGetters } from "vuex";
 export default {
   name: "NineSquare",
   data() {

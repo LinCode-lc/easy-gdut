@@ -1,15 +1,10 @@
 import request from './request'
 import qs from 'qs'
-// 发布
+// markdown发布
 export function post(topic) {
     return request({
         url: '/post/markdown/release',
         method: 'post',
-        // params: {
-        //     userId: topic.userId,
-        //     postTitle: topic.postTitle,
-        //     postContents: topic.postContents
-        // }
         data: {
             userId: topic.userId,
             postTitle: topic.postTitle,
@@ -23,14 +18,6 @@ export function postComment(commentContents, postId, replyId, replyReplyId, user
     return request({
         url: '/comment/save',
         method: 'post',
-        // params: {
-        //     commentContents,
-        //     postId,
-        //     replyId,
-        //     replyReplyId,
-        //     userId
-
-        // }
         data: {
             commentContents,
             postId,
@@ -52,7 +39,7 @@ export function getTagList() {
     })
 }
 
-//发布
+//普通发布
 export function postTopic(topic) {
     return request({
         url: '/post/edit/release',

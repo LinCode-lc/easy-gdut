@@ -120,6 +120,7 @@ export function removeFollow(targetuserId, relationFlag) {
   })
 }
 
+//关注
 export function saveFollow(targetuserId, relationFlag) {
   return request({
     url: `user/setRelation`,

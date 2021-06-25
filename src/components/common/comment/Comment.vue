@@ -47,9 +47,7 @@
 
     <div class="comm">
       <div class="su com-rep"></div>
-      <div class="com-rep com-title">
-        评论<span class="com-span">({{ commentNum }})</span>
-      </div>
+      <div class="pinglun">评论</div>
     </div>
 
     <div v-for="(item, index) in commentList" class="hbl-child" :key="index">
@@ -1235,8 +1233,14 @@ export default {
 }
 .com-rep {
   display: inline-block;
+}
+.pinglun {
+  display: inline-block;
+  font-size: 16px;
+  margin-left: 5px;
   vertical-align: top;
 }
+
 .com-title {
   font-size: 20px;
   margin-left: 5px;

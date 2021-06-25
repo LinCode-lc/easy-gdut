@@ -1,7 +1,7 @@
 <template>
-  <div id="applica">
+  <div id="application">
     <div class="side">
-      <SideBar2></SideBar2>
+      <SideBar></SideBar>
     </div>
 
     <div class="margin-l">
@@ -23,17 +23,15 @@
 </template>
 
 <script>
-import SideBar2 from "./components/common/SideBar2";
+import SideBar from "./components/common/SideBar";
 import Header from "./components/common/Header";
 
 import LoginWelcome from "./components/content/LoginWelcome";
-// import Card from "./components/content/Card"
-// import Card2 from "./components/content/Card2"
 export default {
-  name: "Applica",
+  name: "Application",
   components: {
     // NavMenu,
-    SideBar2,
+    SideBar,
     Header,
 
     LoginWelcome

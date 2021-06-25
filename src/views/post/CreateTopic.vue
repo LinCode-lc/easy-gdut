@@ -87,7 +87,7 @@
               <!-- 照片墙 -->
               <div class="creat-topic">
                 <a-upload
-                  action="http://localhost:8030/post/edit/image-upload"
+                  action="http://112.74.182.209:80/api/post/edit/image-upload"
                   list-type="picture-card"
                   :file-list="fileList"
                   @preview="handlePreview"

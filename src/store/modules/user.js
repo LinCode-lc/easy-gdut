@@ -36,11 +36,11 @@ const actions = {
       //   });
       login(username, password).then(response => {
         if (response.data == "用户不存在") {
-          // reject(0)
+          reject(0)
 
         } else if (response.data == "用户名或密码错误") {
 
-          // reject(1)
+          reject(1)
         } else {
           // this.$message.success("登入成功！", 0.1);
 

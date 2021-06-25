@@ -1,5 +1,13 @@
 <template>
   <div class="bgc">
+    <router-link :to="{ name: 'Main' }">
+      <div class="logoBack">
+        <img
+          src="http://120.79.162.254:8070/gdut-c/resources/logo-name.jpg"
+          alt=""
+        />
+      </div>
+    </router-link>
     <div class="top-bgc"></div>
     <!-- 头部开始 ----------------->
     <div class="user-profile">
@@ -14,19 +22,25 @@
       <div class="user-profile-header-info-b">
         <ul>
           <li>
-            <div class="user-profile-statistics-num" data-v-d1dbb6f8="">12</div>
+            <div class="user-profile-statistics-num" data-v-d1dbb6f8="">
+              {{ userInfo.userpost }}
+            </div>
             <div class="user-profile-statistics-name" data-v-d1dbb6f8="">
               原创文章
             </div>
           </li>
           <li>
-            <div class="user-profile-statistics-num" data-v-d1dbb6f8="">{{userInfo.focuscount}}</div>
+            <div class="user-profile-statistics-num" data-v-d1dbb6f8="">
+              {{ userInfo.focuscount }}
+            </div>
             <div class="user-profile-statistics-name" data-v-d1dbb6f8="">
               他的关注
             </div>
           </li>
           <li>
-            <div class="user-profile-statistics-num" data-v-d1dbb6f8="">{{userInfo.fanscount}}</div>
+            <div class="user-profile-statistics-num" data-v-d1dbb6f8="">
+              {{ userInfo.fanscount }}
+            </div>
             <div class="user-profile-statistics-name" data-v-d1dbb6f8="">
               粉丝数量
             </div>
@@ -35,31 +49,35 @@
       </div>
     </div>
     <div>
-        <a-collapse :bordered="false">
-           <a-collapse-panel key="1" header="用户资料" :style="messagestyle" >
-              <a-descriptions size="middle" style="text-align:left;margin-left:200px" layout="vertical">
-                  <a-descriptions-item label="用户名">
-                     {{userInfo.username}}
-                  </a-descriptions-item>
-                  <a-descriptions-item label="性别">
-                     {{userInfo.usersex}}
-                  </a-descriptions-item>
-                  <a-descriptions-item label="用户生日">
-                     {{userInfo.userbirthday}}
-                  </a-descriptions-item>
-                  <a-descriptions-item label="用户邮箱">
-                     {{userInfo.useremail}}
-                  </a-descriptions-item>
-                  <a-descriptions-item label="用户留言">
-                     {{userInfo.usermessage}}
-                  </a-descriptions-item>
-                  <a-descriptions-item label="入驻时间">
-                     {{userInfo.creattime}}
-                  </a-descriptions-item>
-                  </a-descriptions>
-             </a-collapse-panel>
-        </a-collapse>
-      </div> 
+      <a-collapse :bordered="false">
+        <a-collapse-panel key="1" header="用户资料" :style="messagestyle">
+          <a-descriptions
+            size="middle"
+            style="text-align:left;margin-left:200px"
+            layout="vertical"
+          >
+            <a-descriptions-item label="用户名">
+              {{ userInfo.username }}
+            </a-descriptions-item>
+            <a-descriptions-item label="性别">
+              {{ userInfo.usersex }}
+            </a-descriptions-item>
+            <a-descriptions-item label="用户生日">
+              {{ userInfo.userbirthday }}
+            </a-descriptions-item>
+            <a-descriptions-item label="用户邮箱">
+              {{ userInfo.useremail }}
+            </a-descriptions-item>
+            <a-descriptions-item label="用户留言">
+              {{ userInfo.usermessage }}
+            </a-descriptions-item>
+            <a-descriptions-item label="入驻时间">
+              {{ userInfo.creattime }}
+            </a-descriptions-item>
+          </a-descriptions>
+        </a-collapse-panel>
+      </a-collapse>
+    </div>
     <!-- 头部结束 ----------------->
 
     <!-- 内容开始--------------------- -->
@@ -70,13 +88,13 @@
             <ul data-v-d487ed78="">
               <li class="user-general-info-join-csdn" data-v-d487ed78="">
                 <i data-v-d487ed78=""></i> <span data-v-d487ed78="">于</span>
-                <span class="user-general-info-key-word" data-v-d487ed78=""
-                  >{{userInfo.creattime}}</span
-                >
+                <span class="user-general-info-key-word" data-v-d487ed78="">{{
+                  userInfo.creattime
+                }}</span>
                 <span data-v-d487ed78="">加入GDUT</span>
               </li>
             </ul>
-          </div> 
+          </div>
           <div class="aside-common-box-head" data-v-d487ed78="">获得成就</div>
           <div class="aside-common-box-bottom" data-v-d487ed78="">
             <div class="aside-common-box-content" data-v-d487ed78="">
@@ -123,30 +141,40 @@
               <!---->帖子·<span class="nav-li-num" data-v-bb5f5e3e="">0</span>
             </li>
           </ul>
-          
-  <template>
-  <a-list item-layout="vertical" size="large" :pagination="pagination" :data-source="listData">
-    <div slot="footer"><b>My Treasure </b> Post</div>
-    <a-list-item slot="renderItem" key="item.title" slot-scope="item">
-      <template v-for="{ type, text } in actions" slot="actions">
-        <span :key="type">
-          <a-icon :type="type" style="margin-right: 10px" />
-          {{ text }}
-        </span>
-      </template>
-      <img
-        slot="extra"
-        width="290"
-        alt="logo"
-        src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
-      />
-      <a-list-item-meta :description="item.description">
-        <a slot="title" :href="item.href">{{ item.title }}</a>
-        <a-avatar slot="avatar" :src="item.avatar" />
-      </a-list-item-meta>
-      {{ item.content }}
-    </a-list-item>
-  </a-list>
+
+          <template>
+            <a-list
+              item-layout="vertical"
+              size="large"
+              :pagination="pagination"
+              :data-source="listData"
+            >
+              <div slot="footer"><b>My Treasure </b> Post</div>
+              <a-list-item slot="renderItem" key="item.title" slot-scope="item">
+                <template v-for="{ type, text } in actions" slot="actions">
+                  <span :key="type">
+                    <a-icon :type="type" style="margin-right: 10px" />
+                    {{ text }}
+                  </span>
+                </template>
+                <img
+                  slot="extra"
+                  width="290"
+                  alt="logo"
+                  src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
+                />
+                <a-list-item-meta :description="item.description">
+                  <a slot="title" :href="item.href">{{ item.title }}</a>
+                  <a-avatar slot="avatar" :src="item.avatar" />
+                </a-list-item-meta>
+                {{ item.content }}
+              </a-list-item>
+            </a-list>
+          </template>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 
@@ -180,91 +208,89 @@ export default {
   name: "Profile",
   data() {
     return {
-      messagestyle:'background: #F4F5F5;border-radius: 4px;margin-bottom: 24px;border: 0;',
+      messagestyle:
+        "background: #F4F5F5;border-radius: 4px;margin-bottom: 24px;border: 0;",
       pagination: {
-        pageSize:5,
+        pageSize: 5
       },
-      id:"",
-      listData:[],
-      userInfo:{
-        username:"",
-        usersex:"",
-        userbirthday:"",
-        useremail:"",
-        usermessage:"",
-        creattime:"",
-        useravatar:"",
-        fanscount:"",
-        focuscount:""
+      id: "",
+      listData: [],
+      userInfo: {
+        username: "",
+        usersex: "",
+        userbirthday: "",
+        useremail: "",
+        usermessage: "",
+        creattime: "",
+        useravatar: "",
+        fanscount: "",
+        focuscount: "",
+        userpost: ""
       },
       actions: [
-        { type: 'star-o', text: '156' },
-        { type: 'like-o', text: '156' },
-        { type: 'message', text: '2' },
-      ],
+        { type: "star-o", text: "156" },
+        { type: "like-o", text: "156" },
+        { type: "message", text: "2" }
+      ]
     };
   },
   computed: {
     ...mapGetters(["token", "user"])
   },
-  created(){
+  created() {
     //获取用户资料
     this.id = this.$route.query.Id;
-        getInfo(this.id).then(response => {
-          for(var key in response.data)
-          if(key =="false"){
-           const form = response.data[key];
-           this.userInfo.username = form.userName;
-           if(form.userSex){
-              this.userInfo.usersex = "男";
-           }else{
-              this.userInfo.usersex = "女";
-           }
-           this.userInfo.useravatar = form.userAvatar;
-           this.userInfo.useremail = form.userEmail;
-           this.userInfo.usermessage = form.userStatement;
-           this.userInfo.userbirthday = form.userBirthday;
-           this.userInfo.creattime = form.creatTime;
-           this.userInfo.fanscount = form.fansCount;
-           this.userInfo.focuscount = form.focusCount
-           console.log(form)
-          }else if(key =="true"){
-            this.$router.push({path:'/Profile'})
-          } 
-        })
+    getInfo(this.id).then(response => {
+      for (var key in response.data)
+        if (key == "false") {
+          const form = response.data[key];
+          this.userInfo.username = form.userName;
+          if (form.userSex) {
+            this.userInfo.usersex = "男";
+          } else {
+            this.userInfo.usersex = "女";
+          }
+          this.userInfo.useravatar = form.userAvatar;
+          this.userInfo.useremail = form.userEmail;
+          this.userInfo.usermessage = form.userStatement;
+          this.userInfo.userbirthday = form.userBirthday;
+          this.userInfo.creattime = form.creatTime;
+          this.userInfo.fanscount = form.fansCount;
+          this.userInfo.focuscount = form.focusCount;
+          console.log(form);
+        } else if (key == "true") {
+          this.$router.push({ path: "/Profile" });
+        }
+    });
 
-         //获取最近游览记录
-    getrecentlyviewed(this.id).then(res =>{
-            const list = [];
-            this.pagination.pageSize = parseInt(res.data.length);
-          for (let i = 0; i < res.data.length; i++) {
-            if(typeof(res.data[i].postContents)=="object"){
-               var pcontents = "空"
-            }else{
-               var pcontents = res.data[i].postContents.substring(0, 100);
-            }
-           list.push({
-                  href: 'javascript:false',
-                  title: res.data[i].postTitle,
-                  avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-                  description:
-                     res.data[i].postTitle,
-                  content:
-                     pcontents +"......",
-               });
-             }
-          this.listData = list
-    })
-  },
+    //获取最近游览记录
+    getrecentlyviewed(this.id).then(res => {
+      const list = [];
+      this.userInfo.userpost = res.data.length;
+      for (let i = 0; i < res.data.length; i++) {
+        if (typeof res.data[i].postContents == "object") {
+          var pcontents = "空";
+        } else {
+          var pcontents = res.data[i].postContents.substring(0, 100);
+        }
+        list.push({
+          href: "javascript:false",
+          title: res.data[i].postTitle,
+          avatar:
+            "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
+          description: res.data[i].postTitle,
+          content: pcontents + "......"
+        });
+      }
+      this.listData = list;
+    });
+  }
 };
-
-
-
 </script>
 
 <style scoped>
 .bgc {
-  height: 125rem /* 900/16 */;
+  height: 150rem /* 900/16 */;
   width: 125rem /* 2000/16 */;
   /* background-color: rgb(244, 245, 245); */
   background-color: rgb(241, 246, 250);
@@ -428,6 +454,11 @@ export default {
   display: flex;
   width: 80%;
   /* height: 36px; */
+}
+.logoBack {
+  width: 10%;
+  height: 10%;
+  margin-left: 1.875rem /* 30/16 */;
 }
 .navList ul li {
   flex: 1;

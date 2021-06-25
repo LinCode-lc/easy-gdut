@@ -30,9 +30,7 @@
     <div v-if="visible">
       <a-radio-group style="margin-right: 8px" :default-value="placement">
       </a-radio-group>
-      <a-button type="primary" @click="showDrawer">
-        Open
-      </a-button>
+
       <a-drawer
         title=""
         :placement="placement"
@@ -186,9 +184,7 @@
 </template>
 
 <script>
-import Card from "../components/content/Card";
 import NineSquare from "../components/content/NineSquare";
-// import Card2 from "../components/content/Card2"
 import { getPostList, getTopciDetail } from "@/network/main.js";
 import Pagination from "@/components/common/Pagination";
 import Search from "@/components/common/Search";
@@ -250,8 +246,6 @@ waterfall.prototype.render = function() {
 export default {
   name: "Deliver",
   components: {
-    Card,
-    // Card2,
     Pagination,
     Search,
     NineSquare,

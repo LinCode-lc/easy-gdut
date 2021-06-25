@@ -3,7 +3,7 @@ import request from './request'
 import qs from 'qs'
 
 
-
+//用户注册
 export function userRegister(formData) {
   return request({
     url: "user/registered",
@@ -61,6 +61,7 @@ export function logout() {
   })
 }
 
+//忘记密码
 export function forget1(meth, type) {
   let type2 = parseInt(type);
   return request({
@@ -73,6 +74,7 @@ export function forget1(meth, type) {
   })
 }
 
+//重置密码
 export function resetpassword(usercode, type, info, newpassword) {
   return request({
     url: '/user/RsetUserPassword',
@@ -85,6 +87,7 @@ export function resetpassword(usercode, type, info, newpassword) {
     }
   })
 }
+
 
 export function sentforget1(usercode, meth, type) {
   return request({

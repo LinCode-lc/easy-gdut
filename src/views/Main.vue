@@ -35,9 +35,7 @@
     <div v-if="visible">
       <a-radio-group style="margin-right: 8px" :default-value="placement">
       </a-radio-group>
-      <a-button type="primary" @click="showDrawer">
-        Open
-      </a-button>
+
       <a-drawer
         title=""
         :placement="placement"
@@ -91,7 +89,6 @@
                   </button>
 
                   <button class="el-icon-message">私信</button>
-                  <button class="el-icon-chat-round">提问</button>
                 </el-row>
               </el-col>
             </div>
@@ -202,9 +199,8 @@
 </template>
 
 <script>
-import Card from "../components/content/Card";
 import NineSquare from "../components/content/NineSquare";
-// import Card2 from "../components/content/Card2"
+
 import { getList, getTopciDetail } from "@/network/main.js";
 import Pagination from "@/components/common/Pagination";
 import Search from "@/components/common/Search";
@@ -266,7 +262,6 @@ waterfall.prototype.render = function() {
 export default {
   name: "Main",
   components: {
-    Card,
     // Card2,
     Pagination,
     Search,

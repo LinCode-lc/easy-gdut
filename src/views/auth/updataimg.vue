@@ -98,7 +98,7 @@ export default {
   },
   created() {
     console.log(this.$store.state.user.user.userId);
-    this.action = `http://localhost:8030/user/updateavatar/${this.$store.state.user.user.userId}`;
+    this.action = ` http://112.74.182.209:80/api/user/updateavatar/${this.$store.state.user.user.userId}`;
   }
 };
 </script>

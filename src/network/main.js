@@ -1,14 +1,15 @@
 import request from './request'
-
+//主页获取帖子
 export function getList(pageNo, size, tab) {
   return request(({
     url: '/post/page',
     method: 'get',
     params: {
-      size: 60
+      size: 10
     }
   }))
 }
+//获取指定板块的帖子
 export function getPostList(plate) {
   return request(({
     url: '/post/page',
@@ -17,6 +18,7 @@ export function getPostList(plate) {
   }))
 }
 
+//获取帖子详情
 export function getTopciDetail(id) {
   return request(({
     url: `/post/getDetailById/${id}`,

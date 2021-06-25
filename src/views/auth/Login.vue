@@ -626,10 +626,21 @@ export default {
       console.log(0);
       this.$refs.ruleForm.validate(valid => {
         if (valid) {
-          this.$store.dispatch("user/login", this.form).then(res => {
-            this.visible1 = false;
-            this.resetForm();
-          });
+          this.$store.dispatch("user/login", this.form).then(
+            res => {
+              this.visible1 = false;
+              this.resetForm();
+            },
+            err => {
+              if (err == 0) {
+                this.$message.success("用户不存在！", 0.1);
+              }
+              if (err == 1) {
+                this.$message.success("用户名或密码错误！", 0.1);
+              }
+            }
+          );
+
           // .catch(res => {
           //   if ((res = 0)) {
           //     this.$message.success("用户不存在！", 0.1);

@@ -63,7 +63,7 @@
 </template>
 
 <script>
-import { follow, hasFollow, unFollow } from "@/network/follow";
+// import { follow, hasFollow, unFollow } from "@/network/follow";
 import { mapGetters } from "vuex";
 export default {
   name: "Author",
